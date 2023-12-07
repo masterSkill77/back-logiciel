@@ -13,6 +13,11 @@ return new class extends Migration
     {
         Schema::create('agencies', function (Blueprint $table) {
             $table->id();
+            $table->string("nameAgency");
+            $table->string('nameCompany');
+            $table->string('addressCompany');
+            $table->string('phoneAgency');
+            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
     }
