@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class RegisterRequest extends FormRequest
+class LoginRequest extends FormRequest
 {
     use ValidationErrors;
     /**
@@ -23,10 +23,8 @@ class RegisterRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nom" => 'required|string:255',
-            "email" => 'required|mail|unique:users',
-            "password" => 'required|string|min:8',
-            
+            'email' => 'required|email|string',
+            'password' => 'required|string',
         ];
     }
 }
