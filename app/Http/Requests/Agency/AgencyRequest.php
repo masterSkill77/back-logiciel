@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Agency;
 
+use App\Http\Requests\ValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
 
 class AgencyRequest extends FormRequest
 {
+    use ValidationErrors;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -27,7 +29,6 @@ class AgencyRequest extends FormRequest
             "addressCompany" => 'required|string:255',
             "phoneAgency" => 'required|string:15',
             "user_id" => 'required|exists:users,id',
-
         ];
     }
 }
