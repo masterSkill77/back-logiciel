@@ -28,7 +28,6 @@ class AgencyRequest extends FormRequest
             "nameCompany" => 'required|string:255',
             "addressCompany" => 'required|string:255',
             "phoneAgency" => 'required|string:15',
-            "user_id" => 'required|exists:users,id',
         ];
     }
 }
