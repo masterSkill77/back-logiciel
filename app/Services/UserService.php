@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\Role;
 use App\Http\Requests\Agency\AgencyRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Models\User;
@@ -18,9 +19,11 @@ class UserService
     {
         $user = $registerRequest->toArray();
         $agency = $agencyRequest->toArray();
+        $user['role'] = Role::SUPER_ADMIN;
         $user['password'] = Hash::make($user['password']);
         $user = new User($user);
         $user->save();
+        $agency['user_id'] = $user->id;
         $this->agencyService->store($agency);
         return $user;
     }

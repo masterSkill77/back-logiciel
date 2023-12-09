@@ -11,7 +11,7 @@ class AgencyRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -22,7 +22,12 @@ class AgencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            //
+            "nameAgency" => 'required|string:255',
+            "nameCompany" => 'required|string:255',
+            "addressCompany" => 'required|string:255',
+            "phoneAgency" => 'required|string:15',
+            "user_id" => 'required|exists:users,id',
+
         ];
     }
 }
