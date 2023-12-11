@@ -11,6 +11,7 @@ use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserService
 {
@@ -37,7 +38,7 @@ class UserService
     {
         $user = User::where('email', $request->email)->first();
         if(!$user){
-            throw new NotFoundHttpException("User with`$request->email` not found");
+            throw new UnauthorizedHttpException('Bad password');
         }
         if (!Hash::check($request->password, $user->password)) {
            throw new BadRequestHttpException('Bad password');
@@ -53,6 +54,7 @@ class UserService
         $user['role'] = Role::AGENCE;
         $user['password'] = Hash::make($user['password']);
         $user = new User($user);
+        $user->save();
         return $user;
     }
 }

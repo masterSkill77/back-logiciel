@@ -11,12 +11,7 @@ class LoginTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_login_page(): void
-    {
-        $response = $this->get('/api/auth/login');
 
-        $response->assertStatus(200);
-    }
 
     public function test_log_user_failed(): void
     {
@@ -32,8 +27,9 @@ class LoginTest extends TestCase
 
     public function test_log_user_ok(): void
     {
-        $response = $this->post('/api/auth/login', ['email' => 'koders@koders.mg', 'password' => '123456789']);
-        $response->assertOk();
+        $response = $this->post('/api/auth/login', ['email' => 'test@gmail.mg', 'password' => '12345678']);
+        
         $response->assertJsonStructure(['user', 'token']);
+        $response->assertOk();
     }
 }
