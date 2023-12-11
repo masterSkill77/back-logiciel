@@ -18,7 +18,6 @@ return new class extends Migration
             $table->string('nameCompany');
             $table->string('addressCompany');
             $table->string('phoneAgency');
-            $table->foreignIdFor(User::class);
             $table->timestamps();
         });
     }

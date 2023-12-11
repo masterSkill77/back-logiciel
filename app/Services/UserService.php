@@ -6,6 +6,7 @@ use App\Enum\Role;
 use App\Http\Requests\Agency\AgencyRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
@@ -42,5 +43,16 @@ class UserService
         }
         $token = $user->createToken('token')->plainTextToken;
         return ['user'=>$user, 'token'=> $token];
+    }
+    
+
+    public function saveuser(CreateUserRequest $createUserRequest): User
+    {
+
+        $user = $createUserRequest->toArray();
+        $user['role'] = Role::AGENCE;
+        $user['password'] = Hash::make($user['password']);
+        $user = new User($user);
+        return $user;
     }
 }
