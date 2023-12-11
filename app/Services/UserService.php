@@ -23,12 +23,13 @@ class UserService
     {
         $user = $registerRequest->toArray();
         $agency = $agencyRequest->toArray();
+       $agency = $this->agencyService->store($agency);
         $user['role'] = Role::SUPER_ADMIN;
         $user['password'] = Hash::make($user['password']);
+        $user['agency_id'] = $agency->id;
         $user = new User($user);
         $user->save();
-        $agency['user_id'] = $user->id;
-        $this->agencyService->store($agency);
+       
         return $user;
     }
 
@@ -46,9 +47,8 @@ class UserService
     }
     
 
-    public function saveuser(CreateUserRequest $createUserRequest): User
+    public function createAgent(CreateUserRequest $createUserRequest): User
     {
-
         $user = $createUserRequest->toArray();
         $user['role'] = Role::AGENCE;
         $user['password'] = Hash::make($user['password']);

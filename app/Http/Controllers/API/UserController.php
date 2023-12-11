@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
 use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
@@ -27,9 +28,9 @@ class UserController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request) : JsonResponse
+    public function store(CreateUserRequest $createRequest) : JsonResponse
     {
-        $user = $this->userService->saveuser($request);
+        $user = $this->userService->createAgent($createRequest);
         return response()->json($user);
     }
 
