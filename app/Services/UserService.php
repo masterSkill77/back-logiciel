@@ -20,7 +20,7 @@ class UserService
         // Constructor of the class
     }
 
-    public function register(RegisterRequest $registerRequest, AgencyRequest $agencyRequest) : User
+    public function register(RegisterRequest $registerRequest, AgencyRequest $agencyRequest) : array
     {
         $user = $registerRequest->toArray();
         $agency = $agencyRequest->toArray();
@@ -30,8 +30,7 @@ class UserService
         $user['agency_id'] = $agency->id;
         $user = new User($user);
         $user->save();
-       
-        return $user;
+        return ['user'=> $user];
     }
 
     public function login(LoginRequest $request) : array
@@ -48,13 +47,13 @@ class UserService
     }
     
 
-    public function createAgent(CreateUserRequest $createUserRequest): User
+    public function createAgent(CreateUserRequest $createUserRequest): array
     {
         $user = $createUserRequest->toArray();
         $user['role'] = Role::AGENCE;
         $user['password'] = Hash::make($user['password']);
         $user = new User($user);
         $user->save();
-        return $user;
+        return ['user'=>$user];
     }
 }
