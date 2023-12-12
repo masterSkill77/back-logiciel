@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Builder;
 
 class Agency extends Model
 {
@@ -11,4 +12,11 @@ class Agency extends Model
 
     protected $fillable = ['nameAgency', 'nameCompany', 'addressCompany', 'phoneAgency'];
 
+    /**
+     * Scope for specifing directly the agenceId without making the condition `where('id', agenceId)
+     */
+    public function scopeAgence(Builder $builder, int $agenceId): Builder
+    {
+        return $builder->where('id', $agenceId);
+    }
 }
