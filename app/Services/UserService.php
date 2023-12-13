@@ -30,7 +30,7 @@ class UserService
         $user['agency_id'] = $agency->id;
         $user = new User($user);
         $user->save();
-        return ['user'=> $user];
+        return ['user'=>$user];
     }
 
     public function login(LoginRequest $request) : array

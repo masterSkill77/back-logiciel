@@ -19,8 +19,6 @@ class RegisterController extends Controller
     public function register(RegisterRequest $registerRequest, AgencyRequest $agencyRequest) :JsonResponse
     {
         $register = $this->userService->register($registerRequest, $agencyRequest);
-        return response()->json([
-            $register
-        ]);
+        return response()->json($register);
     }
 }
