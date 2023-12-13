@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\AgencySeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -27,8 +29,9 @@ class LoginTest extends TestCase
 
     public function test_log_user_ok(): void
     {
-        $response = $this->post('/api/auth/login', ['email' => 'test@gmail.mg', 'password' => '12345678']);
-        
+        $this->seed(AgencySeeder::class);
+        $this->seed(UserSeeder::class);   
+        $response = $this->post('/api/auth/login', ['email' => 'contact@koders.com', 'password' => '123456789']);
         $response->assertJsonStructure(['user', 'token']);
         $response->assertOk();
     }

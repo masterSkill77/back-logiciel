@@ -2,7 +2,7 @@
 
 namespace Tests\Feature;
 
-use App\Models\User;
+
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -37,12 +37,12 @@ class RegisterTest extends TestCase
  {
     $array= [
         'name'=>'koders', 
-        'email'=>'oskar@koders.com',
-         'password'=>'123445678', 
-         'nameAgency'=>'Agence', 
-         'nameCompany'=>'Company',
-         'addressCompany' => 'Street of Company 32 South',
-         'phoneAgency' => '+3324561896'];
+        'email'=>'koders@koders.com',
+        'password'=>'123445678', 
+        'nameAgency'=>'Agence', 
+        'nameCompany'=>'Company',
+        'addressCompany' => 'Street of Company 32 South',
+        'phoneAgency' => '+3324561896'];
     
     $response = $this->post('/api/auth/register', $array);
     $response->assertJsonStructure(['user']);
@@ -50,15 +50,22 @@ class RegisterTest extends TestCase
 
  public function test_create_user() : void
  {
-    $token = "1|qjZCtl8sZ3KkK5l6ywgav3ah3Z9QnUsHCulafPvxbee97945";
-    $array = [
-        'name' => 'agent Tojo',
-        'email' => 'tojo@gmail.com',
-        'password' => 'password1234', 
-        'agency_id' => '1',
-    ];
+
+    $login = $this->postJson('/api/auth/login',[
+        'email' => 'contact@koders.com',
+        'password' => '123456789'
+    ]);
+    $token = $login->json('token');
+
+    $array= [
+        'name'=>'agent', 
+        'email'=>'agent@koders.com',
+        'password'=>'123456789', 
+        'role' => 755,
+        'agency_id' => 1];
+
     $response = $this->withHeaders(['Authorization' => 'Bearer' .$token, 'Accept'=> 'application/json' ])->post('/api/user/create', $array);
     $response->assertJsonStructure(['user']);
- }
+     }
  
 }
