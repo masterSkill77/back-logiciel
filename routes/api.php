@@ -1,5 +1,9 @@
 <?php
 
+use App\Enum\Role;
+use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\Auth\RegisterController;
+use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -17,3 +21,13 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::prefix("auth")->group(function(){
+    Route::post("register", [RegisterController::class, "register"]);
+    Route::post("login", [LoginController::class, "login"]);
+});
+
+Route::prefix("user", ["middleware" => "auth:sanctum", "role"=>Role::SUPER_ADMIN])->group(function(){
+    Route::post("/create", [UserController::class, "store"]);
+});
+

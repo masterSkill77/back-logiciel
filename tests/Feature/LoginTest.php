@@ -2,6 +2,8 @@
 
 namespace Tests\Feature;
 
+use Database\Seeders\AgencySeeder;
+use Database\Seeders\UserSeeder;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -11,12 +13,7 @@ class LoginTest extends TestCase
     /**
      * A basic feature test example.
      */
-    public function test_login_page(): void
-    {
-        $response = $this->get('/api/auth/login');
 
-        $response->assertStatus(200);
-    }
 
     public function test_log_user_failed(): void
     {
@@ -32,8 +29,10 @@ class LoginTest extends TestCase
 
     public function test_log_user_ok(): void
     {
-        $response = $this->post('/api/auth/login', ['email' => 'koders@koders.mg', 'password' => '123456789']);
-        $response->assertOk();
+        $this->seed(AgencySeeder::class);
+        $this->seed(UserSeeder::class);   
+        $response = $this->post('/api/auth/login', ['email' => 'contact@koders.com', 'password' => '123456789']);
         $response->assertJsonStructure(['user', 'token']);
+        $response->assertOk();
     }
 }
