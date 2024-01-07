@@ -12,6 +12,6 @@ class InfoCopropriete extends Model
     protected $primaryKey = 'id_infocopropriete';
 
     protected $fillabale = ['numero_lots', 'nombre_lots', 'quote_part', 'montant_fond', 'mille_copropriete', 'bien_copropriete']; 
-    
-    protected $casts = 'bien_copropriete';
+
+    protected $casts = ['bien_copropriete' => 'json'];
 }
