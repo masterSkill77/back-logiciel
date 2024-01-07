@@ -13,12 +13,19 @@ return new class extends Migration
     {
         Schema::create('info_coproprietes', function (Blueprint $table) {
             $table->unsignedBigInteger('id_infocopropriete');
-            $table->string('numero_lots');
-            $table->integer('nombre_lots');
-            $table->string('quote_part');
-            $table->bigInteger('montant_fond');
-            $table->string('mille_copropriete');
-            $table->json('bien_copropriete');
+            // N° DE LOT
+            $table->string('lot_number');
+            //NB DE LOTS
+            $table->integer('total_unit');
+            //QUOTE PART ANUELLE CHARGES
+            $table->string('annual_charges');
+            //MONTANT FONDS DE TRAVAUX:
+            $table->bigInteger('amount_fund');
+            //MILLIÈMES DE COPROPRIÉTÉ:
+            $table->string('thousands_copropriete');
+            //BIEN EN COPROPRIÉTÉ:
+            $table->json('property_copropriete');
+
             $table->timestamps();
         });
     }
