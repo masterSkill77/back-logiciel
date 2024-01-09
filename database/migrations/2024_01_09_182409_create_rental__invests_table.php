@@ -14,13 +14,13 @@ return new class extends Migration
         Schema::create('rental__invests', function (Blueprint $table) {
             $table->unsignedBigInteger('id_rental_invest');
             //LOYER ESTIMÉ
-            $table->string('estimated_rent');
+            $table->string('estimated_rent')->nullable();
             //LOYER ESTIMÉ
-            $table->string('monthly_rent');
+            $table->string('monthly_rent')->nullable();
             //RENDEMENT
             $table->string('yeld');
             //OCCUPATION
-            $table->integer('occupancy');
+            $table->integer('occupancy')->nullable();
             $table->timestamps();
         });
     }
