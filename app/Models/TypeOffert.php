@@ -10,6 +10,7 @@ class TypeOffert extends Model
 {
     use HasFactory;
     
+    protected $table = 'type_offert';
     protected $timestamps = false;
     protected $fillable = [
         'designation'

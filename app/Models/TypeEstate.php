@@ -10,6 +10,7 @@ class TypeEstate extends Model
 {
     use HasFactory;
     
+    protected $table = 'type_estate';
     protected $fillable = [
         'designation'
     ];
