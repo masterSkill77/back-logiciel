@@ -16,23 +16,23 @@ return new class extends Migration
             $table->id();
             $table->string('category');
             // nombre de couchage
-            $table->integer('nbOfSleeping');
+            $table->integer('nbOfSleeping')->nullable();
             // nombre de salle de bain
-            $table->integer('nbOfBathroom');
+            $table->integer('nbOfBathroom')->nullable();
             // nombre de salle d'eau  
-            $table->integer('nbOfRoomWater');
+            $table->integer('nbOfRoomWater')->nullable();
             // nombre de WC 
-            $table->integer('nbOfWc');
+            $table->integer('nbOfWc')->nullable();
             // caracteristique ensemble des input 
-            $table->json('caracteristique');
+            $table->json('caracteristique')->nullable();
             // surface carrez 
-            $table->float('surfaceSquare');
+            $table->float('surfaceSquare')->nullable();
             // surface sejour 
-            $table->float('surfaceStay');
+            $table->float('surfaceStay')->nullable();
             // type de cuisine 
-            $table->string('TypeOfKitchen');
+            $table->string('TypeOfKitchen')->nullable();
             // etat du cuisine 
-            $table->string('StateOfKitchen');
+            $table->string('StateOfKitchen')->nullable();
             $table->timestamps();
         });
     }

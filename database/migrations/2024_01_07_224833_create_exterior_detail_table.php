@@ -15,32 +15,32 @@ return new class extends Migration
         Schema::create('exterior_detail', function (Blueprint $table) {
             $table->id();
             // metoyenneté 
-            $table->string('semiOwnership');
+            $table->string('semiOwnership')->nullable();
             // sous sol
-            $table->string('basement');
+            $table->string('basement')->nullable();
             // avec sous-sol 
-            $table->float('withbasement');
+            $table->float('withbasement')->nullable();
             // cave 
-            $table->integer('cellar');
+            $table->integer('cellar')->nullable();
             // avec cave 
-            $table->float('trueCellar');
+            $table->float('trueCellar')->nullable();
             // balcon 
-            $table->integer('balcony');
+            $table->integer('balcony')->nullable();
             // avec le balcon
-            $table->float('withBalcony');
+            $table->float('withBalcony')->nullable();
             // terrasse 
-            $table->integer('terrace');
+            $table->integer('terrace')->nullable();
             // avec terrasse 
-            $table->float('withTerrace');
-            $table->integer('varangue');
-            $table->integer('loggia');
-            $table->integer('veranda');
-            $table->float('withVeranda');
+            $table->float('withTerrace')->nullable();
+            $table->integer('varangue')->nullable();
+            $table->integer('loggia')->nullable();
+            $table->integer('veranda')->nullable();
+            $table->float('withVeranda')->nullable();
             // plain pied 
-            $table->integer('singleStorey');
+            $table->integer('singleStorey')->nullable();
             // type de residence 
-            $table->string('typeResidence');
-            $table->string('formatResidence');
+            $table->string('typeResidence')->nullable();
+            $table->string('formatResidence')->nullable();
             $table->timestamps();
         });
     }
