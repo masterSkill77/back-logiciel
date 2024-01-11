@@ -14,11 +14,15 @@ class TypeOffertSeeder extends Seeder
      */
     public function run(): void
     {
-        DB::table('type_offert')->insert([
+        DB::table('type_offert')->truncate();
+        $datas = [
             ['designation' => 'vente'],
             ['designation' => 'location'],
             ['designation' => 'classique'],
-            ['designation' => 'saisoniere']
-        ]);
+            ['designation' => 'programme neuf']
+        ];
+        foreach($datas as $data) {
+            TypeOffert::create($data);
+        }
     }
 }

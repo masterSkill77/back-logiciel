@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 
 class ClasssificationEstate extends Model
@@ -12,6 +13,12 @@ class ClasssificationEstate extends Model
     
     protected $table = 'classsification_estate';
     protected $fillable = [
-        'designation'
+        'designation',
+        'typeEstate_id'
     ];
+
+    public function typeState(): BelongsTo
+    {
+        return $this->belongsTo(typeEstate::class, 'typeEstate_id');
+    }
 }
