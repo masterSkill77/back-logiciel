@@ -21,6 +21,11 @@ class DatabaseSeeder extends Seeder
 
         $this->call([
             PermissionSeeder::class,
+            // type de bien 
+            TypeStateSeeder::class,
+            TypeOffertSeeder::class,
+            ClassificationOffertSeeder::class,
+            ClassificationEstateSeeder::class
         ]);
     }
 }
