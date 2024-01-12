@@ -9,6 +9,7 @@ use App\Models\InteriorDetail;
 use App\Models\Photos;
 use App\Models\Rental_Invest;
 use App\Models\RentalInvest;
+use App\Models\Sector;
 use App\Models\TypeEstate;
 use App\Models\TypeOffert;
 use Illuminate\Database\Migrations\Migration;
@@ -69,31 +70,6 @@ return new class extends Migration
             //DOSSIER DATE CREATION
             $table->timestamp('date_folder');
 
-            //SECTEUR
-            //PAYS DE L'ANNONCE
-            $table->string('advertised_country');
-            //CODE POSTAL PUBLIC 
-            $table->string('public_zap');
-            //VILLE PUBLIC
-            $table->string ('public_country');
-            //CODE POSTAL PRIVÉE
-            $table->string('private_zap');
-            //VILLE PRIVEE
-            $table->string('private_country');
-            //ADRESSE DE BIEN
-            $table->string('property_address');
-            //COMPLETEMENT D'ADRESSE
-            $table->string('address_completed');
-            //IMMEUBLE/BATIMENT
-            $table->string('building');
-            //PROXIMITE DES SERVICES
-            $table->string('prox_service');
-            //ENVIRONNEMENT
-            $table->string('environment');
-            //MAP
-            $table->json('map');
-
-
             //PRIX
             //PRIX PUBLIC
             $table->float('publish_price')->nullable();
@@ -128,6 +104,8 @@ return new class extends Migration
             $table->foreignIdFor(Diagnostic::class);
             //INVEST LOCATIF
             $table->foreignIdFor(RentalInvest::class);
+            //SECTEUR
+            $table->foreignIdFor(Sector::class);
 
 
             $table->timestamps();
