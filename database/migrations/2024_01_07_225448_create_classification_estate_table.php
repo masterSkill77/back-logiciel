@@ -12,7 +12,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classsification_estate', function (Blueprint $table) {
+        Schema::create('classification_estate', function (Blueprint $table) {
             $table->id();
             $table->string('designation');
             $table->foreignIdFor(TypeEstate::class);
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classsification_estate');
+        Schema::dropIfExists('classification_estate');
     }
 };

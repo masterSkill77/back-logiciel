@@ -10,19 +10,23 @@ class TypeOffertService
     {
         // Constructor of the class
     }
-
-    public function createTypeoffert(array $params) :TypeOffert
+    public function createTypeOffert(array $params): TypeOffert
     {
-        $typeoffert = (new TypeOffert($params));
-        $typeoffert->save();
-        return $typeoffert;
+        $type = (new TypeOffert($params));
+        $type->save();
+        return $type;
     }
 
+    /**
+     * Update an TypeOffert row based on infoId
+     * @param \App\Models\TypeOffert $type
+     * @param array $params
+     * @return \App\Models\TypeOffert
+     */
 
-    public function updateTypeOffert(TypeOffert $typeOffert, array $params): TypeOffert
+    public function updateTypeOffert(TypeOffert $type, array $params): TypeOffert
     {
-        $typeOffert->update($params);
-        return $typeOffert;
+        $type->update($params);
+        return $type;
     }
-
 }

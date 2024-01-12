@@ -30,4 +30,5 @@ class SectorService
         $sector->update($params);
         return $sector;
     }
+    
 }
