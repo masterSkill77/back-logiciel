@@ -16,7 +16,7 @@ class Bien extends Model
         'garden_exist_area','garden_exist_private','swim','swim_exist','swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
         'number_garage','indoor_parking','outdoor_parking', 'status', 'num_folder', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
         'rent', 'duration_lease','photos_id_photos', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
-        'exterior_detail_id','classification_estate_id', 'diagnostic_id', 'rental_invest_id_rental_invest', 'sector_id_sector'
+        'exterior_detail_id','classification_estate_id', 'diagnostic_id', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id'
     ];
 
      public function photos():HasOne
@@ -24,37 +24,37 @@ class Bien extends Model
         return $this->hasOne(Photos::class);
      }
 
-     public function infococpropriete():HasOne
+     public function infoCopropriete():HasOne
      {
         return $this->hasOne(InfoCopropriete::class);
      }
 
-     public function typeoffert():HasOne
+     public function typeOffert():HasOne
      {
         return $this->hasOne(TypeOffert::class);
      }
 
-     public function typeestate() :HasOne 
+     public function typeEstate() :HasOne 
      {
         return $this->hasOne(TypeEstate::class);
      }
 
-     public function  interiordetail() :HasOne
+     public function  interiorDetail() :HasOne
      {
         return $this->hasOne(InteriorDetail::class);
      }
 
-     public function exteriordetail() :HasOne
+     public function exteriorDetail() :HasOne
      {
         return $this->hasOne(ExteriorDetail::class);
      }
 
-     public function classificationoffert() :HasOne
+     public function classificationOffert() :HasOne
      {
         return $this->hasOne(ClassificationOffert::class);
      }
 
-     public function classificationestate() :HasOne
+     public function classificationEstate() :HasOne
      {
         return $this->hasOne(ClasssificationEstate::class);
      }
@@ -73,4 +73,15 @@ class Bien extends Model
      {
         return $this->hasOne(Sector::class);
      }
+
+     public function terrain() :HasOne
+     {
+        return $this->hasOne(Terrain::class);
+     }
+     
+     public function infoFinanciere() :HasOne
+     {
+        return $this->hasOne(InfoFinanciere::class);
+     }
+     
 }
