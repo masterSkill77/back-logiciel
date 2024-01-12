@@ -1,5 +1,16 @@
 <?php
 
+use App\Models\ClassificationOffert;
+use App\Models\ClasssificationEstate;
+use App\Models\Diagnostic;
+use App\Models\ExteriorDetail;
+use App\Models\InfoCopropriete;
+use App\Models\InteriorDetail;
+use App\Models\Photos;
+use App\Models\Rental_Invest;
+use App\Models\RentalInvest;
+use App\Models\TypeEstate;
+use App\Models\TypeOffert;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -95,6 +106,30 @@ return new class extends Migration
             //DURÉE BAIL
             $table->integer('duration_lease')->nullable();
             
+
+            //RELATION
+            //PHOTOS    
+            $table->foreignIdFor(Photos::class)->nullable();
+            //INFOCOPROPRIETE
+            $table->foreignIdFor(InfoCopropriete::class)->nullable();
+            //TYPE D'OFFRE
+            $table->foreignIdFor(TypeOffert::class);
+            //TYPE DE BIEN
+            $table->foreignIdFor(TypeEstate::class);
+            //DETAIL INTERIEUR
+            $table->foreignIdFor(InteriorDetail::class);
+            //DETAIL EXTERIEUR
+            $table->foreignIdFor(ExteriorDetail::class);
+            //CLASSIFATION D'OFFRE
+            $table->foreignIdFor(ClassificationOffert::class);
+            //CLASSIFICATION DE BIEN
+            $table->foreignIdFor(ClasssificationEstate::class);
+            //DIAGNOSTICS
+            $table->foreignIdFor(Diagnostic::class);
+            //INVEST LOCATIF
+            $table->foreignIdFor(RentalInvest::class);
+
+
             $table->timestamps();
         });
     }
