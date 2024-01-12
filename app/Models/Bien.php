@@ -14,5 +14,6 @@ class Bien extends Model
     protected $fillable = [
         'city',
         'country'
+        
     ];
 }
