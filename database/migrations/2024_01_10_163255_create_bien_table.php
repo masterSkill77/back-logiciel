@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Advertisement;
 use App\Models\ClassificationOffert;
 use App\Models\ClasssificationEstate;
 use App\Models\Diagnostic;
@@ -69,6 +70,8 @@ return new class extends Migration
             $table->unsignedBigInteger('num_folder');
             //DOSSIER DATE CREATION
             $table->timestamp('date_folder');
+            //EQUIPEMENT
+            $table->json('equipment')->nullable();
 
             //PRIX
             //PRIX PUBLIC
@@ -106,7 +109,8 @@ return new class extends Migration
             $table->foreignIdFor(RentalInvest::class);
             //SECTEUR
             $table->foreignIdFor(Sector::class);
-
+            //ANNONCE
+            $table->foreignIdFor(Advertisement::class);
 
             $table->timestamps();
         });

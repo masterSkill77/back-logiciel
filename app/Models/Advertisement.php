@@ -7,13 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
 // Annonce 
-class Announcement extends Model
+class Advertisement extends Model
 {
     use HasFactory;
     
-    protected $table = 'announcement';
+    protected $table = 'advertisement';
     protected $fillable = [
-        'titleAnnounce',
+        'title',
         'description'
     ];
 }

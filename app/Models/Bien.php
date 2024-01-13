@@ -85,9 +85,9 @@ class Bien extends Model
         return $this->hasOne(InfoFinanciere::class);
      }
 
-     public function announcement() :HasOne
+     public function advertisement() :HasOne
      {
-      return $this->hasOne(Announcement::class);
+      return $this->hasOne(Advertisement::class);
      }
      
 }
