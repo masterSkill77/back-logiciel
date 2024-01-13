@@ -6,7 +6,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
 
-class InteriorDetail extends Model
+class ExteriorDetail extends Model
 {
 
     use HasFactory;

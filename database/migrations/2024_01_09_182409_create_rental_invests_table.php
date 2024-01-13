@@ -11,7 +11,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('rental__invests', function (Blueprint $table) {
+        Schema::create('rental_invests', function (Blueprint $table) {
             $table->unsignedBigInteger('id_rental_invest');
             //LOYER ESTIMÉ
             $table->string('estimated_rent')->nullable();

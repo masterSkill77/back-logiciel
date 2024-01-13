@@ -1,6 +1,5 @@
 <?php
 
-use App\Models\TypeEstate;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -12,10 +11,9 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('classsification_estate', function (Blueprint $table) {
+        Schema::create('terrains', function (Blueprint $table) {
             $table->id();
-            $table->string('designation');
-            $table->foreignIdFor(TypeEstate::class);
+            $table->json('ground');
             $table->timestamps();
         });
     }
@@ -25,6 +23,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('classsification_estate');
+        Schema::dropIfExists('terrains');
     }
 };
