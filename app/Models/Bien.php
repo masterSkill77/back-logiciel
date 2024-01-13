@@ -16,7 +16,8 @@ class Bien extends Model
         'garden_exist_area','garden_exist_private','swim','swim_exist','swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
         'number_garage','indoor_parking','outdoor_parking', 'status', 'num_folder', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
         'rent', 'duration_lease','photos_id_photos', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
-        'exterior_detail_id','classification_estate_id', 'diagnostic_id', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id'
+        'exterior_detail_id','classification_estate_id', 'diagnostic_id', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
+        'announcement_id'
     ];
 
      public function photos():HasOne
@@ -82,6 +83,11 @@ class Bien extends Model
      public function infoFinanciere() :HasOne
      {
         return $this->hasOne(InfoFinanciere::class);
+     }
+
+     public function announcement() :HasOne
+     {
+      return $this->hasOne(Announcement::class);
      }
      
 }
