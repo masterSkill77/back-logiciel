@@ -23,6 +23,12 @@ class CreateContactRequest extends FormRequest
     {
         return [
             "title"=> 'required|string',
+            "sort"=> 'required|string',
+            "main_info"=> 'required|string',
+            "space_perso_activate"=> 'required|string',
+            "space_proprio_activate"=> 'required|string',
+            "bien_id_bien"=> 'required|integer',
+            "user_id"=> 'required|integer',
             
         ];
     }
