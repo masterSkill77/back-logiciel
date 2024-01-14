@@ -23,11 +23,11 @@ class CreateContactRequest extends FormRequest
     {
         return [
             "title"=> 'required|string',
-            "sort"=> 'required|string',
-            "main_info"=> 'required|string',
-            "space_perso_activate"=> 'required|string',
-            "space_proprio_activate"=> 'required|string',
-            "bien_id_bien"=> 'required|integer',
+            "sort"=> 'required|json',
+            "main_info"=> 'required|json',
+            "space_perso_activate"=> 'required|boolean',
+            "space_proprio_activate"=> 'required|boolean',
+            "bien_id"=> 'required|integer',
             "user_id"=> 'required|integer',
             
         ];
