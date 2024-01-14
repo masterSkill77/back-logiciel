@@ -25,7 +25,7 @@ class ContactService
         return $contact;
     }
 
-    public function getContact(): Collection
+    public function getAllContact(): Collection
     {
         return Contact::all();
     }

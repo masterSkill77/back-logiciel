@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\Role;
+use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -29,5 +30,11 @@ Route::prefix("auth")->group(function(){
 
 Route::prefix("user", ["middleware" => "auth:sanctum", "role"=>Role::SUPER_ADMIN])->group(function(){
     Route::post("/create", [UserController::class, "store"]);
+
 });
 
+
+Route::prefix("contact")->group(function(){
+    Route::get('/' , [ContactController::class, 'index']);
+    Route::post('/', [ContactController::class, 'store']);
+});
