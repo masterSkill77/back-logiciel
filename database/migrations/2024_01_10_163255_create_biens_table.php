@@ -24,7 +24,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('bien', function (Blueprint $table) {
+        Schema::create('biens', function (Blueprint $table) {
             $table->unsignedBigInteger('id_bien');
             //PAYS
             $table->string('city')->nullable();
@@ -84,10 +84,10 @@ return new class extends Migration
             $table->float('rent')->nullable();
             //DURÉE BAIL
             $table->integer('duration_lease')->nullable();
-            
+
 
             //RELATION
-            //PHOTOS    
+            //PHOTOS
             $table->foreignIdFor(Photos::class)->nullable();
             //INFOCOPROPRIETE
             $table->foreignIdFor(InfoCopropriete::class)->nullable();
