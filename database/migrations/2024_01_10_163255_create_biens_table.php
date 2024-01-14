@@ -1,6 +1,7 @@
 <?php
 
 use App\Models\Advertisement;
+use App\Models\Agency;
 use App\Models\ClassificationOffert;
 use App\Models\ClasssificationEstate;
 use App\Models\Diagnostic;
@@ -13,6 +14,7 @@ use App\Models\RentalInvest;
 use App\Models\Sector;
 use App\Models\TypeEstate;
 use App\Models\TypeOffert;
+use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -111,6 +113,10 @@ return new class extends Migration
             $table->foreignIdFor(Sector::class);
             //ANNONCE
             $table->foreignIdFor(Advertisement::class);
+
+            $table->foreignIdFor(Agency::class)->cascadeOnDelete();
+
+            $table->foreignIdFor(User::class, 'agent_id');
 
             $table->timestamps();
         });
