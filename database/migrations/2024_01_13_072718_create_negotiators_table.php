@@ -14,6 +14,15 @@ return new class extends Migration
         //NEGOCIATEUR IMMOBILLIER
         Schema::create('negotiators', function (Blueprint $table) {
             $table->unsignedBigInteger('id_negotiator');
+            //NOM
+            $table->string('name');
+            //PRENOMS
+            $table->string('lastname');
+            //ADRESSE
+            $table->string('address');
+            //CONTACT
+            $table->string('contact');
+            
             $table->timestamps();
         });
     }
