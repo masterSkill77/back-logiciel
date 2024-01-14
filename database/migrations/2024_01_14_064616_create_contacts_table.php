@@ -28,10 +28,9 @@ return new class extends Migration
             $table->boolean('space_proprio_activate');
             //BIEN
             $table->foreignIdFor(Bien::class)->nullable();
-            //USER
-            $table->foreignIdFor(User::class);
             //NEGOCIATEUR
-            $table->foreignIdFor(Negotiator::class)->nullable();
+            $table->foreignIdFor(User::class);
+            
 
             $table->timestamps();
         });

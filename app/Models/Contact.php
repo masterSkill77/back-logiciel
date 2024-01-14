@@ -12,7 +12,7 @@ class Contact extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_contact';
-    protected $fillable = ['title', 'sort', 'main_info', 'space_perso_activate', 'space_proprio_activate', 'bien_id_bien', 'user_id', 'negotiator_id_negotiator'];
+    protected $fillable = ['title', 'sort', 'main_info', 'space_perso_activate', 'space_proprio_activate', 'bien_id_bien', 'user_id'];
 
     public function scopeContact(Builder $query , Contact $contact): Builder
     {
@@ -29,11 +29,7 @@ class Contact extends Model
         return $this->hasOne(User::class);
     }
 
-    public function negotiator() : HasOne
-    {
-        return $this->hasOne(Negotiator::class);
-    }
-
+   
 }
 
 
