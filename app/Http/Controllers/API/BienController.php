@@ -6,8 +6,9 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ExteriorDetailService;
 use App\Services\InteriorDetailService;
-use App\Http\Requests\Detail\CreateExteriorDetailRequest;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
+use App\Http\Requests\Contact\CreateContactRequest;
+use App\Http\Requests\Detail\CreateExteriorDetailRequest;
 
 class BienController extends Controller
 {

@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Requests\Contact;
+namespace App\Http\Requests\Detail;
 
 use Illuminate\Foundation\Http\FormRequest;
 
@@ -38,6 +38,6 @@ class CreateExteriorDetailRequest extends FormRequest
             "singleStorey"=> 'required|integer',
             "typeResidence"=> 'required|string',
             "formatResidence"=> 'required|string'
-        ]
+        ];
     }
 }
