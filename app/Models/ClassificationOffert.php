@@ -19,6 +19,6 @@ class ClassificationOffert extends Model
 
     public function typeOffert(): BelongsTo
     {
-        return $this->belongsTo(typeOffert::class, 'typeOffert_id');
+        return $this->belongsTo(typeOffert::class, 'type_offert_id');
     }
 }
