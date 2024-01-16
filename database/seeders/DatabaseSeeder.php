@@ -20,12 +20,14 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-         
-            // type de bien 
+
+            // type de bien
             TypeStateSeeder::class,
             TypeOffertSeeder::class,
             ClassificationOffertSeeder::class,
-            ClassificationEstateSeeder::class
+            ClassificationEstateSeeder::class,
+            AgencySeeder::class,
+            UserSeeder::class
         ]);
     }
 }
