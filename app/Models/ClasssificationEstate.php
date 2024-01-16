@@ -11,7 +11,7 @@ class ClasssificationEstate extends Model
 {
     use HasFactory;
     
-    protected $table = 'classsification_estate';
+    protected $table = 'classification_estate';
     protected $fillable = [
         'designation',
         'typeEstate_id'
