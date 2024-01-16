@@ -3,9 +3,12 @@
 namespace App\Http\Requests\Detail;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ValidationErrors;
 
 class CreateInteriorDetailRequest extends FormRequest
 {
+    use ValidationErrors;
+
         /**
      * Determine if the user is authorized to make this request.
      */

@@ -2,10 +2,13 @@
 
 namespace App\Http\Requests\Detail;
 
+use App\Http\Requests\ValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateExteriorDetailRequest extends FormRequest
+class CreateExternDetailRequest extends FormRequest
 {
+    use ValidationErrors;
+
         /**
      * Determine if the user is authorized to make this request.
      */
@@ -14,7 +17,7 @@ class CreateExteriorDetailRequest extends FormRequest
         return true;
     }
 
-    /**
+        /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -22,7 +25,7 @@ class CreateExteriorDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "semiOwnership"=> 'required|json',
+            "semiOwnership"=> 'required|string',
             "basement"=> 'required|json',
             "withbasement"=> 'required|float',
             "cellar"=> 'required|integer',

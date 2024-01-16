@@ -1,58 +1,143 @@
 <?php
 
-namespace App\Http\API\Controllers;
+namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\ExteriorDetailService;
 use App\Services\InteriorDetailService;
+use App\Services\InfoCoproprieteService;
+use App\Services\TerrainService;
+use App\Services\DiagnosticService;
+use App\Services\RentalInvestService;
+use App\Services\InfoFinanciereService;
+use App\Services\SectorService;
+use App\Services\PhotosService;
+use App\Services\BienService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
 use App\Http\Requests\Contact\CreateContactRequest;
-use App\Http\Requests\Detail\CreateExteriorDetailRequest;
+use App\Http\Requests\Detail\CreateExternDetailRequest;
+use App\Http\Requests\InfoCopropriete\CreateInfoCoprprieteRequest;
+use App\Http\Requests\Terrain\CreateTerrainRequest;
+use App\Http\Requests\Diagnostique\CreateDiagnostiqueRequest;
+use App\Http\Requests\RentalInvest\RentalInvestRequest;
+use App\Http\Requests\InfoFinanciere\InfoFinanciereRequest;
+use App\Http\Requests\Sector\SectorRequest;
+use App\Http\Requests\Photos\PhotoRequest;
+use App\Http\Requests\Bien\BienRequest;
+
 
 class BienController extends Controller
 {
     public function __construct( 
         public InteriorDetailService $interiorDetailService,
         public ExteriorDetailService $exteriorDetailService,
-        public CreateInteriorDetailRequest $createInteriorDetail,
-        public CreateExteriorDetailRequest $createexteriorDetail
+        public TerrainService $terrainService,
+        public InfoCoproprieteService $infoCoproprieteService,
+        public DiagnosticService $diagnostiqueService,
+        public RentalInvestService $rentalInvestService,
+        public InfoFinanciereService $infoFinanciereService,
+        public SectorService $sectorService,
+        public PhotosService $photoService,
+        public BienService $bienService
         )
     {
         
     }
 
-    public function createBien(Request $request)
+    public function createBien(
+        CreateExternDetailRequest $requestExterior,
+        CreateTerrainRequest $requestTerrain,
+        CreateInteriorDetailRequest $requestInterior,
+        CreateInfoCoprprieteRequest $infoCoproprieteRequest,
+        CreateDiagnostiqueRequest $requestDiagnostique,
+        RentalInvestRequest $requestRentalInvest,
+        InfoFinanciereRequest $requestInfoFinanciere,
+        SectorRequest $requestSector,
+        PhotoRequest $requestPhoto,
+        BienRequest $requestBien
+    )
     {
-        try {
-            $details = $this->detailRequest();
-            return response()->json(['details' => $details], 200);
-        } catch (\Exception $e) {
-            return response()->json(['error' => $e->getMessage()], 500);
-        }
 
+        $this->handleExteriorDetail($requestExterior);
+        $this->handleTerrain($requestTerrain);
+        $this->handleInteriorDetail($requestInterior);
+        $this->handleInfoCopropriete($infoCoproprieteRequest);
+        $this->handleDiagnostique($requestDiagnostique);
+        $this->handleRentalInvest($requestRentalInvest);
+        $this->handleInfoFinanciere($requestInfoFinanciere);
+        $this->handleSector($requestSector);
+        $this->handlePhotos($requestPhoto);
+        $this->handleBien($requestBien);
+    }   
+
+
+    private function handleTerrain(array $terrainData)
+    {
+        $data = $terrainData->validated();
+        return $this->terrainService->createTerrain($data);
     }
-    private function detailRequest($request)
+    
+    private function handleExteriorDetail(array $requestData): array
     {
-        $interior = $this->handleInteriorDetail($this->createInteriorDetail->toArray());
-        
-        $exterior = $this->handleExteriorDetail($this->createExteriorDetail->toArray());
+        $data = $requestData->validated();
 
-        return ['interior' => $interior, 'exterior' => $exterior];
-
+        return $this->exteriorDetailService->createExteriorDetail($data);
     }
 
-    private function handleInteriorDetail($request)
+    private function handleInteriorDetail(array $requestData): array
     {
-        $interior = $this->interiorDetailService->createInteriorDetail($request);
+        $data = $requestData->validated();
 
-        return $interior;
+        return $this->interiorDetailService->createInteriorDetail($data);
     }
 
-    private function handleExteriorDetail($request)
+    private function handleInfoCopropriete(array $requestData): array
     {
-        $exterior = $this->exteriorDetailService->createExteriorDetail($request);
+        $data = $requestData->validated();
 
-        return $exterior;
+        return $this->infoCoproprieteService->createInfoCopropriete($data);
+    }
+
+    private function handleDiagnostique(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->diagnostiqueService->createDiagnostic($data);
+    }
+
+    private function handleRentalInvest(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->rentalInvestService->createRentalInvest($data);
+    }
+
+    private function handleInfoFinanciere(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->infoFinanciereService->createInfoFinanciere($data);
+    }
+
+    private function handleSector(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->sectorService->createSector($data);
+    }
+
+    private function handlePhotos(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->photoService->addPhotos($data);
+    }
+
+    private function handleBien(array $requestData): array
+    {
+        $data = $requestData->validated();
+
+        return $this->bienService->createBien($data);
     }
 }

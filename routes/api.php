@@ -6,6 +6,7 @@ use App\Http\Controllers\API\TypeOffertController;
 use App\Http\Controllers\API\ClassificationOffertController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TypeEstateController;
+use App\Http\Controllers\API\BienController;
 use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -67,4 +68,9 @@ Route::prefix("type-estate")->group(function(){
 Route::prefix("classification-estate")->group(function(){
     Route::get('/' , [ClassificationEstateController::class, 'index']);
     Route::get('/{id}' , [ClassificationEstateController::class, 'getById']);
+});
+
+// route pour les biens
+Route::prefix("bien")->group(function(){
+    Route::post('/' , [BienController::class, 'createBien']);
 });
