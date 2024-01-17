@@ -25,10 +25,10 @@ class RentalInvestRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "estimated_rent"=> 'required|string',
-            "monthly_rent"=> 'required|string',
-            "yeld"=> 'required|string',
-            "occupancy"=> 'required|integer'
+            "rentalInvests.estimated_rent"=> 'required|string',
+            "rentalInvests.monthly_rent"=> 'required|string',
+            "rentalInvests.yeld"=> 'required|string',
+            "rentalInvests.occupancy"=> 'required|integer'
         ];
     }
 }

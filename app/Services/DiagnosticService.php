@@ -13,11 +13,15 @@ class DiagnosticService
     }
 
 
-    public function createDiagnostic(array $params): Diagnostic
+    public function createDiagnostic(array $params): int
     {
-        $Diagnostic = (new Diagnostic($params));
-        $Diagnostic->save();
-        return $Diagnostic;
+        if (isset($params['diagnostique']) && is_array($params['diagnostique'])) {
+            $Diagnostic = (new Diagnostic($params['diagnostique']));
+            $Diagnostic->save();
+            return $Diagnostic->id;
+        }
+
+        return 0;
     }
 
     /**

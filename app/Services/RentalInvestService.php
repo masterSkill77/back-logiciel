@@ -11,11 +11,15 @@ class RentalInvestService
     {
         // Constructor of the class
     }
-    public function createRentalInvest(array $params): RentalInvest
+    public function createRentalInvest(array $params): int
     {
-        $rentalInvest = (new RentalInvest($params));
-        $rentalInvest->save();
-        return $rentalInvest;
+        if(isset($params['rentalInvests']) && is_array($params['rentalInvests'])) {
+            $rentalInvest = (new RentalInvest($params['rentalInvests']));
+            $rentalInvest->save();
+
+            return $rentalInvest->id;
+        }
+            return 0;
     }
 
     /**

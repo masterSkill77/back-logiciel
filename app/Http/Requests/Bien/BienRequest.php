@@ -3,9 +3,11 @@
 namespace App\Http\Requests\Bien;
 
 use Illuminate\Foundation\Http\FormRequest;
+use App\Http\Requests\ValidationErrors;
 
 class BienRequest extends FormRequest
 {
+    use ValidationErrors;
     /**
      * Determine if the user is authorized to make this request.
      */

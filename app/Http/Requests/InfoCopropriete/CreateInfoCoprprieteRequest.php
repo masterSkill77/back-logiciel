@@ -25,12 +25,12 @@ class CreateInfoCoprprieteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "lot_number"=> 'required|string',
-            "total_unit"=> 'required|integer',
-            "annual_charges"=> 'required|string',
-            "amount_fund"=> 'required|integer',
-            "thousands_copropriete"=> 'required|string',
-            "property_copropriete"=> 'required|array',
+            "InfoCopropriete.lot_number"=> 'required|string',
+            "InfoCopropriete.total_unit"=> 'required|integer',
+            "InfoCopropriete.annual_charges"=> 'required|string',
+            "InfoCopropriete.amount_fund"=> 'required|integer',
+            "InfoCopropriete.thousands_copropriete"=> 'required|string',
+            "InfoCopropriete.property_copropriete"=> 'required|array',
         ];
     }
 }

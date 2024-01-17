@@ -25,25 +25,25 @@ class InfoFinanciereRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "info_price"=> 'required|integer',
-            "info_rent"=> 'required|integer',
-            "info_rent_encadrement"=> 'required|boolean',
-            "info_rent_default"=> 'required|integer',
-            "info_rent_majored"=> 'required|integer',
-            "info_rent_complement"=> 'required|integer',
-            "info_locative_charge_total"=> 'required|integer',
-            "info_locative_charge_format"=> 'required|string',
-            "info_honoraire_charge"=> 'required|array',
-            "info_estimation_value"=> 'required|integer',
-            "info_estimation_date"=> 'required|date',
-            "info_honoraire_locataire_part"=> 'required|array',
-            "info_honoraire_proprio_part"=> 'required|array',
-            "info_predicted_work"=> 'required|string',
-            "info_monthly_charge"=> 'required|integer',
-            "info_garantied_deposit"=> 'required|string',
-            "info_fonciere_taxe"=> 'required|integer',
-            "info_habitation_taxe"=> 'required|integer',
-            "info_ordure_menagere_taxe"=> 'required|integer'
+            "InfoFinanciere.info_price"=> 'required|integer',
+            "InfoFinanciere.info_rent"=> 'required|integer',
+            "InfoFinanciere.info_rent_encadrement"=> 'required|boolean',
+            "InfoFinanciere.info_rent_default"=> 'required|integer',
+            "InfoFinanciere.info_rent_majored"=> 'required|integer',
+            "InfoFinanciere.info_rent_complement"=> 'required|integer',
+            "InfoFinanciere.info_locative_charge_total"=> 'required|integer',
+            "InfoFinanciere.info_locative_charge_format"=> 'required|string',
+            "InfoFinanciere.info_honoraire_charge"=> 'required|array',
+            "InfoFinanciere.info_estimation_value"=> 'required|integer',
+            "InfoFinanciere.info_estimation_date"=> 'required|date',
+            "InfoFinanciere.info_honoraire_locataire_part"=> 'required|array',
+            "InfoFinanciere.info_honoraire_proprio_part"=> 'required|array',
+            "InfoFinanciere.info_predicted_work"=> 'required|string',
+            "InfoFinanciere.info_monthly_charge"=> 'required|integer',
+            "InfoFinanciere.info_garantied_deposit"=> 'required|string',
+            "InfoFinanciere.info_fonciere_taxe"=> 'required|integer',
+            "InfoFinanciere.info_habitation_taxe"=> 'required|integer',
+            "InfoFinanciere.info_ordure_menagere_taxe"=> 'required|integer'
         ];
     }
 }

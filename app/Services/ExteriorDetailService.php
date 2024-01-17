@@ -11,11 +11,11 @@ class ExteriorDetailService
     {
         // Constructor of the class
     }
-    public function createExteriorDetail(array $params): ExteriorDetail
+    public function createExteriorDetail(array $params): int
     {
         $exterior = (new ExteriorDetail($params));
         $exterior->save();
-        return $exterior;
+        return $exterior->id;
     }
 
     /**

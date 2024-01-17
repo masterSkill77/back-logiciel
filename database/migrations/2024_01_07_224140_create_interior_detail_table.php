@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // table detail interieur 
-        Schema::create('interior_detail', function (Blueprint $table) {
+        Schema::create('interior_details', function (Blueprint $table) {
             $table->id();
             $table->string('category');
             // nombre de couchage

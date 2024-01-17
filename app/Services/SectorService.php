@@ -11,11 +11,11 @@ class SectorService
         // Constructor of the class
     }
 
-    public function createSector(array $params): Sector
+    public function createSector(array $params): int
     {
         $sector = (new Sector($params));
         $sector->save();
-        return $sector;
+        return $sector->id;
     }
 
     /**

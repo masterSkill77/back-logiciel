@@ -11,11 +11,15 @@ class TerrainService
         // Constructor of the class
     }
 
-    public function createTerrain(array $params): Terrain
+    public function createTerrain(array $params): int
     {
-        $terrain = (new Terrain($params));
-        $terrain->save();
-        return $terrain;
+        if (isset($params['ground']) && is_array($params['ground'])) {
+            $terrain = new Terrain(['ground' => json_encode($params['ground'])]);
+            $terrain->save();
+            return $terrain->id;
+        }
+    
+        return 0;
     }
 
     /**

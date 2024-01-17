@@ -11,11 +11,11 @@ class PhotosService
     {
         // Constructor of the class
     }
-    public function addPhotos(array $params): Photos
+    public function addPhotos(array $params): int
     {
         $photo = (new Photos($params));
         $photo->save();
-        return $photo;
+        return $photo->id;
     }
 
     /**

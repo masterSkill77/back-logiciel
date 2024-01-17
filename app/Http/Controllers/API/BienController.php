@@ -46,13 +46,52 @@ class BienController extends Controller
     }
 
     public function createBien(
-        BienRequest $requestBien
+        InfoFinanciereRequest $requestInfoFinanciere,
     )
     {
-        $this->handleBien($requestBien->validated());
-
+        $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
     }   
 
+
+    private function handleInfoFinanciere(array $requestData): array
+    {
+        $data = $this->infoFinanciereService->createInfoFinanciere($requestData);
+        $response = ['id' => $data];
+        
+        return $response;
+    }
+
+    private function handleRentalInvest(array $requestData): array
+    {
+        $data = $this->rentalInvestService->createRentalInvest($requestData);
+        $response = ['id' =>$data];
+
+        return $response;
+    }
+
+    private function handleDiagnostique(array $requestData): array
+    {
+        $dataId = $this->diagnostiqueService->createDiagnostic($requestData);
+        $response = ['id' =>$dataId];
+
+        return $response;
+    }
+
+    private function handleInfoCopropriete(array $requestData): array
+    {
+        $dataId = $this->infoCoproprieteService->createInfoCopropriete($requestData);
+        $response = ['id' =>$dataId];
+
+        return $response;
+    }
+
+    private function handleInteriorDetail(array $requestData): array
+    {
+        $interiorDetailId = $this->interiorDetailService->createInteriorDetail($requestData);
+        $response =  ['id' => $interiorDetailId];
+
+        return $response;
+    }
 
     private function handleBien(array $requestData): array
     {
@@ -61,39 +100,20 @@ class BienController extends Controller
 
     private function handleExteriorDetail(array $requestData): array
     {
-        return $this->exteriorDetailService->createExteriorDetail($requestData);
+        $exteriorId = $this->exteriorDetailService->createExteriorDetail($requestData);
+        $responseDetail = ['id' => $exteriorId];
+
+        return $responseDetail;
     }
 
     private function handleTerrain(array $terrainData)
     {
-        return $this->terrainService->createTerrain($terrainData);
-    }
-    
+        $terrainId = $this->terrainService->createTerrain($terrainData);
+        $responsseTerrainId = ['id' => $terrainId];
 
-    private function handleInteriorDetail(array $requestData): array
-    {
-        return $this->interiorDetailService->createInteriorDetail($requestData);
+        return $responsseTerrainId;
     }
 
-    private function handleInfoCopropriete(array $requestData): array
-    {
-        return $this->infoCoproprieteService->createInfoCopropriete($requestData);
-    }
-
-    private function handleDiagnostique(array $requestData): array
-    {
-        return $this->diagnostiqueService->createDiagnostic($requestData);
-    }
-
-    private function handleRentalInvest(array $requestData): array
-    {
-        return $this->rentalInvestService->createRentalInvest($requestData);
-    }
-
-    private function handleInfoFinanciere(array $requestData): array
-    {
-        return $this->infoFinanciereService->createInfoFinanciere($requestData);
-    }
 
     private function handleSector(array $requestData): array
     {

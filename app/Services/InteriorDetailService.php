@@ -12,11 +12,16 @@ class InteriorDetailService
         // Constructor of the class
     }
     
-    public function createInteriorDetail(array $params): InteriorDetail
+    public function createInteriorDetail(array $params): int
     {
-        $interior = (new InteriorDetail($params));
-        $interior->save();
-        return $interior;
+        if (isset($params['interiorDetail']) && is_array($params['interiorDetail'])) {
+
+            $interior = (new InteriorDetail($params['interiorDetail']));
+            $interior->save();
+            return $interior->id;
+        }
+    
+        return 0;
     }
 
     /**
