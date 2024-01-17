@@ -26,7 +26,7 @@ class PhotoRequest extends FormRequest
     {
         return [
             "photos_original"=> 'required|string',
-            "photos_slide"=> 'required|json'
+            "photos_slide"=> 'required|array'
         ];
     }
 }

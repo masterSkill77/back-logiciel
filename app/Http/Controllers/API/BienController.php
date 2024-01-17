@@ -46,31 +46,20 @@ class BienController extends Controller
     }
 
     public function createBien(
-        CreateExternDetailRequest $requestExterior,
-        CreateTerrainRequest $requestTerrain,
-        CreateInteriorDetailRequest $requestInterior,
-        CreateInfoCoprprieteRequest $infoCoproprieteRequest,
-        CreateDiagnostiqueRequest $requestDiagnostique,
-        RentalInvestRequest $requestRentalInvest,
-        InfoFinanciereRequest $requestInfoFinanciere,
-        SectorRequest $requestSector,
-        PhotoRequest $requestPhoto,
-        BienRequest $requestBien
+        CreateExternDetailRequest $requestExterior
     )
     {
+        $this->handleExteriorDetail($requestExterior->toArray());
 
-        $this->handleExteriorDetail($requestExterior);
-        $this->handleTerrain($requestTerrain);
-        $this->handleInteriorDetail($requestInterior);
-        $this->handleInfoCopropriete($infoCoproprieteRequest);
-        $this->handleDiagnostique($requestDiagnostique);
-        $this->handleRentalInvest($requestRentalInvest);
-        $this->handleInfoFinanciere($requestInfoFinanciere);
-        $this->handleSector($requestSector);
-        $this->handlePhotos($requestPhoto);
-        $this->handleBien($requestBien);
     }   
 
+    private function handleExteriorDetail(array $requestData): array
+    {
+        dd($requestData);
+        $data = $requestData->validated();
+
+        return $this->exteriorDetailService->createExteriorDetail($data);
+    }
 
     private function handleTerrain(array $terrainData)
     {
@@ -78,12 +67,6 @@ class BienController extends Controller
         return $this->terrainService->createTerrain($data);
     }
     
-    private function handleExteriorDetail(array $requestData): array
-    {
-        $data = $requestData->validated();
-
-        return $this->exteriorDetailService->createExteriorDetail($data);
-    }
 
     private function handleInteriorDetail(array $requestData): array
     {

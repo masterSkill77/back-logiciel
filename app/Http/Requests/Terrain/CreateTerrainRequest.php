@@ -24,7 +24,7 @@ class CreateTerrainRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "ground"=> 'required|json'
+            "ground"=> 'required|array'
         ];
     }
 }

@@ -25,12 +25,12 @@ class CreateInteriorDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "category"=> 'required|json',
+            "category"=> 'required|array',
             "nbOfSleeping"=> 'required|integer',
             "nbOfBathroom"=> 'required|integer',
             "nbOfRoomWater"=> 'required|integer',
             "nbOfWc"=> 'required|integer',
-            "caracteristique"=> 'required|json',
+            "caracteristique"=> 'required|array',
             "surfaceSquare"=> 'required|integer',
             "surfaceStay"=> 'required|integer',
             "TypeOfKitchen"=> 'required|string',

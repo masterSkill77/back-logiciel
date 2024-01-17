@@ -35,7 +35,7 @@ class SectorRequest extends FormRequest
             "building"=> 'required|string',
             "prox_service"=> 'required|string',
             "environment"=> 'required|string',
-            "map"=> 'required|json'
+            "map"=> 'required|array'
         ];
     }
 }

@@ -28,9 +28,9 @@ class CreateInfoCoprprieteRequest extends FormRequest
             "lot_number"=> 'required|string',
             "total_unit"=> 'required|integer',
             "annual_charges"=> 'required|string',
-            "amount_fund"=> 'required|bigInteger',
+            "amount_fund"=> 'required|integer',
             "thousands_copropriete"=> 'required|string',
-            "property_copropriete"=> 'required|json',
+            "property_copropriete"=> 'required|array',
         ];
     }
 }
