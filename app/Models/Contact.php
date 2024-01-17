@@ -12,7 +12,16 @@ class Contact extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_contact';
-    protected $fillable = ['title', 'sort', 'main_info', 'space_perso_activate', 'space_proprio_activate', 'bien_id', 'user_id'];
+    protected $fillable = ['contact_type', 'target', 'civility', 'firstname', 'lastname',
+                            'legal_form', 'company_name', 'siret', 'phone', 'home_phone',
+                            'mail', 'country', 'city', 'zip', 'adress', 'negociator',
+                            'contact_source', 'note', 'space_perso_activate', 'space_proprio_activate',
+                            'man_info', 'woman_info', 'bien_id', 'user_id'];
+    
+    protected $casts = [
+        "man_info" => "json",
+        "woman_info" => "json"
+    ];
 
     public function scopeContact(Builder $query , Contact $contact): Builder
     {

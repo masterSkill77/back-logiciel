@@ -20,15 +20,15 @@ class ContactController extends Controller
     public function store(CreateContactRequest $contactRequest) : JsonResponse
     {
         try{
-
+            $contacts = $contactRequest->toArray();
+            $contact = $this->contactService->createContact($contacts);
+            return response()->json($contact);
         }
         catch(Exception)
         {
 
         }
-        $contacts = $contactRequest->toArray();
-        $contact = $this->contactService->createContact($contacts);
-        return response()->json($contact);
+      
     }
  
 

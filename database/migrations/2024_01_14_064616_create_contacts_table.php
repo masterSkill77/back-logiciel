@@ -15,23 +15,55 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_contact');
-            //TITRE DE CONTACT
-            $table->string('title');
+            $table->unsignedBigInteger('id_contact')->autoIncrement();
             //TYPE DE CONTACT
-            $table->json('sort');
-            //INFO PRINCIPALES
-            $table->json('main_info');
+            $table->string('contact_type');
+            //CIBLE
+            $table->string('target');
+            //CIVILITE
+            $table->string('civility')->nullable();
+            //PRENOM
+            $table->string('firstname')->nullable();
+            //NOM
+            $table->string('lastname')->nullable();
+            //FORME JURIDIQUE
+            $table->string('legal_form')->nullable();
+            //RAISON SOCIALE
+            $table->string('company_name')->nullable();
+            //SIRET
+            $table->string('siret')->nullable();
+            //TELEPHONE
+            $table->string('phone')->nullable();
+            //TELEPHONE FIXE
+            $table->string('home_phone')->nullable();
+            //MAIL
+            $table->string('mail')->nullable();
+            //PAYS
+            $table->string('country')->nullable();
+            //VILLE
+            $table->string('city')->nullable();
+            //CODE POSTAL
+            $table->string('zip')->nullable();
+            //ADRESSE
+            $table->string('adress')->nullable();
+            //NEGOCIATEUR
+            $table->string('negociator');
+            //SOURCE DE CONTACT
+            $table->string('contact_source');
+            //NOTE
+            $table->string('note')->nullable();
             //ACTIVATION ESPACE PERSO
             $table->boolean('space_perso_activate');
             //ACTIVATION ESPACE PROPRIO
             $table->boolean('space_proprio_activate');
+            //INFOHOMME
+            $table->json('man_info')->nullable();
+            //INFOFEMME
+            $table->json('woman_info')->nullable();
             //BIEN
             $table->foreignIdFor(Bien::class)->nullable();
             //NEGOCIATEUR
-            $table->foreignIdFor(User::class);
-            
-
+            $table->foreignIdFor(User::class);            
             $table->timestamps();
         });
     }
