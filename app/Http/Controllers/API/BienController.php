@@ -46,81 +46,62 @@ class BienController extends Controller
     }
 
     public function createBien(
-        CreateExternDetailRequest $requestExterior
+        BienRequest $requestBien
     )
     {
-        $this->handleExteriorDetail($requestExterior->toArray());
+        $this->handleBien($requestBien->validated());
 
     }   
 
+
+    private function handleBien(array $requestData): array
+    {
+        return $this->bienService->createBien($requestData);
+    }
+
     private function handleExteriorDetail(array $requestData): array
     {
-        dd($requestData);
-        $data = $requestData->validated();
-
-        return $this->exteriorDetailService->createExteriorDetail($data);
+        return $this->exteriorDetailService->createExteriorDetail($requestData);
     }
 
     private function handleTerrain(array $terrainData)
     {
-        $data = $terrainData->validated();
-        return $this->terrainService->createTerrain($data);
+        return $this->terrainService->createTerrain($terrainData);
     }
     
 
     private function handleInteriorDetail(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->interiorDetailService->createInteriorDetail($data);
+        return $this->interiorDetailService->createInteriorDetail($requestData);
     }
 
     private function handleInfoCopropriete(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->infoCoproprieteService->createInfoCopropriete($data);
+        return $this->infoCoproprieteService->createInfoCopropriete($requestData);
     }
 
     private function handleDiagnostique(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->diagnostiqueService->createDiagnostic($data);
+        return $this->diagnostiqueService->createDiagnostic($requestData);
     }
 
     private function handleRentalInvest(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->rentalInvestService->createRentalInvest($data);
+        return $this->rentalInvestService->createRentalInvest($requestData);
     }
 
     private function handleInfoFinanciere(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->infoFinanciereService->createInfoFinanciere($data);
+        return $this->infoFinanciereService->createInfoFinanciere($requestData);
     }
 
     private function handleSector(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->sectorService->createSector($data);
+        return $this->sectorService->createSector($requestData);
     }
 
     private function handlePhotos(array $requestData): array
     {
-        $data = $requestData->validated();
-
-        return $this->photoService->addPhotos($data);
-    }
-
-    private function handleBien(array $requestData): array
-    {
-        $data = $requestData->validated();
-
-        return $this->bienService->createBien($data);
+        return $this->photoService->addPhotos($requestData);
     }
 }
