@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         // table detail exterieur 
-        Schema::create('exterior_detail', function (Blueprint $table) {
+        Schema::create('exterior_details', function (Blueprint $table) {
             $table->id();
             // metoyenneté 
             $table->string('semiOwnership')->nullable();
@@ -50,6 +50,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('exterior_detail');
+        Schema::dropIfExists('exterior_details');
     }
 };

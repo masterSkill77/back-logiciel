@@ -19,6 +19,6 @@ class TypeOffert extends Model
 
     public function classificationOfferts(): HasMany
     {
-        return $this->hasMany(ClassificationOffert::class, 'typeOffert_id');
+        return $this->hasMany(ClassificationOffert::class, 'type_offert_id');
     }
 }

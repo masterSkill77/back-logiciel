@@ -9,9 +9,18 @@ class InfoCopropriete extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_infocopropriete';
+    protected $fillable = [
+        'lot_number', 'total_unit', 'annual_charges', 'amount_fund', 'thousands_copropriete', 'property_copropriete'
+    ];
 
-    protected $fillabale = ['total_unit', 'lot_number', 'annual_charges', 'amount_fund', 'thousands_copropriete', 'property_copropriete']; 
+    protected $primaryKey = 'id_infocopropriete';
+    public $incrementing = true;
+
+    protected $keyType = 'int';
+
+    public $timestamps = true;
+
+    protected $dateFormat = 'Y-m-d H:i:s';
 
     protected $casts = ['property_copropriete' => 'json'];
 }

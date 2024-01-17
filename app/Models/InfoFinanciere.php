@@ -9,6 +9,12 @@ class InfoFinanciere extends Model
 {
     use HasFactory;
 
+    protected $casts = [
+        'info_honoraire_charge' => 'array',
+        'info_honoraire_locataire_part' => 'array',
+        'info_honoraire_proprio_part' => 'array'
+    ];
+
     protected $fillable = [
         'info_price',
         'info_rent',

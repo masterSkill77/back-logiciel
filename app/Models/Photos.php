@@ -15,6 +15,6 @@ class Photos extends Model
     protected $fillable = ['photos_original', 'photos_slide'];
 
     protected $casts = [
-        'photos_slide' => 'json'
+        'photos_slide' => 'array'
     ];
 }

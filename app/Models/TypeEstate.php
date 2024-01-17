@@ -18,6 +18,6 @@ class TypeEstate extends Model
 
     public function classificationEstate(): HasMany
     {
-        return $this->hasMany(ClasssificationEstate::class, 'typeEstate_id');
+        return $this->hasMany(ClasssificationEstate::class, 'type_estate_id');
     }
 }

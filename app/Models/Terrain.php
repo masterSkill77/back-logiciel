@@ -9,4 +9,7 @@ class Terrain extends Model
 {
     use HasFactory;
     protected $fillable = ['ground'];
+    protected $casts = [
+        'ground' => 'array'
+    ];
 }

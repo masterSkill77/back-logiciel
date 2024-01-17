@@ -20,8 +20,7 @@ class DatabaseSeeder extends Seeder
         // ]);
 
         $this->call([
-
-            // type de bien
+            AgencySeeder::class,
             TypeStateSeeder::class,
             TypeOffertSeeder::class,
             ClassificationOffertSeeder::class,
