@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\Contact\CreateContactRequest;
 use App\Services\ContactService;
+use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
@@ -18,6 +19,13 @@ class ContactController extends Controller
 
     public function store(CreateContactRequest $contactRequest) : JsonResponse
     {
+        try{
+
+        }
+        catch(Exception)
+        {
+
+        }
         $contacts = $contactRequest->toArray();
         $contact = $this->contactService->createContact($contacts);
         return response()->json($contact);
