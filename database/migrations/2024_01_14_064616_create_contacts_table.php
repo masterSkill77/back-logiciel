@@ -15,7 +15,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('contacts', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_contact');
+            $table->id('id_contact'); 
             //TITRE DE CONTACT
             $table->string('title');
             //TYPE DE CONTACT

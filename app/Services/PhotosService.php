@@ -13,9 +13,13 @@ class PhotosService
     }
     public function addPhotos(array $params): int
     {
-        $photo = (new Photos($params));
-        $photo->save();
-        return $photo->id;
+        if(isset($params['photos']) && is_array($params['photos'])) {
+            $photo = (new Photos($params['photos']));
+            $photo->save();
+            return $photo->id_photos;
+        }
+
+        return 0;
     }
 
     /**

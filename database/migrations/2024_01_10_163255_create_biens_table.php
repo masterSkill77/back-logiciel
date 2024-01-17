@@ -14,7 +14,9 @@ use App\Models\RentalInvest;
 use App\Models\Sector;
 use App\Models\TypeEstate;
 use App\Models\TypeOffert;
+use App\Models\Terrain;
 use App\Models\User;
+use App\Models\InfoFinanciere;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -27,7 +29,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('biens', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_bien');
+            $table->id('id_bien'); 
             //PAYS
             $table->string('city')->nullable();
             //VILLE NOM
@@ -90,33 +92,37 @@ return new class extends Migration
 
             //RELATION
             //PHOTOS
-            $table->foreignIdFor(Photos::class)->nullable();
+            $table->foreignIdFor(Photos::class)->nullable()->default(null);
             //INFOCOPROPRIETE
-            $table->foreignIdFor(InfoCopropriete::class)->nullable();
+            $table->foreignIdFor(InfoCopropriete::class)->nullable()->default(null);
             //TYPE D'OFFRE
-            $table->foreignIdFor(TypeOffert::class);
+            $table->foreignIdFor(TypeOffert::class)->nullable()->default(null);
             //TYPE DE BIEN
-            $table->foreignIdFor(TypeEstate::class);
+            $table->foreignIdFor(TypeEstate::class)->nullable()->default(null);
             //DETAIL INTERIEUR
-            $table->foreignIdFor(InteriorDetail::class);
+            $table->foreignIdFor(InteriorDetail::class)->nullable()->default(null);
             //DETAIL EXTERIEUR
-            $table->foreignIdFor(ExteriorDetail::class);
+            $table->foreignIdFor(ExteriorDetail::class)->nullable()->default(null);
             //CLASSIFATION D'OFFRE
-            $table->foreignIdFor(ClassificationOffert::class);
+            $table->foreignIdFor(ClassificationOffert::class)->nullable()->default(null);
             //CLASSIFICATION DE BIEN
-            $table->foreignIdFor(ClasssificationEstate::class);
+            $table->foreignIdFor(ClasssificationEstate::class)->nullable()->default(null);
             //DIAGNOSTICS
-            $table->foreignIdFor(Diagnostic::class);
+            $table->foreignIdFor(Diagnostic::class)->nullable()->default(null);
             //INVEST LOCATIF
-            $table->foreignIdFor(RentalInvest::class);
+            $table->foreignIdFor(RentalInvest::class)->nullable()->default(null);
             //SECTEUR
-            $table->foreignIdFor(Sector::class);
+            $table->foreignIdFor(Sector::class)->nullable()->default(null);
             //ANNONCE
-            $table->foreignIdFor(Advertisement::class);
+            $table->foreignIdFor(Advertisement::class)->nullable()->default(null);
+            // terrain 
+            $table->foreignIdFor(Terrain::class)->nullable()->default(null);
+            // info financiere 
+            $table->foreignIdFor(InfoFinanciere::class)->nullable()->default(null);
 
-            $table->foreignIdFor(Agency::class)->cascadeOnDelete();
+            $table->foreignIdFor(Agency::class)->cascadeOnDelete()->nullable()->default(null);
 
-            $table->foreignIdFor(User::class, 'agent_id');
+            $table->foreignIdFor(User::class, 'agent_id')->nullable()->default(null);
 
             $table->timestamps();
         });
@@ -127,6 +133,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('bien');
+        Schema::dropIfExists('biens');
     }
 };

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API;
 
 use Illuminate\Http\Request;
+use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
 use App\Services\ExteriorDetailService;
 use App\Services\InteriorDetailService;
@@ -25,13 +26,14 @@ use App\Http\Requests\InfoFinanciere\InfoFinanciereRequest;
 use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
-
+use Illuminate\Validation\ValidationException;
+use Exception; 
 
 class BienController extends Controller
 {
     public function __construct( 
-        public InteriorDetailService $interiorDetailService,
         public ExteriorDetailService $exteriorDetailService,
+        public InteriorDetailService $interiorDetailService,
         public TerrainService $terrainService,
         public InfoCoproprieteService $infoCoproprieteService,
         public DiagnosticService $diagnostiqueService,
@@ -40,27 +42,70 @@ class BienController extends Controller
         public SectorService $sectorService,
         public PhotosService $photoService,
         public BienService $bienService
+
         )
     {
         
     }
 
     public function createBien(
+        CreateExternDetailRequest $requestExterior,
+        CreateTerrainRequest $requestTerrain,
+        CreateInteriorDetailRequest $requestInterior,
+        CreateInfoCoprprieteRequest $infoCoproprieteRequest,
+        CreateDiagnostiqueRequest $requestDiagnostique,
+        RentalInvestRequest $requestRentalInvest,
         InfoFinanciereRequest $requestInfoFinanciere,
+        SectorRequest $requestSector,
+        PhotoRequest $requestPhoto,
+        BienRequest $requestBien
     )
     {
-        $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
-    }   
+        try {
+            $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
+            $terrainId = $this->handleTerrain($requestTerrain->toArray());
+            $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
+            $infoCoproprieteId = $this->handleInfoCopropriete($infoCoproprieteRequest->toArray());
+            $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
+            $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
+            $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
+            $sectorId = $this->handleSector($requestSector->toArray());
+            $photosId = $this->handlePhotos($requestPhoto->toArray());
+            $requestData = $requestBien->validated();
+
+            $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
+            $requestData['biens']['photos_id_photos'] = $photosId['id'];
+            $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
+            $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
+            $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
+            $requestData['biens']['rental_invest_id_rental_invest'] = $rentalInvestId['id'];
+            $requestData['biens']['sector_id_sector'] = $sectorId['id'];
+            $requestData['biens']['terrain_id'] = $terrainId['id'];
+            $requestData['biens']['info_financiere_id'] = $infoFinanciereId['id'];
+
+            $this->handleBien($requestData);
+
+            return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
+        } catch (ValidationException $e) {
+
+            return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
+        } catch (\Exception $e) {
+
+            return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
+        }
+    }
 
 
+    // ajout et recuperation d'identification de la info financiere
     private function handleInfoFinanciere(array $requestData): array
     {
         $data = $this->infoFinanciereService->createInfoFinanciere($requestData);
         $response = ['id' => $data];
-        
+
         return $response;
     }
 
+    // ajout et recuperation de la rental invest
     private function handleRentalInvest(array $requestData): array
     {
         $data = $this->rentalInvestService->createRentalInvest($requestData);
@@ -69,6 +114,7 @@ class BienController extends Controller
         return $response;
     }
 
+    // ajout et recuperation de la diagnostique 
     private function handleDiagnostique(array $requestData): array
     {
         $dataId = $this->diagnostiqueService->createDiagnostic($requestData);
@@ -77,6 +123,7 @@ class BienController extends Controller
         return $response;
     }
 
+    // ajout et recuperation de la info copropriete 
     private function handleInfoCopropriete(array $requestData): array
     {
         $dataId = $this->infoCoproprieteService->createInfoCopropriete($requestData);
@@ -85,6 +132,7 @@ class BienController extends Controller
         return $response;
     }
 
+    // ajout et recuperation de l'interieuur de la detail
     private function handleInteriorDetail(array $requestData): array
     {
         $interiorDetailId = $this->interiorDetailService->createInteriorDetail($requestData);
@@ -93,11 +141,16 @@ class BienController extends Controller
         return $response;
     }
 
+    // ajout et recuperation du bien
     private function handleBien(array $requestData): array
     {
-        return $this->bienService->createBien($requestData);
+        $data = $this->bienService->createBien($requestData);
+        $response = ['id' =>$data];
+
+        return $response;
     }
 
+    // ajout et recuperation du l'exterieur du detail
     private function handleExteriorDetail(array $requestData): array
     {
         $exteriorId = $this->exteriorDetailService->createExteriorDetail($requestData);
@@ -106,6 +159,7 @@ class BienController extends Controller
         return $responseDetail;
     }
 
+    // ajout et recuperation du terrain
     private function handleTerrain(array $terrainData)
     {
         $terrainId = $this->terrainService->createTerrain($terrainData);
@@ -115,13 +169,20 @@ class BienController extends Controller
     }
 
 
+    // ajout et recuperation du secteur
     private function handleSector(array $requestData): array
     {
-        return $this->sectorService->createSector($requestData);
+        $data = $this->sectorService->createSector($requestData);
+        $response = ['id' => $data];
+
+        return $response;
     }
 
+    // ajout et recuperation du photos
     private function handlePhotos(array $requestData): array
     {
-        return $this->photoService->addPhotos($requestData);
+        $data = $this->photoService->addPhotos($requestData);
+        $response= ['id' =>$data];
+        return $response;
     }
 }

@@ -17,7 +17,7 @@ class RentalInvestService
             $rentalInvest = (new RentalInvest($params['rentalInvests']));
             $rentalInvest->save();
 
-            return $rentalInvest->id;
+            return $rentalInvest->id_rental_invest;
         }
             return 0;
     }

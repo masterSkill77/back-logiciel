@@ -13,8 +13,8 @@ class TerrainService
 
     public function createTerrain(array $params): int
     {
-        if (isset($params['ground']) && is_array($params['ground'])) {
-            $terrain = new Terrain(['ground' => json_encode($params['ground'])]);
+        if (isset($params['terrain']) && is_array($params['terrain'])) {
+            $terrain = new Terrain($params['terrain']);
             $terrain->save();
             return $terrain->id;
         }

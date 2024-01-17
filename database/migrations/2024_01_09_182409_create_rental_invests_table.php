@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('rental_invests', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_rental_invest');
+            $table->id('id_rental_invest'); 
             //LOYER ESTIMÉ
             $table->string('estimated_rent')->nullable();
             //LOYER ESTIMÉ

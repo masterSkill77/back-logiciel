@@ -25,21 +25,22 @@ class CreateExternDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "semiOwnership"=> 'required|string',
-            "withbasement"=> 'required|integer',
-            "cellar"=> 'required|integer',
-            "trueCellar"=> 'required|integer',
-            "balcony"=> 'required|integer',
-            "withBalcony"=> 'required|integer',
-            "terrace"=> 'required|integer',
-            "withTerrace"=> 'required|integer',
-            "varangue"=> 'required|integer',
-            "loggia"=> 'required|integer',
-            "veranda"=> 'required|integer',
-            "withVeranda"=> 'required|integer',
-            "singleStorey"=> 'required|integer',
-            "typeResidence"=> 'required|string',
-            "formatResidence"=> 'required|string'
+            "exteriorDetail.semiOwnership"=> 'required|string',
+            "exteriorDetail.basement"=> 'required|array',
+            "exteriorDetail.withbasement"=> 'required|integer',
+            "exteriorDetail.cellar"=> 'required|integer',
+            "exteriorDetail.trueCellar"=> 'required|integer',
+            "exteriorDetail.balcony"=> 'required|integer',
+            "exteriorDetail.withBalcony"=> 'required|integer',
+            "exteriorDetail.terrace"=> 'required|integer',
+            "exteriorDetail.withTerrace"=> 'required|integer',
+            "exteriorDetail.varangue"=> 'required|integer',
+            "exteriorDetail.loggia"=> 'required|integer',
+            "exteriorDetail.veranda"=> 'required|integer',
+            "exteriorDetail.withVeranda"=> 'required|integer',
+            "exteriorDetail.singleStorey"=> 'required|integer',
+            "exteriorDetail.typeResidence"=> 'required|string',
+            "exteriorDetail.formatResidence"=> 'required|string'
         ];
     }
 }

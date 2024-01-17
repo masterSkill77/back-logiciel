@@ -18,7 +18,7 @@ class DiagnosticService
         if (isset($params['diagnostique']) && is_array($params['diagnostique'])) {
             $Diagnostic = (new Diagnostic($params['diagnostique']));
             $Diagnostic->save();
-            return $Diagnostic->id;
+            return $Diagnostic->id_diagnostics;
         }
 
         return 0;

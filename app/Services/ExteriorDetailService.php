@@ -13,9 +13,13 @@ class ExteriorDetailService
     }
     public function createExteriorDetail(array $params): int
     {
-        $exterior = (new ExteriorDetail($params));
-        $exterior->save();
-        return $exterior->id;
+        if(isset($params['exteriorDetail']) && is_array($params['exteriorDetail'])) {
+            $exterior = (new ExteriorDetail($params['exteriorDetail']));
+            $exterior->save();
+
+            return $exterior->id;
+        }
+        return 0;
     }
 
     /**

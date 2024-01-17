@@ -13,9 +13,14 @@ class SectorService
 
     public function createSector(array $params): int
     {
-        $sector = (new Sector($params));
-        $sector->save();
-        return $sector->id;
+        if(isset($params['sectors']) && is_array($params['sectors'])) {
+            $sector = (new Sector($params['sectors']));
+            $sector->save();
+
+            return $sector->id_sector;
+        }
+
+        return 0;
     }
 
     /**

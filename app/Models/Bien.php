@@ -11,15 +11,21 @@ class Bien extends Model
 {
     use HasFactory;
 
-    protected $table = 'bien';
+    protected $table = 'biens';
     protected $fillable = [
         'city', 'country', 'name_country', 'zap_country', 'living_area', 'land_area', 'number_room', 'number_bedroom', 'number_level', 'garden_exist',
         'garden_exist_area', 'garden_exist_private', 'swim', 'swim_exist', 'swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
-        'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'num_folder', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
+        'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'num_folder', 'equipment', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
         'rent', 'duration_lease', 'photos_id_photos', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
-        'exterior_detail_id', 'classification_estate_id', 'diagnostic_id', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
-        'announcement_id',
+        'exterior_detail_id', 'classification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
+        'advertisement_id',
         'agency_id', 'agent_id'
+    ];
+
+    protected $casts = [
+        'swim_exist' => 'array',
+        'status' => 'array',
+        'equipment' => 'array'
     ];
 
     public function photos(): HasOne

@@ -12,7 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('info_coproprietes', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_infocopropriete');
+            $table->id('id_infocopropriete'); 
+
             // N° DE LOT
             $table->string('lot_number');
             //NB DE LOTS
