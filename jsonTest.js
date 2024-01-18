@@ -192,5 +192,13 @@
         "publish_property" : true,
         "rent" : 2,
         "duration_lease" : 2
-    }
+    },
+    "advertissement": {
+        "title": "oskar",
+        "description": "test de la description pour l'advertissement"
+    },
+    "type_offert_id": 1,
+    "type_estate_id": 1,
+    "classification_estate_id": 1,
+    "classification_offert_id": 1
 }

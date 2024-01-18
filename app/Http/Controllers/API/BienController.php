@@ -15,6 +15,7 @@ use App\Services\InfoFinanciereService;
 use App\Services\SectorService;
 use App\Services\PhotosService;
 use App\Services\BienService;
+use App\Services\AdvertissementsService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
 use App\Http\Requests\Contact\CreateContactRequest;
 use App\Http\Requests\Detail\CreateExternDetailRequest;
@@ -26,6 +27,7 @@ use App\Http\Requests\InfoFinanciere\InfoFinanciereRequest;
 use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
+use App\Http\Requests\Advertissement\AdvertissementRequest;
 use Illuminate\Validation\ValidationException;
 use Exception; 
 
@@ -41,6 +43,7 @@ class BienController extends Controller
         public InfoFinanciereService $infoFinanciereService,
         public SectorService $sectorService,
         public PhotosService $photoService,
+        public AdvertissementsService $advertissementService,
         public BienService $bienService
 
         )
@@ -58,10 +61,13 @@ class BienController extends Controller
         InfoFinanciereRequest $requestInfoFinanciere,
         SectorRequest $requestSector,
         PhotoRequest $requestPhoto,
+        AdvertissementRequest $requestAdvertissement,
         BienRequest $requestBien
     )
     {
         try {
+
+            $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
             $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
             $terrainId = $this->handleTerrain($requestTerrain->toArray());
             $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
@@ -73,6 +79,7 @@ class BienController extends Controller
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
 
+            $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             $requestData['biens']['photos_id_photos'] = $photosId['id'];
             $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
@@ -82,7 +89,14 @@ class BienController extends Controller
             $requestData['biens']['sector_id_sector'] = $sectorId['id'];
             $requestData['biens']['terrain_id'] = $terrainId['id'];
             $requestData['biens']['info_financiere_id'] = $infoFinanciereId['id'];
-
+            $typeOffertId = $requestBien->input('type_offert_id');
+            $typeEstateId = $requestBien->input('type_estate_id');
+            $classificationEstateId = $requestBien->input('classification_estate_id');
+            $classificationOffertId = $requestBien->input('classification_offert_id');
+            $requestData['biens']['type_offert_id'] = $typeOffertId;
+            $requestData['biens']['type_estate_id'] = $typeEstateId;
+            $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
+            $requestData['biens']['classification_offert_id'] = $classificationOffertId;
             $this->handleBien($requestData);
 
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
@@ -95,6 +109,14 @@ class BienController extends Controller
         }
     }
 
+    // advertissement
+    private function handleAdvertissement(array $requestData): array
+    {
+        $data = $this->advertissementService->store($requestData);
+        $response = ['id' =>$data];
+
+        return $response;
+    }
 
     // ajout et recuperation d'identification de la info financiere
     private function handleInfoFinanciere(array $requestData): array
