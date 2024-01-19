@@ -2,7 +2,12 @@
 
 use App\Enum\Role;
 use App\Http\Controllers\API\ContactController;
+use App\Http\Controllers\API\TypeOffertController;
+use App\Http\Controllers\API\ClassificationOffertController;
 use App\Http\Controllers\API\UserController;
+use App\Http\Controllers\API\TypeEstateController;
+use App\Http\Controllers\API\BienController;
+use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
@@ -37,4 +42,35 @@ Route::prefix("user", ["middleware" => "auth:sanctum", "role"=>Role::SUPER_ADMIN
 Route::prefix("contact")->group(function(){
     Route::get('/' , [ContactController::class, 'index']);
     Route::post('/', [ContactController::class, 'store']);
+});
+
+// route pour les type offre
+Route::prefix("type-offert")->group(function(){
+    Route::get('/' , [TypeOffertController::class, 'index']);
+    Route::get('/{id}' , [TypeOffertController::class, 'findById']);
+    Route::get('/classification-offert/{id}' , [TypeOffertController::class, 'getClassificationByIdTypeOffert']);
+});
+
+// route pour les classification d'offre
+Route::prefix("classification-offert")->group(function(){
+    Route::get('/' , [ClassificationOffertController::class, 'index']);
+    Route::get('/{id}' , [ClassificationOffertController::class, 'getById']);
+});
+
+// route pour les type de bien
+Route::prefix("type-estate")->group(function(){
+    Route::get('/' , [TypeEstateController::class, 'index']);
+    Route::get('/{id}' , [TypeEstateController::class, 'getById']);
+    Route::get('/classification-bien/{id}' , [TypeEstateController::class, 'getClassificationByIdTypeEstate']);
+});
+
+// route pour les classification de bien
+Route::prefix("classification-estate")->group(function(){
+    Route::get('/' , [ClassificationEstateController::class, 'index']);
+    Route::get('/{id}' , [ClassificationEstateController::class, 'getById']);
+});
+
+// route pour les biens
+Route::prefix("bien")->group(function(){
+    Route::post('/' , [BienController::class, 'createBien']);
 });

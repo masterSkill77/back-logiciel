@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('sectors', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_sector');
+            $table->id('id_sector'); 
             //PAYS DE L'ANNONCE
             $table->string('advertised_country');
             //CODE POSTAL PUBLIC 

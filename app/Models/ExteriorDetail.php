@@ -11,6 +11,10 @@ class ExteriorDetail extends Model
 
     use HasFactory;
 
+    protected $casts = [
+        'basement' => 'json',
+    ];
+    
     protected $fillable = [
         'semiOwnership', 'basement', 'withbasement', 'cellar', 'trueCellar', 'balcony', 'withBalcony', 'terrace', 'withTerrace', 'varangue',
         'loggia', 'veranda', 'withVeranda', 'singleStorey', 'typeResidence', 'formatResidence'

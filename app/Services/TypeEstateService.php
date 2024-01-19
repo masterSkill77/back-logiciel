@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TypeEstate;
+use Illuminate\Database\Eloquent\Collection;
 
 class TypeEstateService
 {
@@ -28,5 +29,20 @@ class TypeEstateService
     {
         $type->update($params);
         return $type;
+    }
+
+    public function findAll(): Collection
+    {
+        return TypeEstate::all();
+    }
+
+    public function getById(int $typeEstate): ?TypeEstate
+    {
+        return TypeEstate::find($typeEstate);
+    }
+
+    public function getClassificationByIdTypeEstate(int $typeEstate) :TypeEstate
+    {
+        return TypeEstate::where('id', $typeEstate)->with(['classificationEstate'])->first();
     }
 }

@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('photos', function (Blueprint $table) {
-            $table->unsignedBigInteger('id_photos');
+            $table->id('id_photos'); 
             //photo à la une
             $table->string('photos_original')->nullable();
             //photos pout le slide

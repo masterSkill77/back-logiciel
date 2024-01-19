@@ -11,11 +11,17 @@ class InfoCoproprieteService
     {
         // Constructor of the class
     }
-    public function createInfoCopropriete(array $params): InfoCopropriete
+    public function createInfoCopropriete(array $params): int
     {
-        $copropriete = (new InfoCopropriete($params));
-        $copropriete->save();
-        return $copropriete;
+        if (isset($params['InfoCopropriete']) && is_array($params['InfoCopropriete'])) {
+
+            $copropriete = (new InfoCopropriete($params['InfoCopropriete']));
+            $copropriete->save();
+
+            return $copropriete->id_infocopropriete;
+        }
+
+        return 0;
     }
 
     /**

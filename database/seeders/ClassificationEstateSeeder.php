@@ -16,7 +16,7 @@ class ClassificationEstateSeeder extends Seeder
     public function run(): void
     {
         //classification de bien
-        DB::table('classsification_estate')->truncate();
+        DB::table('classification_estate')->truncate();
         $classifications = [
             ['designation' => 'Maison', 'type_estate_id' => 1],
             ['designation' => 'Villa', 'type_estate_id' => 1],

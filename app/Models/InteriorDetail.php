@@ -10,6 +10,10 @@ class InteriorDetail extends Model
 {
     use HasFactory;
     
+    protected $casts = [
+        'caracteristique' => 'array',
+        'category' => 'array',
+    ];
     protected $fillable = [
         'category', 'nbOfSleeping', 'nbOfBathroom', 'nbOfRoomWater', 'nbOfWc', 'caracteristique', 'surfaceSquare', 'surfaceStay',
         'TypeOfKitchen', 'StateOfKitchen'

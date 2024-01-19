@@ -16,11 +16,16 @@ class InfoFinanciereService
      * @param array $params
      * @return \App\Models\InfoFinanciere
      */
-    public function createInfoFinanciere(array $params): InfoFinanciere
+    public function createInfoFinanciere(array $params): int
     {
-        $infoFinanciere = (new InfoFinanciere($params));
-        $infoFinanciere->save();
-        return $infoFinanciere;
+        if(isset($params['InfoFinanciere']) && is_array($params['InfoFinanciere'])) {
+            $infoFinanciere = (new InfoFinanciere($params['InfoFinanciere']));
+            $infoFinanciere->save();
+
+            return $infoFinanciere->id;
+        }
+        return 0;
+
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\TypeOffert;
+use Illuminate\Database\Eloquent\Collection;
 
 class TypeOffertService
 {
@@ -28,5 +29,20 @@ class TypeOffertService
     {
         $type->update($params);
         return $type;
+    }
+
+    public function findAll() :Collection
+    {
+        return TypeOffert::all();
+    }
+
+    public function getById(int $typeOffert) :?TypeOffert
+    {
+        return TypeOffert::find($typeOffert);
+    }
+
+    public function getClassificationByIdTypeOffert(int $typeOffert) :TypeOffert
+    {
+        return TypeOffert::where('id', $typeOffert)->with(['classificationOfferts'])->first();
     }
 }

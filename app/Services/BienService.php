@@ -12,11 +12,15 @@ class BienService
         // Constructor of the class
     }
 
-    public function createBien(array $params): Bien
+    public function createBien(array $params): int
     {
-        $Bien = (new Bien($params));
-        $Bien->save();
-        return $Bien;
+        if(isset($params['biens']) && is_array($params['biens'])) {
+            $Bien = (new Bien($params['biens']));
+            $Bien->save();
+            return $Bien->id;
+        }
+
+        return 0;
     }
 
     public function updateBien(Bien $bien, array $params): Bien
