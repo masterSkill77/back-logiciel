@@ -36,6 +36,28 @@ class BienService
 
     public function getById(int $bienId): Bien
     {
-        return Bien::where('id', $bienId)->first();
+        return Bien::with([
+            'photos',
+            'infoCopropriete',
+            'typeOffert',
+            'typeEstate',
+            'interiorDetail',
+            'exteriorDetail',
+            'classificationOffert',
+            'classificationEstate',
+            'diagnostic',
+            'rentalInvest',
+            'sector',
+            'terrain',
+            'infoFinanciere',
+            'advertisement',
+        ])->find($bienId);
+    }
+
+    public function findAll() :Collection
+    {
+        
+        return Bien::with('photos')->get();
+
     }
 }

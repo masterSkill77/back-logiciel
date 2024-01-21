@@ -30,7 +30,7 @@ class Bien extends Model
 
     public function photos(): HasOne
     {
-        return $this->hasOne(Photos::class);
+        return $this->hasOne(Photos::class, 'id_photos');
     }
 
     public function infoCopropriete(): HasOne

@@ -17,4 +17,9 @@ class Photos extends Model
     protected $casts = [
         'photos_slide' => 'array'
     ];
+
+    public function bien(): BelongsTo
+    {
+        return $this->belongsTo(Bien::class, 'photos_id_photos');
+    }
 }

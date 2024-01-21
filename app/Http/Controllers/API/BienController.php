@@ -30,6 +30,7 @@ use App\Http\Requests\Bien\BienRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
 use Illuminate\Validation\ValidationException;
 use Exception; 
+use Illuminate\Database\Eloquent\Collection;
 
 class BienController extends Controller
 {
@@ -66,6 +67,7 @@ class BienController extends Controller
     )
     {
         try {
+            // transaction 
 
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
             $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
@@ -97,14 +99,16 @@ class BienController extends Controller
             $requestData['biens']['type_estate_id'] = $typeEstateId;
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
+            
             $this->handleBien($requestData);
-
+            // commit 
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
+
         } catch (ValidationException $e) {
 
             return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
-
+            //roll back
             return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -206,5 +210,10 @@ class BienController extends Controller
         $data = $this->photoService->addPhotos($requestData);
         $response= ['id' =>$data];
         return $response;
+    }
+
+    public function findAll() : Collection
+    {
+        return $this->bienService->findAll();
     }
 }

@@ -73,4 +73,5 @@ Route::prefix("classification-estate")->group(function(){
 // route pour les biens
 Route::prefix("bien")->group(function(){
     Route::post('/' , [BienController::class, 'createBien']);
+    Route::get('/' , [BienController::class, 'findAll']);
 });
