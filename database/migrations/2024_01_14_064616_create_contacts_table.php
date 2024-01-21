@@ -63,8 +63,6 @@ return new class extends Migration
             $table->json('man_info')->nullable();
             //INFOFEMME
             $table->json('woman_info')->nullable();
-            //BIEN
-            $table->foreignIdFor(Preferency::class)->nullable();
             //NEGOCIATEUR
             $table->foreignIdFor(User::class);
             //Préference
