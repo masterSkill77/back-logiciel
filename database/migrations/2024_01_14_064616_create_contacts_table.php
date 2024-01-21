@@ -2,6 +2,7 @@
 
 use App\Models\Bien;
 use App\Models\Negotiator;
+use App\Models\PreferenceContacts;
 use App\Models\User;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -30,7 +31,8 @@ return new class extends Migration
             $table->foreignIdFor(Bien::class)->nullable();
             //NEGOCIATEUR
             $table->foreignIdFor(User::class);
-            
+            //Préference
+            $table->foreignIdFor(PreferenceContacts::class);
 
             $table->timestamps();
         });
