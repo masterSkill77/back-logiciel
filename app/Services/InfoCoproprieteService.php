@@ -42,4 +42,5 @@ class InfoCoproprieteService
     {
         return InfoCopropriete::all();
     }
+    
 }

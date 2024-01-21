@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bien extends Model
@@ -28,24 +29,24 @@ class Bien extends Model
         'equipment' => 'array'
     ];
 
-    public function photos(): HasOne
+    public function images(): HasOne
     {
-        return $this->hasOne(Photos::class, 'id_photos');
+        return $this->hasOne(Photos::class, 'id_photos', 'photos_id_photos');
     }
 
     public function infoCopropriete(): HasOne
     {
-        return $this->hasOne(InfoCopropriete::class);
+        return $this->hasone(InfoCopropriete::class, 'id_infocopropriete', 'info_copropriete_id_infocopropriete');
     }
 
     public function typeOffert(): HasOne
     {
-        return $this->hasOne(TypeOffert::class);
+        return $this->hasOne(TypeOffert::class, 'offert_id','type_offert_id');
     }
 
     public function typeEstate(): HasOne
     {
-        return $this->hasOne(TypeEstate::class);
+        return $this->hasOne(TypeEstate::class, 'estate_id','type_estate_id');
     }
 
     public function  interiorDetail(): HasOne

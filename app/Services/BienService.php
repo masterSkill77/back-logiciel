@@ -57,7 +57,7 @@ class BienService
     public function findAll() :Collection
     {
         
-        return Bien::with('photos')->get();
+        return Bien::with(['images', 'infoCopropriete'])->get();
 
     }
 }
