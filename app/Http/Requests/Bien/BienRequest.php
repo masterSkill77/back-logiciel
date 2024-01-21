@@ -58,13 +58,14 @@ class BienRequest extends FormRequest
             "biens.type_estate_id"=> 'integer',
             "biens.interior_detail_id"=> 'integer',
             "biens.exterior_detail_id"=> 'integer',
-            "biens.classification_estate_id"=> 'integer',
+            "biens.classsification_estate_id"=> 'integer',
+            "biens.classification_offert_id"=> 'integer',
             "biens.diagnostic_id_diagnostics"=> 'integer',
             "biens.rental_invest_id_rental_invest"=> 'integer',
             "biens.sector_id_sector"=> 'integer',
             "biens.terrain_id"=> 'integer',
             "biens.info_financiere_id"=> 'integer',
-            "announcement_id"=> 'integer',
+            "biens.advertisement_id"=> 'integer'
         ];
     }
 }

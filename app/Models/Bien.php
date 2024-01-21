@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Bien extends Model
@@ -17,7 +18,7 @@ class Bien extends Model
         'garden_exist_area', 'garden_exist_private', 'swim', 'swim_exist', 'swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
         'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'num_folder', 'equipment', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
         'rent', 'duration_lease', 'photos_id_photos', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
-        'exterior_detail_id', 'classification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
+        'exterior_detail_id', 'classification_offert_id', 'classsification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
         'advertisement_id',
         'agency_id', 'agent_id'
     ];
@@ -28,24 +29,24 @@ class Bien extends Model
         'equipment' => 'array'
     ];
 
-    public function photos(): HasOne
+    public function images(): HasOne
     {
-        return $this->hasOne(Photos::class);
+        return $this->hasOne(Photos::class, 'id_photos', 'photos_id_photos');
     }
 
     public function infoCopropriete(): HasOne
     {
-        return $this->hasOne(InfoCopropriete::class);
+        return $this->hasone(InfoCopropriete::class, 'id_infocopropriete', 'info_copropriete_id_infocopropriete');
     }
 
     public function typeOffert(): HasOne
     {
-        return $this->hasOne(TypeOffert::class);
+        return $this->hasOne(TypeOffert::class, 'offert_id','type_offert_id');
     }
 
     public function typeEstate(): HasOne
     {
-        return $this->hasOne(TypeEstate::class);
+        return $this->hasOne(TypeEstate::class, 'estate_id','type_estate_id');
     }
 
     public function  interiorDetail(): HasOne

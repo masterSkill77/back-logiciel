@@ -11,7 +11,7 @@ class Advertisement extends Model
 {
     use HasFactory;
     
-    protected $table = 'advertisement';
+    protected $table = 'advertissements';
     protected $fillable = [
         'title',
         'description'

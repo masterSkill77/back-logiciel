@@ -30,7 +30,7 @@ class Contact extends Model
 
     public function bien() : HasOne
     {
-        return $this->hasOne(Bien::class);
+        return $this->hasOne(Bien::class, 'photos_id_photos');
     }
 
     public function user() :HasOne
