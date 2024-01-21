@@ -49,7 +49,7 @@ return new class extends Migration
             //ADRESSE
             $table->string('adress')->nullable();
             //NEGOCIATEUR
-            $table->string('negociator');
+            $table->string('negociator'); //Agent
             //SOURCE DE CONTACT
             $table->string('contact_source');
             //NOTE
@@ -63,9 +63,10 @@ return new class extends Migration
             //INFOFEMME
             $table->json('woman_info')->nullable();
             //BIEN
-            $table->foreignIdFor(Bien::class)->nullable();
+            $table->foreignIdFor(Preferency::class)->nullable();
             //NEGOCIATEUR
-            $table->foreignIdFor(User::class);            
+            $table->foreignIdFor(User::class);    
+                    
             $table->timestamps();
         });
     }

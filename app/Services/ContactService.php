@@ -19,9 +19,10 @@ class ContactService
         return $contact;
     }
 
-    public function updateContact(Contact $contact, array $params): Contact
+    public function updateContact($data, $params): Contact
     {
-        $contact->update($params);
+        $contact = Contact::findOrFail($params);
+        $contact->update($data);
         return $contact;
     }
 

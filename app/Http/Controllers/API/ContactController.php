@@ -9,6 +9,7 @@ use Exception;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 class ContactController extends Controller
 {
@@ -29,6 +30,18 @@ class ContactController extends Controller
 
         }
       
+    }
+
+    public function update(Request $request, $contactId) :JsonResponse
+    {
+        $data = $request->all();
+        $contact = $this->contactService->updateContact($data, $contactId);
+        if($contact)
+        {
+            return response()->json($contact, 200);
+        }else{
+            throw new NotFoundHttpException("Erreur de la modification");
+        }
     }
  
 
