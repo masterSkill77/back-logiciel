@@ -4,7 +4,7 @@ namespace App\Services;
 
 use App\Models\Bien;
 use Illuminate\Database\Eloquent\Collection;
-
+use Illuminate\Database\Eloquent\ModelNotFoundException;
 class BienService
 {
     public function __construct()
@@ -34,30 +34,52 @@ class BienService
         return Bien::all();
     }
 
-    public function getById(int $bienId): Bien
+    // find identification de la bien avec leur relation 
+    public function getById(int $bienId): ?Bien
     {
-        return Bien::with([
-            'photos',
-            'infoCopropriete',
-            'typeOffert',
-            'typeEstate',
-            'interiorDetail',
-            'exteriorDetail',
-            'classificationOffert',
-            'classificationEstate',
-            'diagnostic',
-            'rentalInvest',
-            'sector',
-            'terrain',
-            'infoFinanciere',
-            'advertisement',
-        ])->find($bienId);
+        try {
+            return Bien::with([
+                'photos',
+                'infoCopropriete',
+                'typeOffert',
+                'typeEstate',
+                'interiorDetail',
+                'exteriorDetail',
+                'classificationOffert',
+                'classificationEstate',
+                'diagnostic',
+                'rentalInvest',
+                'sector',
+                'terrain',
+                'infoFinanciere',
+                'advertisement'
+            ])->find($bienId);
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
     }
 
+    /**
+     * return list bien avec leur relation
+     */
     public function findAll() :Collection
     {
         
-        return Bien::with(['images', 'infoCopropriete'])->get();
+        return Bien::with([
+            'photos', 
+            'infoCopropriete', 
+            'typeOffert',
+            'typeEstate',
+            'interiorDetail',
+            'rentalInvest',
+            'exteriorDetail',
+            'classificationOffert',
+            'classificationEstate',
+            'diagnostic', 
+            'sector',
+            'terrain',
+            'infoFinanciere',
+            'advertisement'])->get();
 
     }
 }

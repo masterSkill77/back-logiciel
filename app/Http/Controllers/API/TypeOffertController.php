@@ -17,6 +17,9 @@ class TypeOffertController extends Controller
         
     }
 
+    /**
+     * list d'offert
+     */
     public function index() : JsonResponse
     {
         $list = $this->typeOffert->findAll();
@@ -24,21 +27,27 @@ class TypeOffertController extends Controller
         return response()->json($list);
     }
 
+    /**
+     * get identification d'offert
+     */
     public function findById(int $typeOffert) :JsonResponse
     {
         $typeOffertId = $this->typeOffert->getById($typeOffert);
         if(!$typeOffertId) {
-            throw new NotFoundHttpException("type offert with `$typeOffertId` not found");
+            throw new NotFoundHttpException("type offert with `$typeOffert` not found");
         }
 
         return response()->json($typeOffertId);
     }
 
+    /**
+     * get list de la classification par identification du type d'offert
+     */
     public function getClassificationByIdTypeOffert(int $typeOffert) :JsonResponse
     {
         $typeOffertId = $this->typeOffert->getClassificationByIdTypeOffert($typeOffert);
         if(!$typeOffertId) {
-            throw new NotFoundHttpException("type offert with `$typeOffertId` not found");
+            throw new NotFoundHttpException("type offert with `$typeOffert` not found");
         }
 
         return response()->json($typeOffertId);

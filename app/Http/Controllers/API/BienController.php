@@ -31,6 +31,9 @@ use App\Http\Requests\Advertissement\AdvertissementRequest;
 use Illuminate\Validation\ValidationException;
 use Exception; 
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\JsonResponse;
+use App\Exceptions\CustomException;
 
 class BienController extends Controller
 {
@@ -52,6 +55,10 @@ class BienController extends Controller
         
     }
 
+    /**
+     * creation du bien 
+     * return json
+     */
     public function createBien(
         CreateExternDetailRequest $requestExterior,
         CreateTerrainRequest $requestTerrain,
@@ -212,8 +219,27 @@ class BienController extends Controller
         return $response;
     }
 
+    /**
+     * return array
+     * list de la bien avec leur relation
+     */
     public function findAll() : Collection
     {
         return $this->bienService->findAll();
+    }
+
+    /**
+     * return json 
+     * get identification du bien 
+     */
+    public function findById(int $bienId): JsonResponse
+    {
+        $findBienId = $this->bienService->getById($bienId);
+
+        if (!$findBienId) {
+            return response()->json(['error' => "Bien with ID $bienId not found"], 404);
+        }
+
+        return response()->json($findBienId);
     }
 }
