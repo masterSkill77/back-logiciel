@@ -60,12 +60,14 @@ class BienService
     }
 
     /**
-     * return list bien avec leur relation
+     * @param int $perPage
+     * @param string $sortBy
+     * @param string $sortOrder
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function findAll() :Collection
+    public function findAll(int $perPage = 10, string $sortBy = 'id', string $sortOrder = 'asc', array $filters = [])
     {
-        
-        return Bien::with([
+        $query = Bien::with([
             'photos', 
             'infoCopropriete', 
             'typeOffert',
@@ -79,7 +81,34 @@ class BienService
             'sector',
             'terrain',
             'infoFinanciere',
-            'advertisement'])->get();
+            'advertisement'
+        ])->orderBy($sortBy, $sortOrder);
 
+        foreach ($filters as $filter => $value) {
+            switch ($filter) {
+                case 'bienActif':
+                    $query->when($value !== null, function ($query) use ($value) {
+                        $query->where('statusActif', $value);
+                    });
+                    break;
+                case 'bienInactif':
+                    $query->when($value !== null, function ($query) use ($value) {
+                        $query->where('statusInActif', $value);
+                    });
+                    break;
+                case 'archived':
+                    $query->when($value !== null, function ($query) use ($value) {
+                        $query->where('archived', $value);
+                    });
+                    break;
+                case 'vendus':
+                    $query->when($value !== null, function ($query) use ($value) {
+                        $query->where('vendus', $value);
+                    });
+                    break;
+            }
+        }
+
+        return $query->paginate($perPage);
     }
 }

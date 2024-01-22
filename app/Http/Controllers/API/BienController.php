@@ -34,6 +34,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\CustomException;
+use Illuminate\Pagination\LengthAwarePaginator;
 
 class BienController extends Controller
 {
@@ -219,13 +220,21 @@ class BienController extends Controller
         return $response;
     }
 
-    /**
-     * return array
-     * list de la bien avec leur relation
+   /**
+     * Get all Biens with pagination
+     *
+     * @param Request $request
+     * @return LengthAwarePaginator
      */
-    public function findAll() : Collection
+    public function findAll(Request $request) : LengthAwarePaginator
     {
-        return $this->bienService->findAll();
+        $perPage = $request->input('perPage', 10);
+        $sortBy = $request->input('sortBy', 'id');
+        $sortOrder = $request->input('sortOrder', 'asc');
+        $filters = $request->all();
+
+        return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters);
+   
     }
 
     /**
