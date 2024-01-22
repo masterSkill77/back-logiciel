@@ -11,7 +11,7 @@ class Agency extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nameAgency', 'nameCompany', 'addressCompany', 'phoneAgency'];
+    protected $fillable = ['nameAgency', 'nameCompany', 'addressCompany', 'phoneAgency', 'pige_online_key'];
 
     /**
      * Scope for specifing directly the agenceId without making the condition `where('id', agenceId)`
