@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Agency;
+use App\Models\Pige;
 use Exception;
 use Illuminate\Support\Facades\Http;
 
@@ -33,5 +34,26 @@ class PigeService
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
+    }
+
+    /**
+     * Register or update pige into database
+     *@param array $pige : the pige to be created or updated
+     * @return void
+     */
+
+    public function createOrUpdatePige(array $pige): void
+    {
+        Pige::createOrUpdate($pige);
+    }
+
+    /**
+     * Get the piges based on the agency from database
+     * @param \App\Models\Agency $agency
+     */
+
+    public function getPigesFromDatabase(Agency $agency)
+    {
+        return Pige::agency($agency)->paginate(20);
     }
 }
