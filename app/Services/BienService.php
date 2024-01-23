@@ -65,7 +65,7 @@ class BienService
      * @param string $sortOrder
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function findAll(int $perPage = 10, string $sortBy = 'id', string $sortOrder = 'asc', array $filters = [])
+    public function findAll(int $perPage = 10, ?string $sortBy = 'id', ?string $sortOrder = 'asc', ?array $filters = [], ?string $search)
     {
         $query = Bien::with([
             'photos', 
@@ -84,31 +84,70 @@ class BienService
             'advertisement'
         ])->orderBy($sortBy, $sortOrder);
 
+        $query = $this->applyFilters($query, $filters);
+        $query = $this->searchByKeyword($query, $search);
+    
+
+        return $query->paginate($perPage);
+    }
+
+    /**
+     * Appliquer les filtres.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function applyFilters($query, array $filters)
+    {
         foreach ($filters as $filter => $value) {
             switch ($filter) {
-                case 'bienActif':
+                case 'actif':
                     $query->when($value !== null, function ($query) use ($value) {
                         $query->where('statusActif', $value);
                     });
                     break;
-                case 'bienInactif':
+                case 'inactif':
                     $query->when($value !== null, function ($query) use ($value) {
                         $query->where('statusInActif', $value);
                     });
                     break;
-                case 'archived':
+                case 'archivés':
                     $query->when($value !== null, function ($query) use ($value) {
                         $query->where('archived', $value);
                     });
                     break;
                 case 'vendus':
                     $query->when($value !== null, function ($query) use ($value) {
-                        $query->where('vendus', $value);
+                        $query->where('sold', $value);
                     });
                     break;
             }
         }
 
-        return $query->paginate($perPage);
+        return $query;
+    }
+
+
+    /**
+     * Recherche des biens par mot-clé.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $keyword
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function searchByKeyword($query, ?string $keyword)
+    {
+        if (!is_null($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('city', 'like', '%' . $keyword . '%')
+                      ->orWhere('zap_country', 'like', '%' . $keyword . '%')
+                      ->orWhereHas('diagnostic', function ($query) use ($keyword) {
+                          $query->where('dpe_consommation', 'like', '%' . $keyword . '%');
+                      });
+            });
+        }
+    
+        return $query;
     }
 }

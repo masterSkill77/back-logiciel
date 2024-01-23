@@ -229,11 +229,12 @@ class BienController extends Controller
     public function findAll(Request $request) : LengthAwarePaginator
     {
         $perPage = $request->input('perPage', 10);
-        $sortBy = $request->input('sortBy', 'id');
+        $sortBy = $request->input('sortBy', 'id_bien');
         $sortOrder = $request->input('sortOrder', 'asc');
+        $search = $request->input('search');
         $filters = $request->all();
 
-        return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters);
+        return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
    
     }
 
