@@ -17,7 +17,7 @@ class BienService
         if(isset($params['biens']) && is_array($params['biens'])) {
             $Bien = (new Bien($params['biens']));
             $Bien->save();
-            return $Bien->id;
+            return $Bien->id_bien;
         }
 
         return 0;
@@ -83,7 +83,6 @@ class BienService
             'infoFinanciere',
             'advertisement'
         ])->orderBy($sortBy, $sortOrder);
-
         $query = $this->applyFilters($query, $filters);
         $query = $this->searchByKeyword($query, $search);
     
@@ -100,27 +99,21 @@ class BienService
      */
     private function applyFilters($query, array $filters)
     {
-        foreach ($filters as $filter => $value) {
-            switch ($filter) {
+        if (isset($filters['filter'])) {
+            $filterValue = $filters['filter'];
+    
+            switch ($filterValue) {
                 case 'actif':
-                    $query->when($value !== null, function ($query) use ($value) {
-                        $query->where('statusActif', $value);
-                    });
+                    $query->where('publish', true);
                     break;
                 case 'inactif':
-                    $query->when($value !== null, function ($query) use ($value) {
-                        $query->where('statusInActif', $value);
-                    });
+                    $query->where('publish', false);
                     break;
                 case 'archivés':
-                    $query->when($value !== null, function ($query) use ($value) {
-                        $query->where('archived', $value);
-                    });
+                    $query->where('sold', true);
                     break;
                 case 'vendus':
-                    $query->when($value !== null, function ($query) use ($value) {
-                        $query->where('sold', $value);
-                    });
+                    $query->where('sold', false);
                     break;
             }
         }

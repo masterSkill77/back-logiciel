@@ -65,7 +65,11 @@ class BienRequest extends FormRequest
             "biens.sector_id_sector"=> 'integer',
             "biens.terrain_id"=> 'integer',
             "biens.info_financiere_id"=> 'integer',
-            "biens.advertisement_id"=> 'integer'
+            "biens.advertisement_id"=> 'integer',
+            "biens.publish"=> 'required|boolean',
+            "biens.sold"=> 'required|boolean',
+            "biens.user_id"=> 'integer',
+            "biens.agency_id"=> 'integer'
         ];
     }
 }

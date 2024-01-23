@@ -35,6 +35,7 @@ use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\JsonResponse;
 use App\Exceptions\CustomException;
 use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
 
 class BienController extends Controller
 {
@@ -88,7 +89,7 @@ class BienController extends Controller
             $sectorId = $this->handleSector($requestSector->toArray());
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
-
+            $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             $requestData['biens']['photos_id_photos'] = $photosId['id'];
@@ -107,7 +108,11 @@ class BienController extends Controller
             $requestData['biens']['type_estate_id'] = $typeEstateId;
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
-            
+            $user = Auth::user();
+            $requestData['biens']['user_id'] = $user->id;
+            $agency = $user->agency; 
+            $requestData['biens']['agency_id'] = $agency->id;
+
             $this->handleBien($requestData);
             // commit 
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
