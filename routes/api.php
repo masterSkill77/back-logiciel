@@ -72,7 +72,7 @@ Route::prefix("classification-estate")->group(function(){
 
 // route pour les biens
 Route::prefix("bien")->group(function(){
-    Route::post('/' , [BienController::class, 'createBien'])->middleware(['auth:sanctum']);;
-    Route::get('/' , [BienController::class, 'findAll']);
+    Route::post('/' , [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
+    Route::get('/' , [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
     Route::get('/{id}' , [BienController::class, 'findById']);
 });

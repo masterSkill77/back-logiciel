@@ -5,6 +5,8 @@ namespace App\Services;
 use App\Models\Bien;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
+
 class BienService
 {
     public function __construct()
@@ -65,8 +67,9 @@ class BienService
      * @param string $sortOrder
      * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
      */
-    public function findAll(int $perPage = 10, ?string $sortBy = 'id', ?string $sortOrder = 'asc', ?array $filters = [], ?string $search)
+    public function findAll(int $perPage = 10, ?string $sortBy = 'id_bien', ?string $sortOrder = 'asc', ?array $filters = [], ?string $search)
     {
+        $user = Auth::user();
         $query = Bien::with([
             'photos', 
             'infoCopropriete', 
@@ -83,6 +86,7 @@ class BienService
             'infoFinanciere',
             'advertisement'
         ])->orderBy($sortBy, $sortOrder);
+        $query->where('user_id', $user->id);
         $query = $this->applyFilters($query, $filters);
         $query = $this->searchByKeyword($query, $search);
     

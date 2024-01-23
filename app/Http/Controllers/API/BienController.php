@@ -238,7 +238,6 @@ class BienController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $search = $request->input('search');
         $filters = $request->all();
-
         return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
    
     }
