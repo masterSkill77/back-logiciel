@@ -26,7 +26,14 @@
         "ground":[ {
             "test": "house",
             "test": true
-        }]
+        }],
+        "ground_print" : "test",
+        "ground_print_residual": "ground_print_residual",
+        "shon": "shon",
+        "ces": "ces",
+        "codification_plu": "codification_plu",
+        "right_way": "right_way",
+        "cadastral_ref": "cadastral_ref",
     },
 
     "interiorDetail": {

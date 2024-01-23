@@ -24,7 +24,14 @@ class CreateTerrainRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "terrain.ground"=> 'required|array'
+            "terrain.ground"=> 'required|array',
+            "terrain.ground_print"=> 'nullable|string',
+            "terrain.ground_print_residual"=> 'nullable|string',
+            "terrain.shon"=> 'nullable|string',
+            "terrain.ces"=> 'nullable|string',
+            "terrain.codification_plu"=> 'nullable|string',
+            "terrain.right_way"=> 'nullable|string',
+            "terrain.cadastral_ref"=> 'nullable|string',
         ];
     }
 }
