@@ -18,7 +18,7 @@ class ChatGPTController extends Controller
                 'Authorization' => 'Bearer ' . config('services.openai.key'),
             ],
             'json' => [
-                'model' => 'text-davinci-003',
+                'model' => 'turbo-3.5',
                 'messages' => [
                     ['role' => 'system', 'content' => 'You are a helpful assistant.']
                 ],
