@@ -220,9 +220,19 @@ class BienController extends Controller
     // ajout et recuperation du photos
     private function handlePhotos(array $requestData): array
     {
-        $data = $this->photoService->addPhotos($requestData);
-        $response= ['id' =>$data];
-        return $response;
+        $photosData = $requestPhoto->input('photos');
+        $file = $requestPhoto->file('photos.photos_original');
+        
+        $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
+        
+        $requestData = [
+            'photos' => [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $photosData['photos_slide'],
+            ],
+        ];
+
+        return $this->photoService->addPhotos($requestData);
     }
 
    /**
@@ -238,6 +248,7 @@ class BienController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $search = $request->input('search');
         $filters = $request->all();
+        
         return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
    
     }
@@ -255,5 +266,24 @@ class BienController extends Controller
         }
 
         return response()->json($findBienId);
+    }
+
+    // test add photos 
+    public function testPhotos(Request $resquest)
+    {
+        if ($resquest->hasFile('photos_original')) {
+            $file = $resquest->file('photos_original');
+            $originalFilename = $this->photoService->savePhotos($file);
+            
+            $photosData = [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $resquest->input('photos_slide')
+            ];
+
+            $photoId = $this->photoService->addPhotos(['photos' => $photosData]);
+            return $photoId;
+        }
+
+        return 0;
     }
 }
