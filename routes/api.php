@@ -7,6 +7,7 @@ use App\Http\Controllers\API\ClassificationOffertController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
+use App\Http\Controllers\API\ChatGPTController;
 use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
@@ -76,3 +77,6 @@ Route::prefix("bien")->group(function(){
     Route::get('/' , [BienController::class, 'findAll']);
     Route::get('/{id}' , [BienController::class, 'findById']);
 });
+
+//OpenAI
+Route::post('/chat', [ChatGPTController::class, 'chat']);
