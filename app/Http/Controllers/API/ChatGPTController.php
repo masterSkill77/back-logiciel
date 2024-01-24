@@ -3,29 +3,25 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use GuzzleHttp\Client;
+use Orhanerday\OpenAi\OpenAi;
 use Illuminate\Http\Request;
 
 class ChatGPTController extends Controller
 {
     public function chat(Request $request)
     {
-        $client = new Client();
-
-        $response = $client->post('https://api.openai.com/v1/chat/completions', [
-            'headers' => [
-                'Content-Type' => 'application/json',
-                'Authorization' => 'Bearer ' . config('services.openai.key'),
-            ],
-            'json' => [
-                'model' => 'turbo-3.5',
+        $open_ai_key = getenv('OPENAI_API_KEY');
+        $open_ai = new OpenAi($open_ai_key);
+        
+        $chat = $open_ai->chat([           
+                'model' => 'gpt-3.5-turbo',
                 'messages' => [
-                    ['role' => 'system', 'content' => 'You are a helpful assistant.']
-                ],
-            ],
+                    "role" => "user",
+                    "content" => "Who won the world series in 2020?"
+                ]
         ]);
 
-        $data = json_decode($response->getBody()->getContents(), true);
+        $data = json_decode($chat);
 
         return response()->json(['response' => $data['choices'][0]['message']['content']]);
     }
