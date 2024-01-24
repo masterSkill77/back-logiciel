@@ -248,7 +248,7 @@ class BienController extends Controller
         $sortOrder = $request->input('sortOrder', 'asc');
         $search = $request->input('search');
         $filters = $request->all();
-        
+
         return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
    
     }
@@ -273,7 +273,7 @@ class BienController extends Controller
     {
         if ($resquest->hasFile('photos_original')) {
             $file = $resquest->file('photos_original');
-            $originalFilename = $this->photoService->savePhotos($file);
+            $originalFilename = $this->photoService->savePhotos($file, ['test']);
             
             $photosData = [
                 'photos_original' => $originalFilename,

@@ -17,7 +17,7 @@ class PhotosService
         if(isset($params['photos']) && is_array($params['photos'])) {
             $photo = (new Photos($params['photos']));
             $photo->save();
-            
+
             return ['id' => $photo->id_photos];
         }
 
@@ -27,7 +27,7 @@ class PhotosService
     public function savePhotos(UploadedFile $file, array $slides): string
     {
         $originalFilename = $file->getClientOriginalName();
-        $path = $file->move(public_path('/document'), $originalFilename);
+        $path = $file->move(public_path('/document/photos/bien'), $originalFilename);
 
         return $originalFilename;
     }
