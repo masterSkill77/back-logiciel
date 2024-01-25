@@ -1,4 +1,3 @@
-<?php
 
 use App\Models\Bien;
 use App\Models\Negotiator;
@@ -50,7 +49,7 @@ return new class extends Migration
             //ADRESSE
             $table->string('adress')->nullable();
             //NEGOCIATEUR
-            $table->string('negociator'); //Agent
+            $table->string('negociator')->nullable(); //Agent
             //SOURCE DE CONTACT
             $table->string('contact_source');
             //NOTE
