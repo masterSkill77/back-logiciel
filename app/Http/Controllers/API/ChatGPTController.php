@@ -12,16 +12,18 @@ class ChatGPTController extends Controller
     {
         $open_ai_key = getenv('OPENAI_API_KEY');
         $open_ai = new OpenAi($open_ai_key);
-        
-        $chat = $open_ai->chat([           
-                'model' => 'gpt-3.5-turbo',
-                'messages' => [
+
+        $chat = $open_ai->chat([
+            'model' => 'gpt-3.5-turbo',
+            'messages' => [
+                [
                     "role" => "user",
                     "content" => "Who won the world series in 2020?"
                 ]
+            ]
         ]);
 
-        $data = json_decode($chat);
+        $data = json_decode($chat, true);
 
         return response()->json(['response' => $data['choices'][0]['message']['content']]);
     }
