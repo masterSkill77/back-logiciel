@@ -33,16 +33,16 @@ Route::prefix("auth")->group(function(){
     Route::post("login", [LoginController::class, "login"]);
 });
 
-Route::prefix("user", ["middleware" => "auth:sanctum", "role"=>Role::SUPER_ADMIN])->group(function(){
+Route::prefix("user")->middleware(["auth:sanctum", 'role:super_admin'])->group(function(){
     Route::post("/create", [UserController::class, "store"]);
     Route::get('/get-agents', [userController::class, "getAllAgents"]);
 });
 
-
-Route::prefix("contact")->group(function(){
-    Route::get('/' , [ContactController::class, 'index']);
+Route::prefix("contact")->middleware(["auth:sanctum"])->group(function(){
     Route::post('/', [ContactController::class, 'store']);
+    Route::get('/' , [ContactController::class, 'index']);
 });
+
 
 // route pour les type offre
 Route::prefix("type-offert")->group(function(){
@@ -72,7 +72,8 @@ Route::prefix("classification-estate")->group(function(){
 
 // route pour les biens
 Route::prefix("bien")->group(function(){
-    Route::post('/' , [BienController::class, 'createBien']);
-    Route::get('/' , [BienController::class, 'findAll']);
+    Route::post('/' , [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
+    Route::get('/' , [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
     Route::get('/{id}' , [BienController::class, 'findById']);
+    Route::post('/photos' , [BienController::class, 'testPhotos']);
 });

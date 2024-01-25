@@ -36,6 +36,7 @@ class BienRequest extends FormRequest
             "biens.garden_exist_area"=> 'required|integer',
             "biens.garden_exist_private"=> 'required|integer',
             "biens.swim"=> 'required|integer',
+            "biens.recent_construct"=> 'nullable|array',
             "biens.swim_exist"=> 'required|array',
             "biens.swim_exist_volume"=> 'required|integer',
             "biens.swim_exist_dimensions"=> 'required|string',
@@ -65,7 +66,11 @@ class BienRequest extends FormRequest
             "biens.sector_id_sector"=> 'integer',
             "biens.terrain_id"=> 'integer',
             "biens.info_financiere_id"=> 'integer',
-            "biens.advertisement_id"=> 'integer'
+            "biens.advertisement_id"=> 'integer',
+            "biens.publish"=> 'required|boolean',
+            "biens.sold"=> 'required|boolean',
+            "biens.user_id"=> 'integer',
+            "biens.agency_id"=> 'integer'
         ];
     }
 }

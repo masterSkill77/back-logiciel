@@ -77,7 +77,9 @@ return new class extends Migration
             $table->timestamp('date_folder');
             //EQUIPEMENT
             $table->json('equipment')->nullable();
-
+            //CONSTRUCTION RECENTE
+            $table->json('recent_construct')->nullable();
+            
             //PRIX
             //PRIX PUBLIC
             $table->float('publish_price')->nullable();
@@ -89,7 +91,10 @@ return new class extends Migration
             $table->float('rent')->nullable();
             //DURÉE BAIL
             $table->integer('duration_lease')->nullable();
-
+            // actif ou inactif inactif si null
+            $table->boolean('publish')->default(false);
+            // vendre ou a louer acheves si vendus
+            $table->boolean('sold')->default(false);
 
             //RELATION
             //PHOTOS

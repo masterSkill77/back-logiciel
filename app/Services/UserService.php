@@ -36,7 +36,7 @@ class UserService
 
     public function login(LoginRequest $request) : array
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with('agency')->first();
         if(!$user){
             throw new UnauthorizedHttpException('Bad password');
         }
