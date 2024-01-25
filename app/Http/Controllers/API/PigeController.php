@@ -25,7 +25,7 @@ class PigeController extends Controller
         if (!$agency->pige_online_key) {
             return response()->json(['error' => 'NO_APP_KEY_FOUND', 'message' => 'No application key available for this agency'], Response::HTTP_UNPROCESSABLE_ENTITY);
         }
-        $piges = $this->pigeService->getPigesFromDatabase($agency);
-        return response()->json($piges);
+        $piges = $this->pigeService->getPiges($agency);
+        return response()->json(($piges));
     }
 }

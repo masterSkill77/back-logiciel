@@ -29,8 +29,8 @@ class PigeService
     {
         $apiKey = $agency->pige_online_key;
         try {
-            $response = Http::get($this->apiUrl, ['key' => $apiKey]);
-            return ($response->json())['annonces'];
+            $response = Http::get($this->apiUrl, ['key' => $apiKey, 'dept' => 68]);
+            return ($response->json());
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
