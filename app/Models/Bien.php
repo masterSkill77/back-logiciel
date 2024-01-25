@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasOne;
 
@@ -43,12 +44,12 @@ class Bien extends Model
 
     public function typeOffert(): HasOne
     {
-        return $this->hasOne(TypeOffert::class, 'id','type_offert_id');
+        return $this->hasOne(TypeOffert::class, 'id', 'type_offert_id');
     }
 
     public function typeEstate(): HasOne
     {
-        return $this->hasOne(TypeEstate::class, 'id','type_estate_id');
+        return $this->hasOne(TypeEstate::class, 'id', 'type_estate_id');
     }
 
     public function  interiorDetail(): HasOne
@@ -63,7 +64,7 @@ class Bien extends Model
 
     public function classificationOffert(): HasOne
     {
-        return $this->hasOne(ClassificationOffert::class,'id', 'classification_offert_id');
+        return $this->hasOne(ClassificationOffert::class, 'id', 'classification_offert_id');
     }
 
     public function classificationEstate(): HasOne
@@ -93,7 +94,7 @@ class Bien extends Model
 
     public function infoFinanciere(): HasOne
     {
-        return $this->hasOne(InfoFinanciere::class,'id', 'info_financiere_id');
+        return $this->hasOne(InfoFinanciere::class, 'id', 'info_financiere_id');
     }
 
     public function advertisement(): HasOne
@@ -101,6 +102,10 @@ class Bien extends Model
         return $this->hasOne(Advertisement::class, 'id', 'advertisement_id');
     }
 
+    public function agent(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
+    }
     public function scopeAgency(Builder $query, Agency $agency): Builder
     {
         return $query->where('agency_id', $agency->id);

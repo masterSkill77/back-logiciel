@@ -16,7 +16,7 @@ class BienService
 
     public function createBien(array $params): int
     {
-        if(isset($params['biens']) && is_array($params['biens'])) {
+        if (isset($params['biens']) && is_array($params['biens'])) {
             $Bien = (new Bien($params['biens']));
             $Bien->save();
             return $Bien->id_bien;
@@ -36,7 +36,7 @@ class BienService
         return Bien::all();
     }
 
-    // find identification de la bien avec leur relation 
+    // find identification de la bien avec leur relation
     public function getById(int $bienId): ?Bien
     {
         try {
@@ -71,8 +71,9 @@ class BienService
     {
         $user = Auth::user();
         $query = Bien::with([
-            'photos', 
-            'infoCopropriete', 
+            'photos',
+            'agent',
+            'infoCopropriete',
             'typeOffert',
             'typeEstate',
             'interiorDetail',
@@ -80,16 +81,16 @@ class BienService
             'exteriorDetail',
             'classificationOffert',
             'classificationEstate',
-            'diagnostic', 
+            'diagnostic',
             'sector',
             'terrain',
             'infoFinanciere',
             'advertisement'
         ])->orderBy($sortBy, $sortOrder);
-        $query->where('user_id', $user->id);
+        $query->where('agency_id', $user->agency_id);
         $query = $this->applyFilters($query, $filters);
         $query = $this->searchByKeyword($query, $search);
-    
+
 
         return $query->paginate($perPage);
     }
@@ -105,7 +106,7 @@ class BienService
     {
         if (isset($filters['filter'])) {
             $filterValue = $filters['filter'];
-    
+
             switch ($filterValue) {
                 case 'actif':
                     $query->where('publish', true);
@@ -138,13 +139,13 @@ class BienService
         if (!is_null($keyword)) {
             $query->where(function ($query) use ($keyword) {
                 $query->where('city', 'like', '%' . $keyword . '%')
-                      ->orWhere('zap_country', 'like', '%' . $keyword . '%')
-                      ->orWhereHas('diagnostic', function ($query) use ($keyword) {
-                          $query->where('dpe_consommation', 'like', '%' . $keyword . '%');
-                      });
+                    ->orWhere('zap_country', 'like', '%' . $keyword . '%')
+                    ->orWhereHas('diagnostic', function ($query) use ($keyword) {
+                        $query->where('dpe_consommation', 'like', '%' . $keyword . '%');
+                    });
             });
         }
-    
+
         return $query;
     }
 }
