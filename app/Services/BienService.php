@@ -4,6 +4,8 @@ namespace App\Services;
 
 use App\Models\Bien;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Database\Eloquent\ModelNotFoundException;
+use Illuminate\Support\Facades\Auth;
 
 class BienService
 {
@@ -17,7 +19,7 @@ class BienService
         if(isset($params['biens']) && is_array($params['biens'])) {
             $Bien = (new Bien($params['biens']));
             $Bien->save();
-            return $Bien->id;
+            return $Bien->id_bien;
         }
 
         return 0;
@@ -34,30 +36,115 @@ class BienService
         return Bien::all();
     }
 
-    public function getById(int $bienId): Bien
+    // find identification de la bien avec leur relation 
+    public function getById(int $bienId): ?Bien
     {
-        return Bien::with([
-            'photos',
-            'infoCopropriete',
+        try {
+            return Bien::with([
+                'photos',
+                'infoCopropriete',
+                'typeOffert',
+                'typeEstate',
+                'interiorDetail',
+                'exteriorDetail',
+                'classificationOffert',
+                'classificationEstate',
+                'diagnostic',
+                'rentalInvest',
+                'sector',
+                'terrain',
+                'infoFinanciere',
+                'advertisement'
+            ])->find($bienId);
+        } catch (ModelNotFoundException $e) {
+            return null;
+        }
+    }
+
+    /**
+     * @param int $perPage
+     * @param string $sortBy
+     * @param string $sortOrder
+     * @return \Illuminate\Contracts\Pagination\LengthAwarePaginator
+     */
+    public function findAll(int $perPage = 10, ?string $sortBy = 'id_bien', ?string $sortOrder = 'asc', ?array $filters = [], ?string $search)
+    {
+        $user = Auth::user();
+        $query = Bien::with([
+            'photos', 
+            'infoCopropriete', 
             'typeOffert',
             'typeEstate',
             'interiorDetail',
+            'rentalInvest',
             'exteriorDetail',
             'classificationOffert',
             'classificationEstate',
-            'diagnostic',
-            'rentalInvest',
+            'diagnostic', 
             'sector',
             'terrain',
             'infoFinanciere',
-            'advertisement',
-        ])->find($bienId);
+            'advertisement'
+        ])->orderBy($sortBy, $sortOrder);
+        $query->where('user_id', $user->id);
+        $query = $this->applyFilters($query, $filters);
+        $query = $this->searchByKeyword($query, $search);
+    
+
+        return $query->paginate($perPage);
     }
 
-    public function findAll() :Collection
+    /**
+     * Appliquer les filtres.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param array $filters
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function applyFilters($query, array $filters)
     {
-        
-        return Bien::with(['images', 'infoCopropriete'])->get();
+        if (isset($filters['filter'])) {
+            $filterValue = $filters['filter'];
+    
+            switch ($filterValue) {
+                case 'actif':
+                    $query->where('publish', true);
+                    break;
+                case 'inactif':
+                    $query->where('publish', false);
+                    break;
+                case 'archivés':
+                    $query->where('sold', true);
+                    break;
+                case 'vendus':
+                    $query->where('sold', false);
+                    break;
+            }
+        }
 
+        return $query;
+    }
+
+
+    /**
+     * Recherche des biens par mot-clé.
+     *
+     * @param \Illuminate\Database\Eloquent\Builder $query
+     * @param string|null $keyword
+     * @return \Illuminate\Database\Eloquent\Builder
+     */
+    private function searchByKeyword($query, ?string $keyword)
+    {
+        if (!is_null($keyword)) {
+            $query->where(function ($query) use ($keyword) {
+                $query->where('city', 'like', '%' . $keyword . '%')
+                      ->orWhere('zap_country', 'like', '%' . $keyword . '%')
+                      ->orWhereHas('diagnostic', function ($query) use ($keyword) {
+                          $query->where('dpe_consommation', 'like', '%' . $keyword . '%');
+                      });
+            });
+        }
+    
+        return $query;
     }
 }

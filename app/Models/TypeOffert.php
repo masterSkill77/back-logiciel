@@ -12,6 +12,8 @@ class TypeOffert extends Model
 {
     use HasFactory;
     
+    protected $primaryKey = 'id';
+
     protected $table = 'type_offert';
     public $timestamps = false;
     protected $fillable = [

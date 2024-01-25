@@ -14,6 +14,10 @@ class ClassificationEstateController extends Controller
         
     }
 
+    /**
+     * list de la classification de bien
+     * return json
+     */
     public function index(): JsonResponse
     {
         $list = $this->classificationEstate->findAll();
@@ -21,11 +25,15 @@ class ClassificationEstateController extends Controller
         return response()->json($list);
     }
 
+    /**
+     * get du classification du bien
+     * return json
+     */
     public function getById(int $classificationEstate): JsonResponse
     {
         $classificationEstateId = $this->classificationEstate->getById($classificationEstate);
         if(!$classificationEstateId) {
-            throw new NotFoundHttpException("classification de bien with `$classificationEstateId` not found");
+            throw new NotFoundHttpException("classification de bien with `$classificationEstate` not found");
         }
 
         return response()->json($classificationEstateId);

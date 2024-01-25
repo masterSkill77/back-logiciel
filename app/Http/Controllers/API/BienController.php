@@ -31,6 +31,12 @@ use App\Http\Requests\Advertissement\AdvertissementRequest;
 use Illuminate\Validation\ValidationException;
 use Exception; 
 use Illuminate\Database\Eloquent\Collection;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+use Illuminate\Http\JsonResponse;
+use App\Exceptions\CustomException;
+use Illuminate\Pagination\LengthAwarePaginator;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BienController extends Controller
 {
@@ -52,6 +58,10 @@ class BienController extends Controller
         
     }
 
+    /**
+     * creation du bien 
+     * return json
+     */
     public function createBien(
         CreateExternDetailRequest $requestExterior,
         CreateTerrainRequest $requestTerrain,
@@ -66,6 +76,7 @@ class BienController extends Controller
         BienRequest $requestBien
     )
     {
+        DB::beginTransaction();
         try {
             // transaction 
 
@@ -80,7 +91,7 @@ class BienController extends Controller
             $sectorId = $this->handleSector($requestSector->toArray());
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
-
+            $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             $requestData['biens']['photos_id_photos'] = $photosId['id'];
@@ -99,16 +110,23 @@ class BienController extends Controller
             $requestData['biens']['type_estate_id'] = $typeEstateId;
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
-            
+            $user = Auth::user();
+            $requestData['biens']['user_id'] = $user->id;
+            $agency = $user->agency; 
+            $requestData['biens']['agency_id'] = $agency->id;
+
             $this->handleBien($requestData);
-            // commit 
+            DB::commit(); 
+            
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
 
         } catch (ValidationException $e) {
+            DB::rollBack(); 
 
             return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
-            //roll back
+            DB::rollBack(); 
+
             return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }
@@ -207,13 +225,70 @@ class BienController extends Controller
     // ajout et recuperation du photos
     private function handlePhotos(array $requestData): array
     {
-        $data = $this->photoService->addPhotos($requestData);
-        $response= ['id' =>$data];
-        return $response;
+        $photosData = $requestPhoto->input('photos');
+        $file = $requestPhoto->file('photos.photos_original');
+        
+        $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
+        
+        $requestData = [
+            'photos' => [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $photosData['photos_slide'],
+            ],
+        ];
+
+        return $this->photoService->addPhotos($requestData);
     }
 
-    public function findAll() : Collection
+   /**
+     * Get all Biens with pagination
+     *
+     * @param Request $request
+     * @return LengthAwarePaginator
+     */
+    public function findAll(Request $request) : LengthAwarePaginator
     {
-        return $this->bienService->findAll();
+        $perPage = $request->input('perPage', 10);
+        $sortBy = $request->input('sortBy', 'id_bien');
+        $sortOrder = $request->input('sortOrder', 'asc');
+        $search = $request->input('search');
+        $filters = $request->all();
+
+        return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
+   
+    }
+
+    /**
+     * return json 
+     * get identification du bien 
+     */
+    public function findById(int $bienId): JsonResponse
+    {
+        $findBienId = $this->bienService->getById($bienId);
+
+        if (!$findBienId) {
+            return response()->json(['error' => "Bien with ID $bienId not found"], 404);
+        }
+
+        return response()->json($findBienId);
+    }
+
+    // test add photos 
+    public function testPhotos(Request $resquest)
+    {
+        if ($resquest->hasFile('photos_original')) {
+            $file = $resquest->file('photos_original');
+            $originalFilename = $this->photoService->savePhotos($file, ['test']);
+            
+            $photosData = [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $resquest->input('photos_slide')
+            ];
+
+            $photoId = $this->photoService->addPhotos(['photos' => $photosData]);
+            return $photoId;
+        }
+
+        return 0;
     }
 }

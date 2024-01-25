@@ -90,7 +90,10 @@ return new class extends Migration
             $table->float('rent')->nullable();
             //DURÉE BAIL
             $table->integer('duration_lease')->nullable();
-
+            // actif ou inactif inactif si null
+            $table->boolean('publish')->default(false);
+            // vendre ou a louer acheves si vendus
+            $table->boolean('sold')->default(false);
 
             //RELATION
             //PHOTOS
@@ -124,7 +127,7 @@ return new class extends Migration
 
             $table->foreignIdFor(Agency::class)->cascadeOnDelete()->nullable()->default(null);
 
-            $table->foreignIdFor(User::class, 'agent_id')->nullable()->default(null);
+            $table->foreignIdFor(User::class, 'user_id')->nullable()->default(null);
 
             $table->timestamps();
         });

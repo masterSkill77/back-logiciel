@@ -13,14 +13,16 @@ class Bien extends Model
     use HasFactory;
 
     protected $table = 'biens';
+    protected $primaryKey = 'id_bien';
+
     protected $fillable = [
         'city', 'country', 'name_country', 'zap_country', 'living_area', 'land_area', 'number_room', 'number_bedroom', 'number_level', 'garden_exist',
         'garden_exist_area', 'garden_exist_private', 'swim', 'swim_exist', 'swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
         'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'num_folder', 'equipment', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
         'rent', 'duration_lease', 'photos_id_photos', 'recent_construct', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
         'exterior_detail_id', 'classification_offert_id', 'classsification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
-        'advertisement_id',
-        'agency_id', 'agent_id'
+        'advertisement_id', 'publish', 'sold',
+        'agency_id', 'user_id'
     ];
 
     protected $casts = [
@@ -30,7 +32,7 @@ class Bien extends Model
         'recent_construct' => 'array'
     ];
 
-    public function images(): HasOne
+    public function photos(): HasOne
     {
         return $this->hasOne(Photos::class, 'id_photos', 'photos_id_photos');
     }
@@ -42,62 +44,62 @@ class Bien extends Model
 
     public function typeOffert(): HasOne
     {
-        return $this->hasOne(TypeOffert::class, 'offert_id','type_offert_id');
+        return $this->hasOne(TypeOffert::class, 'id','type_offert_id');
     }
 
     public function typeEstate(): HasOne
     {
-        return $this->hasOne(TypeEstate::class, 'estate_id','type_estate_id');
+        return $this->hasOne(TypeEstate::class, 'id','type_estate_id');
     }
 
     public function  interiorDetail(): HasOne
     {
-        return $this->hasOne(InteriorDetail::class);
+        return $this->hasOne(InteriorDetail::class, 'id', 'interior_detail_id');
     }
 
     public function exteriorDetail(): HasOne
     {
-        return $this->hasOne(ExteriorDetail::class);
+        return $this->hasOne(ExteriorDetail::class, 'id', 'exterior_detail_id');
     }
 
     public function classificationOffert(): HasOne
     {
-        return $this->hasOne(ClassificationOffert::class);
+        return $this->hasOne(ClassificationOffert::class,'id', 'classification_offert_id');
     }
 
     public function classificationEstate(): HasOne
     {
-        return $this->hasOne(ClasssificationEstate::class);
+        return $this->hasOne(ClasssificationEstate::class, 'id', 'classsification_estate_id');
     }
 
     public function diagnostic(): HasOne
     {
-        return $this->hasOne(Diagnostic::class);
+        return $this->hasOne(Diagnostic::class, 'id_diagnostics', 'diagnostic_id_diagnostics');
     }
 
     public function rentalInvest(): HasOne
     {
-        return $this->hasOne(RentalInvest::class);
+        return $this->hasOne(RentalInvest::class, 'id_rental_invest', 'rental_invest_id_rental_invest');
     }
 
     public function sector(): HasOne
     {
-        return $this->hasOne(Sector::class);
+        return $this->hasOne(Sector::class, 'id_sector', 'sector_id_sector');
     }
 
     public function terrain(): HasOne
     {
-        return $this->hasOne(Terrain::class);
+        return $this->hasOne(Terrain::class, 'id', 'terrain_id');
     }
 
     public function infoFinanciere(): HasOne
     {
-        return $this->hasOne(InfoFinanciere::class);
+        return $this->hasOne(InfoFinanciere::class,'id', 'info_financiere_id');
     }
 
     public function advertisement(): HasOne
     {
-        return $this->hasOne(Advertisement::class);
+        return $this->hasOne(Advertisement::class, 'id', 'advertisement_id');
     }
 
     public function scopeAgency(Builder $query, Agency $agency): Builder

@@ -4,6 +4,7 @@ namespace App\Services;
 
 use App\Models\Photos;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Http\UploadedFile;
 
 class PhotosService
 {
@@ -11,15 +12,24 @@ class PhotosService
     {
         // Constructor of the class
     }
-    public function addPhotos(array $params): int
+    public function addPhotos(array $params): array
     {
         if(isset($params['photos']) && is_array($params['photos'])) {
             $photo = (new Photos($params['photos']));
             $photo->save();
-            return $photo->id_photos;
+
+            return ['id' => $photo->id_photos];
         }
 
-        return 0;
+        return ['id' => 0];
+    }
+
+    public function savePhotos(UploadedFile $file, array $slides): string
+    {
+        $originalFilename = $file->getClientOriginalName();
+        $path = $file->move(public_path('/document/photos/bien'), $originalFilename);
+
+        return $originalFilename;
     }
 
     /**

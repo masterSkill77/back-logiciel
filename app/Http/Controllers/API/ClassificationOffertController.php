@@ -14,6 +14,9 @@ class ClassificationOffertController extends Controller
         
     }
 
+    /**
+     * return list des classification offert
+     */
     public function index() :JsonResponse
     {
         $list = $this->classificationService->findAll();
@@ -21,11 +24,14 @@ class ClassificationOffertController extends Controller
         return response()->json($list);
     }
 
+    /**
+     * return de get classification offert
+     */
     public function getById(int $classificationOffert): JsonResponse
     {
         $classificationOffertId = $this->classificationService->getById($classificationOffert);
         if(!$classificationOffertId) {
-            throw new NotFoundHttpException("classificationOffert with `$classificationOffertId` not found");
+            throw new NotFoundHttpException("classificationOffert with `$classificationOffert` not found");
         }
 
         return response()->json($classificationOffertId);
