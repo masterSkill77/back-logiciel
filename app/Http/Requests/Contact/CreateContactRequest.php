@@ -24,6 +24,8 @@ class CreateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
+            
+            "contact.title"=> 'required|string:150',
             "contact.contact_type"=> 'required|string:150',
             "contact.target"=> 'required|string:150',
             "contact.civility"=> 'nullable|string:150',
@@ -45,9 +47,7 @@ class CreateContactRequest extends FormRequest
             "contact.space_perso_activate"=> 'required|boolean',
             "contact.space_proprio_activate"=> 'required|boolean',
             "contact.man_info"=> 'nullable|array',
-            "contact.woman_info"=> 'nullable|array',          
-            "contact.preferency_contact_id"=> 'nullable|integer',
-            "contact.user_id"=> 'nullable|integer',         
+            "contact.woman_info"=> 'nullable|array',                  
         ];
     }
 }

@@ -36,6 +36,7 @@ class BienRequest extends FormRequest
             "biens.garden_exist_area"=> 'required|integer',
             "biens.garden_exist_private"=> 'required|integer',
             "biens.swim"=> 'required|integer',
+            "biens.recent_construct"=> 'nullable|array',
             "biens.swim_exist"=> 'required|array',
             "biens.swim_exist_volume"=> 'required|integer',
             "biens.swim_exist_dimensions"=> 'required|string',

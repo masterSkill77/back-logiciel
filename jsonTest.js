@@ -187,6 +187,12 @@
             "test": "house",
             "test": true
         }],
+        "recent_construct" : [{
+            "assurance": "assurance",
+            "garantie": "garantie",
+            "achat" : "achat",
+            "certificat": "certificat"
+        }],
         "publish_price" : 2,
         "selling_price" : 2,
         "publish_property" : true,

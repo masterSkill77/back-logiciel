@@ -76,7 +76,9 @@ return new class extends Migration
             $table->timestamp('date_folder');
             //EQUIPEMENT
             $table->json('equipment')->nullable();
-
+            //CONSTRUCTION RECENTE
+            $table->json('recent_construct')->nullable();
+            
             //PRIX
             //PRIX PUBLIC
             $table->float('publish_price')->nullable();

@@ -29,20 +29,15 @@ class ContactController extends Controller
     {
         try{            
             $userId = auth()->user();
-            
-            $typeOffertId = $contactRequest->input('type_offert_id');
-            $typeEstateId = $contactRequest->input('type_estate_id');
-            $preferencyContactRequest['preferencyContact']['type_offert_id'] = $typeOffertId;
-            $preferencyContactRequest['preferencyContact']['type_estate_id'] = $typeEstateId;
             $preferencyContactId = $this->storePreferencyContact($preferencyContactRequest->toArray());
-
             $requestData = $contactRequest->validated();
-            $requestData['contact']['preferency_contact_id'] = $preferencyContactId['id'];
-            $requestData['contact']['user_id'] = $userId;
+            $requestData['contact']['preference_contacts_id_preference'] = $preferencyContactId['id'];
+            $requestData['contact']['user_id'] = $userId->id;
+            
+            $this->contactService->createContact($requestData);
+         
+            return response(['message' => 'un contact est créé avec succès'], Response::HTTP_CREATED);
 
-            $contacts = $contactRequest->toArray();
-            $contact = $this->contactService->createContact($contacts);
-            return response()->json($contact);
         }catch (ValidationException $e) {
             return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
@@ -73,6 +68,7 @@ class ContactController extends Controller
     //PreferencyContact
     public function storePreferencyContact(array $requestData): array
     {
+     
         $data = $this->preferencyContactService->store($requestData);
         $result = ['id' =>$data];
 

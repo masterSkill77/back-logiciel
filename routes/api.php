@@ -33,16 +33,16 @@ Route::prefix("auth")->group(function(){
     Route::post("login", [LoginController::class, "login"]);
 });
 
-Route::prefix("user", ["middleware" => "auth:sanctum", "role"=>Role::SUPER_ADMIN])->group(function(){
+Route::prefix("user")->middleware(["auth:sanctum", 'role:super_admin'])->group(function(){
     Route::post("/create", [UserController::class, "store"]);
-
+    
 });
 
-
-Route::prefix("contact")->group(function(){
-    Route::get('/' , [ContactController::class, 'index']);
+Route::prefix("contact")->middleware(["auth:sanctum"])->group(function(){
     Route::post('/', [ContactController::class, 'store']);
+    Route::get('/' , [ContactController::class, 'index']);
 });
+
 
 // route pour les type offre
 Route::prefix("type-offert")->group(function(){
