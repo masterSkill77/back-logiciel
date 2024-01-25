@@ -35,7 +35,7 @@ class UserService
 
     public function login(LoginRequest $request) : array
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::with('agency')->where('email', $request->email)->first();
         if(!$user){
             throw new UnauthorizedHttpException('Bad password');
         }
@@ -45,7 +45,7 @@ class UserService
         $token = $user->createToken('token')->plainTextToken;
         return ['user'=>$user, 'token'=> $token];
     }
-    
+
 
     public function createAgent(CreateUserRequest $createUserRequest): array
     {
