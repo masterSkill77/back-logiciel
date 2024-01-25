@@ -25,7 +25,6 @@ class DatabaseSeeder extends Seeder
             TypeOffertSeeder::class,
             ClassificationOffertSeeder::class,
             ClassificationEstateSeeder::class,
-            AgencySeeder::class,
             UserSeeder::class
         ]);
     }
