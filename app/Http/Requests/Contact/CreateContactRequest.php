@@ -25,7 +25,6 @@ class CreateContactRequest extends FormRequest
     {
         return [
             
-            "contact.title"=> 'required|string:150',
             "contact.contact_type"=> 'required|string:150',
             "contact.target"=> 'required|string:150',
             "contact.civility"=> 'nullable|string:150',
@@ -37,10 +36,10 @@ class CreateContactRequest extends FormRequest
             "contact.phone"=> 'nullable|string:10',
             "contact.home_phone"=> 'nullable|string:15',
             "contact.mail"=> 'nullable|string:150',
-            "contact.country"=> 'nullable|string:255',
-            "contact.city"=> 'nullable|string:255',
-            "contact.zip"=> 'nullable|string:150',
-            "contact.adress"=> 'nullable|string:255',
+            "contact.country_contact"=> 'nullable|string:255',
+            "contact.city_contact"=> 'nullable|string:255',
+            "contact.zip_contact"=> 'nullable|string:150',
+            "contact.adress_contact"=> 'nullable|string:255',
             "contact.negociator"=> 'required|string:255',
             "contact.contact_source"=> 'required|string:255',
             "contact.note"=> 'nullable|string:255',

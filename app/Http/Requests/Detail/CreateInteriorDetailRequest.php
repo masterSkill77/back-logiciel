@@ -25,16 +25,16 @@ class CreateInteriorDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "interiorDetail.category"=> 'required|array',
-            "interiorDetail.nbOfSleeping"=> 'required|integer',
-            "interiorDetail.nbOfBathroom"=> 'required|integer',
-            "interiorDetail.nbOfRoomWater"=> 'required|integer',
-            "interiorDetail.nbOfWc"=> 'required|integer',
-            "interiorDetail.caracteristique"=> 'required|array',
-            "interiorDetail.surfaceSquare"=> 'required|integer',
-            "interiorDetail.surfaceStay"=> 'required|integer',
-            "interiorDetail.TypeOfKitchen"=> 'required|string',
-            "interiorDetail.StateOfKitchen"=> 'required|integer',
+            "interiorDetail.category"=> 'nullable|array',
+            "interiorDetail.nbOfSleeping"=> 'nullable|integer',
+            "interiorDetail.nbOfBathroom"=> 'nullable|integer',
+            "interiorDetail.nbOfRoomWater"=> 'nullable|integer',
+            "interiorDetail.nbOfWc"=> 'nullable|integer',
+            "interiorDetail.caracteristique"=> 'nullable|array',
+            "interiorDetail.surfaceSquare"=> 'nullable|integer',
+            "interiorDetail.surfaceStay"=> 'nullable|integer',
+            "interiorDetail.TypeOfKitchen"=> 'nullable|string',
+            "interiorDetail.StateOfKitchen"=> 'nullable|integer',
 
         ];
     }

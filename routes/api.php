@@ -33,9 +33,9 @@ Route::prefix("auth")->group(function(){
     Route::post("login", [LoginController::class, "login"]);
 });
 
-Route::prefix("user")->middleware(["auth:sanctum", 'role:super_admin'])->group(function(){
+Route::prefix("user")->middleware(["auth:sanctum"])->group(function(){
     Route::post("/create", [UserController::class, "store"]);
-    Route::get('/get-agents', [userController::class, "getAllAgents"]);
+    Route::get('/get-agents', [UserController::class, "getAllAgents"]);
 });
 
 Route::prefix("contact")->middleware(["auth:sanctum"])->group(function(){

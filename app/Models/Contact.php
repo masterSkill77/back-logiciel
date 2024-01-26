@@ -12,11 +12,11 @@ class Contact extends Model
 {
     use HasFactory;
     protected $primaryKey = 'id_contact';
-    protected $fillable = ['title','contact_type', 'target', 'civility', 'firstname', 'lastname',
+    protected $fillable = ['contact_type', 'target', 'civility', 'firstname', 'lastname',
                             'legal_form', 'company_name', 'siret', 'phone', 'home_phone',
-                            'mail', 'country', 'city', 'zip', 'adress', 'negociator',
+                            'mail', 'country_contact', 'city_contact', 'zip_contact', 'adress_contact', 'negociator',
                             'contact_source', 'note', 'space_perso_activate', 'space_proprio_activate',
-                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference'];
+                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference', 'agency_id'];
     
     protected $casts = [
         "man_info" => "json",
