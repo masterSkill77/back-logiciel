@@ -9,6 +9,7 @@ use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
 use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\API\PigeController;
+use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
@@ -81,3 +82,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/{agency}', [PigeController::class, 'getPigesByAgence']);
     });
 });
+
+
+Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');

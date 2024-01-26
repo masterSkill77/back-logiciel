@@ -3,9 +3,12 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+
+use App\Enum\Role;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -52,4 +55,8 @@ class User extends Authenticatable
         return $this->belongsTo(Agency::class);
     }
 
+    public function scopeSuperAdmin(Builder $query, int $agencyId)
+    {
+        return $query->where('agency_id', $agencyId)->where('role', Role::SUPER_ADMIN);
+    }
 }
