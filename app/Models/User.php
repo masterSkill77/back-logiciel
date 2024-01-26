@@ -59,4 +59,12 @@ class User extends Authenticatable
     {
         return $query->where('agency_id', $agencyId)->where('role', Role::SUPER_ADMIN);
     }
+
+    /**
+     * Get all of the user's configurations.
+     */
+    public function configurations()
+    {
+        return $this->morphMany(Configuration::class, 'configurable');
+    }
 }

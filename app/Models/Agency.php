@@ -30,4 +30,12 @@ class Agency extends Model
     {
         return $this->hasMany(User::class, 'agence_id');
     }
+
+    /**
+     * Get all of the user's configurations.
+     */
+    public function configurations()
+    {
+        return $this->morphMany(Configuration::class, 'configurable');
+    }
 }
