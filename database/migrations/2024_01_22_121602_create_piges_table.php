@@ -41,7 +41,6 @@ return new class extends Migration
             $table->string('adresse')->nullable();
             $table->integer('maj')->nullable();
             $table->string('bloctel')->nullable();
-            $table->foreignIdFor(Agency::class, 'agency_id');
             $table->timestamps();
         });
     }
