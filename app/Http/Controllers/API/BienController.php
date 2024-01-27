@@ -36,6 +36,7 @@ use Illuminate\Http\JsonResponse;
 use App\Exceptions\CustomException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class BienController extends Controller
 {
@@ -75,6 +76,7 @@ class BienController extends Controller
         BienRequest $requestBien
     )
     {
+        DB::beginTransaction();
         try {
             // transaction 
 
@@ -114,14 +116,17 @@ class BienController extends Controller
             $requestData['biens']['agency_id'] = $agency->id;
 
             $this->handleBien($requestData);
-            // commit 
+            DB::commit(); 
+            
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
 
         } catch (ValidationException $e) {
+            DB::rollBack(); 
 
             return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
-            //roll back
+            DB::rollBack(); 
+
             return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
     }

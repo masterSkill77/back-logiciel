@@ -2,6 +2,7 @@
 
 use App\Models\Advertisement;
 use App\Models\Agency;
+use App\Models\Availabilities;
 use App\Models\ClassificationOffert;
 use App\Models\ClasssificationEstate;
 use App\Models\Diagnostic;
@@ -76,7 +77,9 @@ return new class extends Migration
             $table->timestamp('date_folder');
             //EQUIPEMENT
             $table->json('equipment')->nullable();
-
+            //CONSTRUCTION RECENTE
+            $table->json('recent_construct')->nullable();
+            
             //PRIX
             //PRIX PUBLIC
             $table->float('publish_price')->nullable();
@@ -125,7 +128,9 @@ return new class extends Migration
 
             $table->foreignIdFor(Agency::class)->cascadeOnDelete()->nullable()->default(null);
 
-            $table->foreignIdFor(User::class, 'user_id')->nullable()->default(null);
+            $table->foreignIdFor(Availabilities::class)->nullable();
+
+            $table->foreignIdFor(User::class, 'agent_id')->nullable()->default(null);
 
             $table->timestamps();
         });

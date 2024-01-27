@@ -8,6 +8,7 @@ use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\User\CreateUserRequest;
 use App\Models\User;
+use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -35,7 +36,7 @@ class UserService
 
     public function login(LoginRequest $request) : array
     {
-        $user = User::where('email', $request->email)->first();
+        $user = User::where('email', $request->email)->with('agency')->first();
         if(!$user){
             throw new UnauthorizedHttpException('Bad password');
         }
@@ -55,5 +56,11 @@ class UserService
         $user = new User($user);
         $user->save();
         return ['user'=>$user];
+    }
+
+    public  function getAllAgents() : array
+    {
+        $user = User::where('role', Role::AGENCE)->get();
+        return ['user' => $user];
     }
 }
