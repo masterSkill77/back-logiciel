@@ -40,7 +40,7 @@ class CreateContactRequest extends FormRequest
             "contact.city_contact"=> 'nullable|string:255',
             "contact.zip_contact"=> 'nullable|string:150',
             "contact.adress_contact"=> 'nullable|string:255',
-            "contact.negociator"=> 'required|string:255',
+            "contact.negociator"=> 'nullable|string:255',
             "contact.contact_source"=> 'required|string:255',
             "contact.note"=> 'nullable|string:255',
             "contact.space_perso_activate"=> 'required|boolean',
