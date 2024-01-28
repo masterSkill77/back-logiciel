@@ -13,7 +13,23 @@ return new class extends Migration
     {
         Schema::create('terrains', function (Blueprint $table) {
             $table->id();
+            //terrain(piscinable, arboré, divisible)
             $table->json('ground');
+            //EMPRISE AU SOL:
+            $table->string('ground_print')->nullable();
+            //EMPRISE AU SOL RÉSIDUELLE:
+            $table->string('ground_print_residual')->nullable();
+            //SHON:
+            $table->string('shon')->nullable();
+            //CES:
+            $table->string('ces')->nullable();
+            //CODIFICATION PLU:
+            $table->string('codification_plu')->nullable();
+            //DROIT DE PASSAGE:
+            $table->string('right_way')->nullable();
+            //RÉFÉRENCE CADASTRALE:
+            $table->string('cadastral_ref')->nullable();
+           
             $table->timestamps();
         });
     }

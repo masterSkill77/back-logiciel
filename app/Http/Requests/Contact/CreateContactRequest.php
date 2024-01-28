@@ -2,10 +2,12 @@
 
 namespace App\Http\Requests\Contact;
 
+use App\Http\Requests\ValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
 
 class CreateContactRequest extends FormRequest
 {
+    use ValidationErrors;
     /**
      * Determine if the user is authorized to make this request.
      */
@@ -22,14 +24,29 @@ class CreateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "title"=> 'required|string',
-            "sort"=> 'required|json',
-            "main_info"=> 'required|json',
-            "space_perso_activate"=> 'required|boolean',
-            "space_proprio_activate"=> 'required|boolean',
-            "bien_id"=> 'required|integer',
-            "user_id"=> 'required|integer',
             
+            "contact.contact_type"=> 'required|string:150',
+            "contact.target"=> 'required|string:150',
+            "contact.civility"=> 'nullable|string:150',
+            "contact.firstname"=> 'nullable|string:255',
+            "contact.lastname"=> 'nullable|string:255',
+            "contact.legal_form"=> 'nullable|string:255',
+            "contact.company_name"=> 'nullable|string:255',
+            "contact.siret"=> 'nullable|string:255',
+            "contact.phone"=> 'nullable|string:10',
+            "contact.home_phone"=> 'nullable|string:15',
+            "contact.mail"=> 'nullable|string:150',
+            "contact.country_contact"=> 'nullable|string:255',
+            "contact.city_contact"=> 'nullable|string:255',
+            "contact.zip_contact"=> 'nullable|string:150',
+            "contact.adress_contact"=> 'nullable|string:255',
+            "contact.negociator"=> 'nullable|string:255',
+            "contact.contact_source"=> 'required|string:255',
+            "contact.note"=> 'nullable|string:255',
+            "contact.space_perso_activate"=> 'required|boolean',
+            "contact.space_proprio_activate"=> 'required|boolean',
+            "contact.man_info"=> 'nullable|array',
+            "contact.woman_info"=> 'nullable|array',                  
         ];
     }
 }
