@@ -19,10 +19,10 @@ return new class extends Migration
             $table->string('ville')->nullable();
             $table->integer('cp')->nullable();
             $table->string('titre')->nullable();
-            $table->string('texte')->nullable();
+            $table->text('texte')->nullable();
             $table->string('date')->nullable();
             $table->integer('prix')->nullable();
-            $table->integer('prix_evolution')->nullable();
+            $table->json('prix_evolution')->nullable();
             $table->integer('loyer_cc')->nullable();
             $table->integer('meuble')->nullable();
             $table->integer('pieces')->nullable();

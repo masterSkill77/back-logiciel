@@ -2,8 +2,7 @@
 
 namespace App\Console;
 
-use App\Models\Agency;
-use App\Services\PigeService;
+use App\Jobs\CreateOrUpdatePigeJob;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,10 +14,7 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule): void
     {
         // $schedule->command('inspire')->hourly();
-
-        $pigeService = new PigeService();
-        $agency = Agency::all();
-        
+        $schedule->job(new CreateOrUpdatePigeJob);
     }
 
     /**
