@@ -40,4 +40,10 @@ class Pige extends Model
         'maj',
         'bloctel',
     ];
+
+    public function scopeAgency(Builder $query, Agency $agency)
+    {
+        $postalCodes = $agency->configurations()->pluck('code_postal');
+        return $query->whereIn('cp', $postalCodes);
+    }
 }

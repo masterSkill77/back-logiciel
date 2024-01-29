@@ -59,10 +59,20 @@ class PigeService
     /**
      * Get the piges based on the agency from database
      * @param \App\Models\Agency $agency
+     * @return mixed
      */
 
-    public function getPigesFromDatabase(Agency $agency)
+    public function getPigesFromDatabase(Agency $agency): mixed
     {
         return Pige::agency($agency)->paginate(20);
+    }
+    /**
+     * Return an unique pige based on its ID
+     * @param mixed $pigeId
+     * @return mixed
+     */
+    public function getPigeById(mixed $pigeId): mixed
+    {
+        return Pige::where('id', $pigeId)->first();
     }
 }

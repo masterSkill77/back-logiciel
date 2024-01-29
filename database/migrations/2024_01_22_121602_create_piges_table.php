@@ -17,7 +17,7 @@ return new class extends Migration
             $table->string('bien')->nullable();
             $table->string('type')->nullable();
             $table->string('ville')->nullable();
-            $table->integer('cp')->nullable();
+            $table->string('cp')->nullable();
             $table->string('titre')->nullable();
             $table->text('texte')->nullable();
             $table->string('date')->nullable();
