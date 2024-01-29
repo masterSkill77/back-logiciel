@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\Role;
+use App\Http\Controllers\API\AgencyController;
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\TypeOffertController;
 use App\Http\Controllers\API\ClassificationOffertController;
@@ -78,6 +79,9 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [BienController::class, 'findAll']);
     });
 
+    Route::prefix('agency')->group(function () {
+        Route::get('/', [AgencyController::class, 'show'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+    });
     Route::prefix('piges')->group(function () {
         Route::get('/{agency}', [PigeController::class, 'getPigesByAgence']);
     });
