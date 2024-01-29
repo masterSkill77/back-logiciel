@@ -17,10 +17,10 @@ class RoleMiddleware
      */
     public function handle(Request $request, Closure $next, $roles): Response
     {
-        
+
         if (Auth::user() && Auth()->user()->role == $roles) {
             return $next($request);
         }
-        abort(403, 'Unauthorized');
+        abort(403, 'Vous devez être super admin pour pouvoir faire cette action');
     }
 }
