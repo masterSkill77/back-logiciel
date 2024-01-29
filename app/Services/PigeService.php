@@ -6,6 +6,7 @@ use App\Models\Agency;
 use App\Models\Pige;
 use Exception;
 use Illuminate\Support\Facades\Http;
+use Illuminate\Support\Facades\Log;
 
 class PigeService
 {
@@ -15,22 +16,22 @@ class PigeService
      */
 
     public string $apiUrl;
+    protected $apiKey = '';
     public function __construct()
     {
         $this->apiUrl = env("PIGE_ONLINE_API");
+        $this->apiKey = env('PIGE_ONLINE_API_KEY');
     }
 
     /**
      * Get the piges based on the api key of the agency
-     * @param \App\Models\Agency $agency
      * @return mixed
      */
-    public function getPiges(Agency $agency): mixed
+    public function getPiges(): mixed
     {
-        $apiKey = $agency->pige_online_key;
         try {
-            $response = Http::get($this->apiUrl, ['key' => $apiKey, 'dept' => 68]);
-            return ($response->json());
+            $response = Http::get($this->apiUrl, ['key' => $this->apiKey]);
+            return ($response->json())['annonces'];
         } catch (Exception $e) {
             throw new Exception($e->getMessage());
         }
@@ -42,9 +43,17 @@ class PigeService
      * @return void
      */
 
-    public function createOrUpdatePige(array $pige): void
+    public function createOrSkip(array $pige): void
     {
-        Pige::createOrUpdate($pige);
+        $thePige = Pige::where('id', $pige['id'])->first();
+        if (!$thePige) {
+            $currentPige = new Pige($pige);
+            $currentPige->annonceur = json_encode($pige['annonceur']);
+            $currentPige->prix_evolution = json_encode($pige['prix_evolution']);
+            $currentPige->sources = json_encode($pige['sources']);
+
+            $currentPige->save();
+        }
     }
 
     /**
