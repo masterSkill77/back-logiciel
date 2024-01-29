@@ -28,7 +28,7 @@ class Agency extends Model
 
     public function users(): HasMany
     {
-        return $this->hasMany(User::class, 'agence_id');
+        return $this->hasMany(User::class, 'agency_id');
     }
 
     /**
@@ -36,6 +36,6 @@ class Agency extends Model
      */
     public function configurations()
     {
-        return $this->morphMany(Configuration::class, 'configurable');
+        return $this->morphMany(Configuration::class, 'entity');
     }
 }
