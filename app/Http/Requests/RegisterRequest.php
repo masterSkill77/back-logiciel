@@ -26,7 +26,20 @@ class RegisterRequest extends FormRequest
             "name" => 'required|string:255',
             "email" => 'required|email|string|unique:users',
             "password" => 'required|string|min:8',
-            
+
+        ];
+    }
+
+    /**
+     * Return the message error
+     */
+    public function messages(): array
+    {
+        return [
+            'email.unique' => "L'email n'est plus disponible",
+            'email.required' => "L'email est requis",
+            'password.required' => "Le mot de passe est requis",
+            'name.required' => "Le nom est requis"
         ];
     }
 }

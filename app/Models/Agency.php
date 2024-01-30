@@ -2,16 +2,18 @@
 
 namespace App\Models;
 
+use App\Events\RegisteredAgencyEvent;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Facades\Log;
 
 class Agency extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['nameAgency', 'nameCompany', 'addressCompany', 'phoneAgency'];
+    protected $fillable = ['nameAgency', 'nameCompany', 'addressCompany', 'phoneAgency', 'pige_online_key'];
 
     /**
      * Scope for specifing directly the agenceId without making the condition `where('id', agenceId)`
@@ -26,6 +28,14 @@ class Agency extends Model
 
     public function users(): HasMany
     {
-        return $this->hasMany(User::class, 'agence_id');
+        return $this->hasMany(User::class, 'agency_id');
+    }
+
+    /**
+     * Get all of the user's configurations.
+     */
+    public function configurations()
+    {
+        return $this->morphMany(Configuration::class, 'entity');
     }
 }

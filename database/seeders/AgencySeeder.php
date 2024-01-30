@@ -13,11 +13,12 @@ class AgencySeeder extends Seeder
      */
     public function run(): void
     {
-        $array= [
-             'nameAgency'=>'Agence', 
-             'nameCompany'=>'Company',
-             'addressCompany' => 'Street of Company 32 South',
-             'phoneAgency' => '+3324561896'];
-          Agency::create($array);   
+        $array = [
+            'nameAgency' => 'Agence',
+            'nameCompany' => 'Company',
+            'addressCompany' => 'Street of Company 32 South',
+            'phoneAgency' => '+3324561896'
+        ];
+        Agency::create($array);
     }
 }

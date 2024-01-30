@@ -1,10 +1,12 @@
 <?php
 
-namespace App\Http\API\Controllers;
+namespace App\Http\Controllers\API;
 
 use App\Models\Agency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\AgencyService;
+use Illuminate\Support\Facades\Auth;
 
 class AgencyController extends Controller
 {
@@ -35,9 +37,13 @@ class AgencyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Agency $agency)
+    public function show()
     {
-        //
+        $agencyService = new AgencyService();
+        $user = Auth::user();
+        $agency = $agencyService->getById($user->agency_id);
+
+        return response()->json($agency);
     }
 
     /**
