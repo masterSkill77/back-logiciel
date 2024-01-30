@@ -80,8 +80,9 @@ class PigeService
             ['type', '=', $pige->type],
             ['ville', '=', $pige->ville],
             ['pieces', '=', $pige->pieces],
+            ['adresse', '!=', ''],
             ['id', '!=', $pige->id]
-        ])->limit(5)->get();
+        ])->limit(20)->get();
 
         return [...($pige->toArray()), 'correspondants' => $correspondantPiges];
     }
