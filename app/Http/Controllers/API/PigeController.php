@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Filters\PigeFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Agency;
 use App\Services\AgencyService;
@@ -24,10 +25,10 @@ class PigeController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return JsonResponse
      */
-    public function getPigesByAgence(Request $request, Agency $agency): JsonResponse
+    public function getPigesByAgence(Request $request, PigeFilters $pigeFilters, Agency $agency): JsonResponse
     {
         $agency = (new AgencyService)->getById(Auth::user()->agency_id);
-        $piges = $this->pigeService->getPigesFromDatabase($agency);
+        $piges = $this->pigeService->getPigesFromDatabase($agency, $pigeFilters);
         return response()->json(($piges));
     }
 

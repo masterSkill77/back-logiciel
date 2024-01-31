@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Filters\PigeFilters;
 use App\Models\Agency;
 use App\Models\Pige;
 use Exception;
@@ -62,9 +63,9 @@ class PigeService
      * @return mixed
      */
 
-    public function getPigesFromDatabase(Agency $agency): mixed
+    public function getPigesFromDatabase(Agency $agency, PigeFilters $pigeFilters): mixed
     {
-        return Pige::agency($agency)->paginate(20);
+        return Pige::filter($pigeFilters)->agency($agency)->paginate(20);
     }
     /**
      * Return an unique pige based on its ID
