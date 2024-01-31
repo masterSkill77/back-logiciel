@@ -68,4 +68,32 @@ class PigeFilters extends QueryFilters
             return $this->builder;
         return $this->builder->where('prix', '>=', (int) $budgetMin);
     }
+
+
+    public function piece_max(int | string $pieces = '')
+    {
+        if ($pieces == '')
+            return $this->builder;
+        return $this->builder->where('pieces', '<=', (int) $pieces);
+    }
+    public function piece_min(int | string $pieces = '')
+    {
+        if ($pieces == '')
+            return $this->builder;
+        return $this->builder->where('pieces', '>=', (int) $pieces);
+    }
+
+
+    public function surface_max(int | string $surface = '')
+    {
+        if ($surface == '')
+            return $this->builder;
+        return $this->builder->where('surface', '<=', (int) $surface);
+    }
+    public function surface_min(int | string $surface = '')
+    {
+        if ($surface == '')
+            return $this->builder;
+        return $this->builder->where('surface', '>=', (int) $surface);
+    }
 }
