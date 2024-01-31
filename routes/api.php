@@ -74,9 +74,11 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/', [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
         Route::get('/{id}', [BienController::class, 'findById']);
         Route::post('/photos', [BienController::class, 'testPhotos']);
-        Route::prefix('agency')->group(function () {
-            Route::get('/', [AgencyController::class, 'show'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
-        });
+    });
+
+    Route::prefix('agency')->group(function () {
+        Route::get('/', [AgencyController::class, 'show']);
+        // ->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
     });
     Route::prefix('piges')->group(function () {
         Route::get('/{agency}', [PigeController::class, 'getPigesByAgence']);

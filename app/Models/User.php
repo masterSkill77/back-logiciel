@@ -65,6 +65,6 @@ class User extends Authenticatable
      */
     public function configurations()
     {
-        return $this->morphMany(Configuration::class, 'configurable');
+        return $this->morphMany(Configuration::class, 'entity');
     }
 }

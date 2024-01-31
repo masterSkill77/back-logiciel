@@ -22,7 +22,7 @@ class LoginController extends Controller
             $login = $this->userService->login($request);
             return response()->json($login);
         } catch (Exception $e) {
-            return response()->json(["message" => $e->getMessage()], $e->getCode());
+            return response()->json(["message" => $e->getMessage()], (int) 500);
         }
     }
 }

@@ -40,7 +40,7 @@ class UserService
 
     public function login(LoginRequest $request): array
     {
-        $user = User::with('agency')->where('email', $request->email)->first();
+        $user = User::with(['agency', 'configurations'])->where('email', $request->email)->first();
         if (!$user) {
             throw new UnauthorizedHttpException('', "Les accès que vous avez fournis sont incorectes", null, 401);
         }
