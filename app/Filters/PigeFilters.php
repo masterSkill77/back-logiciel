@@ -96,4 +96,9 @@ class PigeFilters extends QueryFilters
             return $this->builder;
         return $this->builder->where('surface', '>=', (int) $surface);
     }
+
+    public function meuble()
+    {
+        return $this->builder->where('meuble', '>', 0);
+    }
 }
