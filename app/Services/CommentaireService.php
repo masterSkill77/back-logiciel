@@ -18,7 +18,7 @@ class CommentaireService
             [
                 'pige_id' => $pigeId,
                 'title' => $title,
-                'comment' => $comments,
+                'comments' => $comments,
                 'user_id' => $userId
             ]
         );
