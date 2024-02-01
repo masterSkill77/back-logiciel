@@ -65,7 +65,7 @@ class PigeService
 
     public function getPigesFromDatabase(Agency $agency, PigeFilters $pigeFilters): mixed
     {
-        return Pige::filter($pigeFilters)->with(['commmentaires', 'commentaires.user'])->agency($agency)->paginate(20);
+        return Pige::filter($pigeFilters)->with(['commentaires', 'commentaires.user'])->agency($agency)->paginate(20);
     }
     /**
      * Return an unique pige based on its ID
