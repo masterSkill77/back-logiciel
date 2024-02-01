@@ -55,6 +55,16 @@ class User extends Authenticatable
         return $this->belongsTo(Agency::class);
     }
 
+    public function biens(): HasMany
+    {
+        return $this->hasMany(Bien::class, 'agent_id');
+    }
+
+    public function contacts(): HasMany
+    {
+        return $this->hasMany(Contact::class);
+    }
+
     public function scopeSuperAdmin(Builder $query, int $agencyId)
     {
         return $query->where('agency_id', $agencyId)->where('role', Role::SUPER_ADMIN);

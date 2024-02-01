@@ -14,7 +14,7 @@ class AgencyService
 
     public function getById(int $agencyId): Agency
     {
-        return  Agency::where('id', $agencyId)->with('configurations', 'users')->first();
+        return  Agency::where('id', $agencyId)->with('configurations', 'users', 'users.configurations', 'users.biens', 'users.contacts')->first();
     }
 
     public function getAll(): Collection
