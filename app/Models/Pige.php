@@ -6,6 +6,7 @@ use App\Filters\Filterable;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Pige extends Model
 {
@@ -47,5 +48,10 @@ class Pige extends Model
     {
         $postalCodes = $agency->configurations()->pluck('code_postal');
         return $query->whereIn('cp', $postalCodes);
+    }
+
+    public function favories(): HasMany
+    {
+        return $this->hasMany(Favorie::class);
     }
 }

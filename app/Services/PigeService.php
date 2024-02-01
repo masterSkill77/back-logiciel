@@ -74,7 +74,7 @@ class PigeService
      */
     public function getPigeById(mixed $pigeId): mixed
     {
-        $pige = Pige::where('id', $pigeId)->first();
+        $pige = Pige::with('favories')->where('id', $pigeId)->first();
         $correspondantPiges = Pige::where([
             ['cp', '=', $pige->cp],
             ['bien', '=', $pige->bien],

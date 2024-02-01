@@ -67,4 +67,9 @@ class User extends Authenticatable
     {
         return $this->morphMany(Configuration::class, 'entity');
     }
+
+    public function favories(): HasMany
+    {
+        return $this->hasMany(Favorie::class);
+    }
 }

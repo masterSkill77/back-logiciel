@@ -7,7 +7,9 @@ use App\Http\Controllers\Controller;
 use App\Models\Agency;
 use App\Services\AgencyService;
 use App\Services\ConfigurationService;
+use App\Services\FavoryService;
 use App\Services\PigeService;
+use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -15,7 +17,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PigeController extends Controller
 {
-    public function __construct(protected PigeService $pigeService, protected AgencyService $agencyService)
+    public function __construct(protected PigeService $pigeService, protected AgencyService $agencyService, protected FavoryService $favoryService)
     {
     }
 
@@ -59,5 +61,20 @@ class PigeController extends Controller
         $pige = $this->pigeService->getPigeById($pigeId);
 
         return response()->json($pige);
+    }
+
+    public function createOrRemoveFromFavorie(Request $request): JsonResponse
+    {
+        $user = Auth::user();
+
+        $favoryId = $request->input('favory_id');
+        $pigeId = $request->input('pige_id');
+
+        try {
+            $this->favoryService->createOrRemoveFavory($favoryId, $user->id, $pigeId);
+            return response()->json('success');
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
     }
 }
