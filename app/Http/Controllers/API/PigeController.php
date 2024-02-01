@@ -6,6 +6,7 @@ use App\Filters\PigeFilters;
 use App\Http\Controllers\Controller;
 use App\Models\Agency;
 use App\Services\AgencyService;
+use App\Services\CommentaireService;
 use App\Services\ConfigurationService;
 use App\Services\FavoryService;
 use App\Services\PigeService;
@@ -17,7 +18,7 @@ use Symfony\Component\HttpFoundation\Response;
 
 class PigeController extends Controller
 {
-    public function __construct(protected PigeService $pigeService, protected AgencyService $agencyService, protected FavoryService $favoryService)
+    public function __construct(protected PigeService $pigeService, protected AgencyService $agencyService, protected FavoryService $favoryService, protected CommentaireService $commentaireService)
     {
     }
 
@@ -72,6 +73,22 @@ class PigeController extends Controller
 
         try {
             $this->favoryService->createOrRemoveFavory($favoryId, $user->id, $pigeId);
+            return response()->json('success');
+        } catch (Exception $e) {
+            return response()->json($e->getMessage(), 500);
+        }
+    }
+
+    public function createComment(Request $request): JsonResponse
+    {
+        $user = Auth::user();
+
+        $title = $request->input('title');
+        $comment = $request->input('comment');
+        $pigeId = $request->input('pige_id');
+
+        try {
+            $this->commentaireService->createCommentaire($user->id, $pigeId, $title, $comment);
             return response()->json('success');
         } catch (Exception $e) {
             return response()->json($e->getMessage(), 500);

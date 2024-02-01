@@ -54,4 +54,9 @@ class Pige extends Model
     {
         return $this->hasMany(Favorie::class);
     }
+
+    public function commentaires(): HasMany
+    {
+        return $this->hasMany(Commentaire::class);
+    }
 }
