@@ -83,7 +83,7 @@ class PigeService
             ['pieces', '=', $pige->pieces],
             ['adresse', '!=', ''],
             ['id', '!=', $pige->id]
-        ])->limit(20)->get();
+        ])->with(['favories', 'commentaires', 'commentaires.user'])->limit(20)->get();
 
         return [...($pige->toArray()), 'correspondants' => $correspondantPiges];
     }
