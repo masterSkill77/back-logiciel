@@ -4,7 +4,9 @@ namespace App\Http\Controllers\API;
 
 use App\Filters\PigeFilters;
 use App\Http\Controllers\Controller;
+use App\Jobs\CreateOrDeletePostalCodeJob;
 use App\Models\Agency;
+use App\Models\Configuration;
 use App\Services\AgencyService;
 use App\Services\CommentaireService;
 use App\Services\ConfigurationService;
@@ -49,7 +51,25 @@ class PigeController extends Controller
 
         $agency->configurations()->save($configuration);
 
+        // dispatch(new CreateOrDeletePostalCodeJob('creation', $configuration, $agency));
+
         return response()->json($agency);
+    }
+
+
+    /**
+     * Remove postal code from the given agency
+     * @param \Illuminate\Http\Reqeust $request
+     * @param \App\Models\Configuration $configuration
+     * @return \Symfony\Component\HttpFoundation\JsonResponse
+     */
+    public function removePostalCode(Request $request, Configuration $configuration): JsonResponse
+    {
+        $configuration = (new ConfigurationService)->removeConfiguration($configuration->id);
+        $agency = $this->agencyService->getById(Auth::user()->agency_id);
+        // dispatch(new CreateOrDeletePostalCodeJob('creation', $configuration, $agency));
+
+        return response()->json($configuration);
     }
 
     /**

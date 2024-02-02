@@ -15,7 +15,14 @@ class ConfigurationService
     {
         $configuration = new Configuration();
         $configuration->code_postal = $postalCode;
+        return $configuration;
+    }
 
+
+    public function removeConfiguration(int $configurationId)
+    {
+        $configuration = Configuration::where('id', $configurationId)->first();
+        $configuration->delete();
         return $configuration;
     }
 }

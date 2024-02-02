@@ -86,6 +86,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/favorie', [PigeController::class, 'createOrRemoveFromFavorie']);
         Route::post('/comment', [PigeController::class, 'createComment']);
         Route::post('/postal-code', [PigeController::class, 'createPostalCode'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::delete('/postal-code/{configuration}', [PigeController::class, 'removePostalCode'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
     });
 });
 
