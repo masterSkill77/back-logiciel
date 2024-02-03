@@ -40,6 +40,7 @@ Route::middleware('auth:sanctum')->group(function () {
     Route::prefix("user")->middleware(["auth:sanctum"])->group(function () {
         Route::post("/create", [UserController::class, "store"]);
         Route::get('/get-agents', [UserController::class, "getAllAgents"]);
+        Route::get('/check-availability', [UserController::class, "checkAvailability"]);
     });
 
     Route::prefix("contact")->middleware(["auth:sanctum"])->group(function () {

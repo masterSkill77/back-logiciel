@@ -8,6 +8,8 @@ use App\Http\Requests\Agency\AgencyRequest;
 use App\Http\Requests\LoginRequest;
 use App\Http\Requests\RegisterRequest;
 use App\Http\Requests\User\CreateUserRequest;
+use App\Jobs\CreatedUserJob;
+use App\Models\Agency;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Exception;
@@ -55,13 +57,15 @@ class UserService
     }
 
 
-    public function createAgent(CreateUserRequest $createUserRequest): array
+    public function createAgent(CreateUserRequest $createUserRequest, Agency $agency): array
     {
         $user = $createUserRequest->toArray();
         $user['role'] = Role::AGENCE;
+        $user['agency_id'] = $agency->id;
         $user['password'] = Hash::make($user['password']);
         $user = new User($user);
         $user->save();
+        dispatch(new CreatedUserJob($agency, $user));
         return ['user' => $user];
     }
 
@@ -69,5 +73,10 @@ class UserService
     {
         $user = User::where('role', Role::AGENCE)->get();
         return ['user' => $user];
+    }
+
+    public function checkUserAvailability(string $nameOrEmail): bool
+    {
+        return User::where('name', $nameOrEmail)->orWhere('email', $nameOrEmail)->first() ? false : true;
     }
 }
