@@ -2,6 +2,7 @@
 
 namespace App\Mail;
 
+use App\Enum\Operation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Mail\Mailable;
@@ -18,7 +19,7 @@ class SendMailValidation extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $user, public $agency, public $passwordNotHashed)
+    public function __construct(public $user, public $agency, public $passwordNotHashed, public $typeOperation = Operation::CREATED)
     {
         $encryptedUser = Crypt::encryptString(json_encode($this->user));
 

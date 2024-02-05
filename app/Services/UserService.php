@@ -149,6 +149,11 @@ class UserService
 
     public function checkUserAvailability(string $nameOrEmail): bool
     {
-        return User::where('name', $nameOrEmail)->orWhere('email', $nameOrEmail)->first() ? false : true;
+        return User::withTrashed()->where('name', $nameOrEmail)->orWhere('email', $nameOrEmail)->first() ? false : true;
+    }
+
+    public function removeUser(User $user)
+    {
+        return User::where('id', $user->id)->delete();
     }
 }

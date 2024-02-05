@@ -28,6 +28,6 @@ class CreatedUserJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->user->email)->send(new SendMailValidation($this->user, $this->agency, $this->passwordNotHashed));
+        Mail::to($this->user->email)->send(new SendMailValidation($this->user, $this->agency, $this->passwordNotHashed, $this->typeOperation));
     }
 }

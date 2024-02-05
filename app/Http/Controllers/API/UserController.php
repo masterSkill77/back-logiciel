@@ -11,6 +11,7 @@ use App\Services\UserService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class UserController extends Controller
 
@@ -37,7 +38,7 @@ class UserController extends Controller
         $admin = Auth::user();
         $agency = (new AgencyService)->getById($admin->agency_id);
         $user = $this->userService->createAgent($createRequest, $agency);
-        return response()->json($user);
+        return response()->json($user, Response::HTTP_CREATED);
     }
 
 
@@ -74,8 +75,9 @@ class UserController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(User $user)
     {
-        //
+        $delete = $this->userService->removeUser($user);
+        return response()->json(['status' => $delete]);
     }
 }

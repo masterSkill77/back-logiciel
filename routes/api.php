@@ -38,8 +38,9 @@ Route::prefix("auth")->group(function () {
 
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix("user")->middleware(["auth:sanctum"])->group(function () {
-        Route::post("/create", [UserController::class, "store"]);
-        Route::post("/update", [UserController::class, "update"]);
+        Route::post("/create", [UserController::class, "store"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::post("/update", [UserController::class, "update"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::delete("/delete/{user}", [UserController::class, "destroy"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
         Route::get('/get-agents', [UserController::class, "getAllAgents"]);
         Route::get('/check-availability', [UserController::class, "checkAvailability"]);
     });
