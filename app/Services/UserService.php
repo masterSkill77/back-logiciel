@@ -156,4 +156,9 @@ class UserService
     {
         return User::where('id', $user->id)->delete();
     }
+
+    public function getAgent(int $userId)
+    {
+        return User::with(['configurations', 'biens', 'contacts'])->where('id', $userId)->first();
+    }
 }

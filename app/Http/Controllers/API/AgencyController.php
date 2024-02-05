@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enum\Role;
 use App\Models\Agency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Services\AgencyService;
+use App\Services\ConfigurationService;
+use App\Services\UserService;
 use Illuminate\Support\Facades\Auth;
 
 class AgencyController extends Controller
@@ -40,10 +43,14 @@ class AgencyController extends Controller
     public function show()
     {
         $agencyService = new AgencyService();
+        $userService = new UserService($agencyService, new ConfigurationService);
         $user = Auth::user();
-        $agency = $agencyService->getById($user->agency_id);
-
-        return response()->json($agency);
+        if ($user->role === Role::SUPER_ADMIN)
+            $config = $agencyService->getById($user->agency_id);
+        else {
+            $config = $userService->getAgent($user->id);
+        }
+        return response()->json($config);
     }
 
     /**
