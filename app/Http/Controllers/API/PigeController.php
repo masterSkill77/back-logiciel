@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Enum\Role;
 use App\Filters\PigeFilters;
 use App\Http\Controllers\Controller;
 use App\Jobs\CreateOrDeletePostalCodeJob;
@@ -33,7 +34,8 @@ class PigeController extends Controller
     public function getPigesByAgence(Request $request, PigeFilters $pigeFilters, Agency $agency): JsonResponse
     {
         $agency = (new AgencyService)->getById(Auth::user()->agency_id);
-        $piges = $this->pigeService->getPigesFromDatabase($agency, $pigeFilters);
+        $user = Auth::user()->role === Role::SUPER_ADMIN ? null : Auth::user();
+        $piges = $this->pigeService->getPigesFromDatabase($agency, $pigeFilters, $user);
         return response()->json(($piges));
     }
 

@@ -45,7 +45,8 @@ class AgencyController extends Controller
         $agencyService = new AgencyService();
         $userService = new UserService($agencyService, new ConfigurationService);
         $user = Auth::user();
-        if ($user->role === Role::SUPER_ADMIN)
+
+        if ($user->role == Role::SUPER_ADMIN->value)
             $config = $agencyService->getById($user->agency_id);
         else {
             $config = $userService->getAgent($user->id);
