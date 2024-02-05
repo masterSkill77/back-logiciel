@@ -32,6 +32,7 @@ class UserController extends Controller
      */
     public function store(CreateUserRequest $createRequest): JsonResponse
     {
+
         $admin = Auth::user();
         $agency = (new AgencyService)->getById($admin->agency_id);
         $user = $this->userService->createAgent($createRequest, $agency);

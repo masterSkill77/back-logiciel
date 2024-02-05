@@ -13,6 +13,7 @@ use App\Models\Agency;
 use App\Models\User;
 use Illuminate\Http\JsonResponse;
 use Exception;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 use Symfony\Component\HttpKernel\Exception\BadRequestHttpException;
 use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
@@ -20,7 +21,7 @@ use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
 
 class UserService
 {
-    public function __construct(public AgencyService $agencyService)
+    public function __construct(public AgencyService $agencyService, protected ConfigurationService $configurationService)
     {
         // Constructor of the class
     }
@@ -59,14 +60,36 @@ class UserService
 
     public function createAgent(CreateUserRequest $createUserRequest, Agency $agency): array
     {
-        $user = $createUserRequest->toArray();
-        $user['role'] = Role::AGENCE;
-        $user['agency_id'] = $agency->id;
-        $user['password'] = Hash::make($user['password']);
-        $user = new User($user);
-        $user->save();
-        dispatch(new CreatedUserJob($agency, $user));
-        return ['user' => $user];
+
+        try {
+            DB::transaction(function () use ($createUserRequest, $agency) {
+                $file = $createUserRequest->file('image');
+                $photoName = 'agent_' . time() . '.' . $file->getClientOriginalExtension();
+                $file->storeAs('public/agent/' . $agency->id, $photoName);
+
+                $user = $createUserRequest->toArray();
+                $user['role'] = Role::AGENCE;
+                $user['agency_id'] = $agency->id;
+                $user['photo_url'] = $photoName;
+                $user['password'] = Hash::make($user['password']);
+                $user = new User($user);
+                $user->save();
+                if ($createUserRequest->code_postal) {
+                    $allPostalCode = explode(',', $createUserRequest->code_postal);
+                    foreach ($allPostalCode as $postalCode) {
+                        $newPostalCode = $this->configurationService->createConfiguration($postalCode);
+                        $user->configurations()->save($newPostalCode);
+                    }
+                }
+
+                DB::commit();
+                dispatch(new CreatedUserJob($agency, $user));
+                return ['user' => $user];
+            });
+        } catch (Exception $e) {
+            DB::rollBack();
+            throw $e;
+        }
     }
 
     public  function getAllAgents(): array
