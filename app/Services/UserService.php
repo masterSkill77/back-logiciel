@@ -58,7 +58,7 @@ class UserService
     }
 
 
-    public function createAgent(CreateUserRequest $createUserRequest, Agency $agency): array
+    public function createAgent(CreateUserRequest $createUserRequest, Agency $agency): void
     {
 
         try {
