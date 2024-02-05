@@ -23,7 +23,12 @@ class ConfigurationService
     public function removeConfiguration(int $configurationId)
     {
         $configuration = Configuration::where('id', $configurationId)->first();
+
+        $allPostalCodes = Configuration::where('code_postal', $configuration->code_postal);
+
+        $allPostalCodes->delete();
         $configuration->delete();
+
         return $configuration;
     }
 }

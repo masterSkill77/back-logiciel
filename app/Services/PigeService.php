@@ -66,10 +66,6 @@ class PigeService
 
     public function getPigesFromDatabase(Agency $agency, PigeFilters $pigeFilters, User $user = null): mixed
     {
-        if ($user) {
-            $codePostaux = $user->configurations()->pluck('code_postal');
-            return Pige::whereIn('cp', $codePostaux)->filter($pigeFilters)->with(['commentaires', 'commentaires.user'])->agency($agency)->paginate(20);
-        }
         return Pige::filter($pigeFilters)->with(['commentaires', 'commentaires.user'])->agency($agency)->paginate(20);
     }
     /**
