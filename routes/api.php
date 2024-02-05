@@ -39,6 +39,7 @@ Route::prefix("auth")->group(function () {
 Route::middleware('auth:sanctum')->group(function () {
     Route::prefix("user")->middleware(["auth:sanctum"])->group(function () {
         Route::post("/create", [UserController::class, "store"]);
+        Route::post("/update", [UserController::class, "update"]);
         Route::get('/get-agents', [UserController::class, "getAllAgents"]);
         Route::get('/check-availability', [UserController::class, "checkAvailability"]);
     });

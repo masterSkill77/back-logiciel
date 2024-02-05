@@ -18,7 +18,7 @@ class SendMailValidation extends Mailable
     /**
      * Create a new message instance.
      */
-    public function __construct(public $user, public $agency)
+    public function __construct(public $user, public $agency, public $passwordNotHashed)
     {
         $encryptedUser = Crypt::encryptString(json_encode($this->user));
 

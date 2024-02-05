@@ -5,7 +5,7 @@ namespace App\Http\Requests\User;
 use App\Http\Requests\ValidationErrors;
 use Illuminate\Foundation\Http\FormRequest;
 
-class CreateUserRequest extends FormRequest
+class UpdateUserRequest extends FormRequest
 {
     use ValidationErrors;
     /**
@@ -24,11 +24,12 @@ class CreateUserRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "name" => 'required|string:255',
-            "email" => 'required|email|string',
-            "password" => 'required|string|min:8',
-            'image' => 'required',
-            'code_postal'
+            "name" => 'string:255',
+            "email" => 'email|string',
+            "password" => 'string|min:8',
+            'image',
+            'code_postal',
+            'user_id'
         ];
     }
 }

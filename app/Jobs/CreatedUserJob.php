@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enum\Operation;
 use App\Mail\SendMailValidation;
 use Illuminate\Bus\Queueable;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -17,7 +18,7 @@ class CreatedUserJob implements ShouldQueue
     /**
      * Create a new job instance.
      */
-    public function __construct(protected $agency, protected $user)
+    public function __construct(protected $agency, protected $user, protected $passwordNotHashed, protected $typeOperation = Operation::CREATED)
     {
         //
     }
@@ -27,6 +28,6 @@ class CreatedUserJob implements ShouldQueue
      */
     public function handle(): void
     {
-        Mail::to($this->user->email)->send(new SendMailValidation($this->user, $this->agency));
+        Mail::to($this->user->email)->send(new SendMailValidation($this->user, $this->agency, $this->passwordNotHashed));
     }
 }
