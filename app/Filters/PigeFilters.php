@@ -40,6 +40,8 @@ class PigeFilters extends QueryFilters
      */
     public function cp(string $cp = '')
     {
+        if ($cp == '')
+            return $this->builder;
         $cp = explode(',', $cp);
         return $this->builder->whereIn('cp', $cp);
     }
