@@ -42,7 +42,8 @@ class PigeFilters extends QueryFilters
     {
         if ($cp == '')
             return $this->builder;
-        return $this->builder->where('cp', $cp);
+        $cp = explode(',', $cp);
+        return $this->builder->whereIn('cp', $cp);
     }
 
 
