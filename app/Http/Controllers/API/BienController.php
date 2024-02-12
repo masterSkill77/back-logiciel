@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\API;
 
+use App\Exceptions\NotAllowedRessourceException;
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
 use App\Http\Controllers\Controller;
@@ -17,7 +18,6 @@ use App\Services\PhotosService;
 use App\Services\BienService;
 use App\Services\AdvertissementsService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
-use App\Http\Requests\Contact\CreateContactRequest;
 use App\Http\Requests\Detail\CreateExternDetailRequest;
 use App\Http\Requests\InfoCopropriete\CreateInfoCoprprieteRequest;
 use App\Http\Requests\Terrain\CreateTerrainRequest;
@@ -28,19 +28,16 @@ use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
+use App\Models\Bien;
 use Illuminate\Validation\ValidationException;
-use Exception; 
-use Illuminate\Database\Eloquent\Collection;
-use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 use Illuminate\Http\JsonResponse;
-use App\Exceptions\CustomException;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
 
 class BienController extends Controller
 {
-    public function __construct( 
+    public function __construct(
         public ExteriorDetailService $exteriorDetailService,
         public InteriorDetailService $interiorDetailService,
         public TerrainService $terrainService,
@@ -53,13 +50,11 @@ class BienController extends Controller
         public AdvertissementsService $advertissementService,
         public BienService $bienService
 
-        )
-    {
-        
+    ) {
     }
 
     /**
-     * creation du bien 
+     * creation du bien
      * return json
      */
     public function createBien(
@@ -74,11 +69,10 @@ class BienController extends Controller
         PhotoRequest $requestPhoto,
         AdvertissementRequest $requestAdvertissement,
         BienRequest $requestBien
-    )
-    {
+    ) {
         DB::beginTransaction();
         try {
-            // transaction 
+            // transaction
 
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
             $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
@@ -112,20 +106,19 @@ class BienController extends Controller
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
             $user = Auth::user();
             $requestData['biens']['user_id'] = $user->id;
-            $agency = $user->agency; 
+            $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
             $this->handleBien($requestData);
-            DB::commit(); 
-            
-            return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
+            DB::commit();
 
+            return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
-            DB::rollBack(); 
+            DB::rollBack();
 
             return response(['message' => $e->validator->errors()], Response::HTTP_BAD_REQUEST);
         } catch (\Exception $e) {
-            DB::rollBack(); 
+            DB::rollBack();
 
             return response(['message' => $e->getMessage()], Response::HTTP_INTERNAL_SERVER_ERROR);
         }
@@ -135,7 +128,7 @@ class BienController extends Controller
     private function handleAdvertissement(array $requestData): array
     {
         $data = $this->advertissementService->store($requestData);
-        $response = ['id' =>$data];
+        $response = ['id' => $data];
 
         return $response;
     }
@@ -153,25 +146,25 @@ class BienController extends Controller
     private function handleRentalInvest(array $requestData): array
     {
         $data = $this->rentalInvestService->createRentalInvest($requestData);
-        $response = ['id' =>$data];
+        $response = ['id' => $data];
 
         return $response;
     }
 
-    // ajout et recuperation de la diagnostique 
+    // ajout et recuperation de la diagnostique
     private function handleDiagnostique(array $requestData): array
     {
         $dataId = $this->diagnostiqueService->createDiagnostic($requestData);
-        $response = ['id' =>$dataId];
+        $response = ['id' => $dataId];
 
         return $response;
     }
 
-    // ajout et recuperation de la info copropriete 
+    // ajout et recuperation de la info copropriete
     private function handleInfoCopropriete(array $requestData): array
     {
         $dataId = $this->infoCoproprieteService->createInfoCopropriete($requestData);
-        $response = ['id' =>$dataId];
+        $response = ['id' => $dataId];
 
         return $response;
     }
@@ -189,7 +182,7 @@ class BienController extends Controller
     private function handleBien(array $requestData): array
     {
         $data = $this->bienService->createBien($requestData);
-        $response = ['id' =>$data];
+        $response = ['id' => $data];
 
         return $response;
     }
@@ -227,9 +220,9 @@ class BienController extends Controller
     {
         $photosData = $requestPhoto->input('photos');
         $file = $requestPhoto->file('photos.photos_original');
-        
+
         $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
-        
+
         $requestData = [
             'photos' => [
                 'photos_original' => $originalFilename,
@@ -240,13 +233,13 @@ class BienController extends Controller
         return $this->photoService->addPhotos($requestData);
     }
 
-   /**
+    /**
      * Get all Biens with pagination
      *
      * @param Request $request
      * @return LengthAwarePaginator
      */
-    public function findAll(Request $request) : LengthAwarePaginator
+    public function findAll(Request $request): LengthAwarePaginator
     {
         $perPage = $request->input('perPage', 10);
         $sortBy = $request->input('sortBy', 'id_bien');
@@ -255,12 +248,11 @@ class BienController extends Controller
         $filters = $request->all();
 
         return $this->bienService->findAll($perPage, $sortBy, $sortOrder, $filters, $search);
-   
     }
 
     /**
-     * return json 
-     * get identification du bien 
+     * return json
+     * get identification du bien
      */
     public function findById(int $bienId): JsonResponse
     {
@@ -273,13 +265,13 @@ class BienController extends Controller
         return response()->json($findBienId);
     }
 
-    // test add photos 
+    // test add photos
     public function testPhotos(Request $resquest)
     {
         if ($resquest->hasFile('photos_original')) {
             $file = $resquest->file('photos_original');
             $originalFilename = $this->photoService->savePhotos($file, ['test']);
-            
+
             $photosData = [
                 'photos_original' => $originalFilename,
                 'photos_slide' => $resquest->input('photos_slide')
@@ -290,5 +282,20 @@ class BienController extends Controller
         }
 
         return 0;
+    }
+
+    /**
+     * Retrieve estate from numFolder
+     * @param int $folderNum
+     * @return JsonResponse
+     */
+    public function getEstateByMandat(int $folderNum): JsonResponse
+    {
+        $user = Auth::user();
+        $bien = $this->bienService->getByMandat($folderNum);
+
+        if ($bien->agency_id !== $user->agency_id)
+            throw new NotAllowedRessourceException();
+        return response()->json($bien);
     }
 }

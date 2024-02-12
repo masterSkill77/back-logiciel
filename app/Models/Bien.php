@@ -124,6 +124,6 @@ class Bien extends Model
 
     public function folder(): HasMany
     {
-        return $this->hasMany(Folder::class);
+        return $this->hasMany(Folder::class, 'bien_id');
     }
 }
