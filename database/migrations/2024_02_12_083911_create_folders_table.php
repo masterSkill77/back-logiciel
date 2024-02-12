@@ -18,7 +18,7 @@ return new class extends Migration
             $table->id();
             $table->uuid('folder_uuid')->default(Uuid::uuid4());
             $table->string('folder_type');
-            $table->foreignIdFor(Bien::class);
+            $table->foreignIdFor(Bien::class, 'bien_id');
             $table->foreignIdFor(Agency::class);
             $table->string('num_mandat');
             $table->date('date_signature');
