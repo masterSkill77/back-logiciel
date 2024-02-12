@@ -16,7 +16,7 @@ return new class extends Migration
             $table->id();
             $table->string('step_name');
             $table->integer('step_duration');
-            $table->date('step_date');
+            $table->date('step_date')->nullable();
             $table->boolean('active')->default(true);
             $table->foreignIdFor(Folder::class);
             $table->timestamps();

@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Models\Folder;
+use App\Models\Step;
 
 class FolderService
 {
@@ -16,5 +17,11 @@ class FolderService
         $folder = new Folder($folderData);
         $folder->save();
         return $folder;
+    }
+    public function createStepForFolder(array $stepData): Step
+    {
+        $step = new Step($stepData);
+        $step->save();
+        return $step;
     }
 }

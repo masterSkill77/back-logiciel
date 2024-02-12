@@ -80,6 +80,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::get('/mandat/{id}', [BienController::class, 'getEstateByMandat']);
         Route::post('/photos', [BienController::class, 'testPhotos']);
         Route::prefix('folder')->group(function () {
+            Route::post('/step', [FolderController::class, 'registerStep']);
             Route::post('/register', [FolderController::class, 'registerFolder'])->middleware('agency_user');
         });
     });
