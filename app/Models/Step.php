@@ -14,5 +14,6 @@ class Step extends Model
         'step_duration',
         'step_date',
         'folder_id',
+        'active'
     ];
 }
