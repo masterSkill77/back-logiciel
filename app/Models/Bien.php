@@ -122,8 +122,8 @@ class Bien extends Model
         return $query->where('agent_id', $agentId);
     }
 
-    public function folder(): HasMany
+    public function folder(): HasOne
     {
-        return $this->hasMany(Folder::class, 'bien_id');
+        return $this->hasOne(Folder::class, 'bien_id');
     }
 }
