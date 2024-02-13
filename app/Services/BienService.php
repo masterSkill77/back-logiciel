@@ -45,6 +45,8 @@ class BienService
                 'infoCopropriete',
                 'typeOffert',
                 'typeEstate',
+                'folder',
+                'folder.steps',
                 'interiorDetail',
                 'exteriorDetail',
                 'classificationOffert',
