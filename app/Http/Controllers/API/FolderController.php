@@ -8,6 +8,7 @@ use App\Http\Requests\Folder\RegisterStepRequest;
 use App\Services\FolderService;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Support\Facades\Auth;
+use Symfony\Component\HttpFoundation\Response;
 
 class FolderController extends Controller
 {
@@ -24,7 +25,7 @@ class FolderController extends Controller
     {
         $user = Auth::user();
         $folder = $this->folderService->createFolder($registerRequest->toArray());
-        return response()->json($folder);
+        return response()->json($folder, Response::HTTP_CREATED);
     }
 
     /**
@@ -35,6 +36,6 @@ class FolderController extends Controller
     public function registerStep(RegisterStepRequest $registerStepRequest): JsonResponse
     {
         $step = $this->folderService->createStepForFolder($registerStepRequest->toArray());
-        return response()->json($step);
+        return response()->json($step, Response::HTTP_CREATED);
     }
 }
