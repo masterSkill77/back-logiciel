@@ -55,4 +55,11 @@ class FolderService
             $step->update();
         }
     }
+    public function updateStep(array $data): void
+    {
+        $step = Step::where('id', $data['step_id'])->first();
+        $step->step_name = $data['step_name'];
+        $step->step_duration = $data['step_duration'];
+        $step->update();
+    }
 }
