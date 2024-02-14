@@ -15,6 +15,7 @@ use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -100,5 +101,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::delete('/postal-code/{configuration}', [PigeController::class, 'removePostalCode'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
     });
 });
+
+Route::get('/test', fn() => Hash::make('123456789'));
 
 Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');
