@@ -38,4 +38,10 @@ class FolderController extends Controller
         $step = $this->folderService->createStepForFolder($registerStepRequest->toArray());
         return response()->json($step, Response::HTTP_CREATED);
     }
+
+    public function updateOrRemoveStep(string $action, int $stepId): JsonResponse
+    {
+        $this->folderService->updateOrRemoveStep($action, $stepId);
+        return response()->json([], Response::HTTP_OK);
+    }
 }

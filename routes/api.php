@@ -81,6 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/photos', [BienController::class, 'testPhotos']);
         Route::prefix('folder')->group(function () {
             Route::post('/step', [FolderController::class, 'registerStep']);
+            Route::get('/step/{action}/{stepId}', [FolderController::class, 'updateOrRemoveStep']);
             Route::post('/register', [FolderController::class, 'registerFolder'])->middleware('agency_user');
         });
     });

@@ -45,4 +45,14 @@ class FolderService
                 break;
         }
     }
+
+    public function updateOrRemoveStep(string $action, int $stepId): void
+    {
+        $step = Step::where('id', $stepId)->first();
+        if ($action === 'delete') $step->delete();
+        else {
+            $step->active = !$step->active;
+            $step->update();
+        }
+    }
 }
