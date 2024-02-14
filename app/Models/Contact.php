@@ -16,7 +16,8 @@ class Contact extends Model
                             'legal_form', 'company_name', 'siret', 'phone', 'home_phone',
                             'mail', 'country', 'city', 'zip', 'adress', 'negociator',
                             'contact_source', 'note', 'space_perso_activate', 'space_proprio_activate',
-                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference'];
+                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference',
+                            'man_info_compl', 'woman_info_compl'];
     
     protected $casts = [
         "man_info" => "json",
