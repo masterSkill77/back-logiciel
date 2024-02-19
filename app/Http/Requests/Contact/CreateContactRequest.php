@@ -49,7 +49,7 @@ class CreateContactRequest extends FormRequest
             "contact.man_info"=> 'nullable|array',
             "contact.woman_info"=> 'nullable|array',
             "contact.man_info_compl"=> 'nullable|array',
-            "contact.woman_info_compl"=> 'nullable|array',                  
+            "contact.woman_info_compl"=> 'nullable|array'                  
         ];
     }
 }
