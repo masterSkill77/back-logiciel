@@ -45,6 +45,8 @@ class BienService
                 'infoCopropriete',
                 'typeOffert',
                 'typeEstate',
+                'folder',
+                'folder.steps',
                 'interiorDetail',
                 'exteriorDetail',
                 'classificationOffert',
@@ -147,5 +149,33 @@ class BienService
         }
 
         return $query;
+    }
+
+    /**
+     * Get the estate based on its mandat num
+     * @param int $numFolder
+     * @return \App\Models\Bien | null
+     */
+    public function getByMandat(int $numFolder): Bien | null
+    {
+        return Bien::where('num_folder', $numFolder)->with([
+            'folder.steps',
+            'folder',
+            'photos',
+            'agent',
+            'infoCopropriete',
+            'typeOffert',
+            'typeEstate',
+            'interiorDetail',
+            'rentalInvest',
+            'exteriorDetail',
+            'classificationOffert',
+            'classificationEstate',
+            'diagnostic',
+            'sector',
+            'terrain',
+            'infoFinanciere',
+            'advertisement'
+        ])->first();
     }
 }

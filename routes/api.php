@@ -9,6 +9,7 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
 use App\Http\Controllers\API\ClassificationEstateController;
+use App\Http\Controllers\API\FolderController;
 use App\Http\Controllers\API\PigeController;
 use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -76,7 +77,14 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
         Route::get('/', [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
         Route::get('/{id}', [BienController::class, 'findById']);
+        Route::get('/mandat/{id}', [BienController::class, 'getEstateByMandat']);
         Route::post('/photos', [BienController::class, 'testPhotos']);
+        Route::prefix('folder')->group(function () {
+            Route::post('/step', [FolderController::class, 'registerStep']);
+            Route::patch('/step', [FolderController::class, 'updateStep']);
+            Route::get('/step/{action}/{stepId}', [FolderController::class, 'updateOrRemoveStep']);
+            Route::post('/register', [FolderController::class, 'registerFolder'])->middleware('agency_user');
+        });
     });
 
     Route::prefix('agency')->group(function () {
