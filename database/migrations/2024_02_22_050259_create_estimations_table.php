@@ -23,7 +23,7 @@ return new class extends Migration
             $table->uuid('estimation_uuid')->default(Uuid::uuid4());
 
             $table->unsignedBigInteger('agency_id');
-            $table->foreign('agency_id')->references('id')->on(Agency::class);
+            $table->foreign('agency_id')->references('id')->on('agencies');
 
             $table->timestamps();
         });
