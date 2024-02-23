@@ -187,17 +187,9 @@
             "test": "house",
             "test": true
         }],
-        "recent_construct" : [{
-            "assurance": "assurance",
-            "garantie": "garantie",
-            "achat" : "achat",
-            "certificat": "certificat"
-        }],
         "publish_price" : 2,
         "selling_price" : 2,
         "publish_property" : true,
-        "publish" : false,
-        "sold" : false,
         "rent" : 2,
         "duration_lease" : 2
     },
@@ -208,7 +200,5 @@
     "type_offert_id": 1,
     "type_estate_id": 1,
     "classification_estate_id": 1,
-    "classification_offert_id": 1,
-    "user_id": 3,
-    "agency_id": 1
+    "classification_offert_id": 1
 }

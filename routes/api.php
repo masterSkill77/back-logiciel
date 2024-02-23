@@ -1,6 +1,7 @@
 <?php
 
 use App\Enum\Role;
+use App\Http\Controllers\API\AgencyController;
 use App\Http\Controllers\API\ContactController;
 use App\Http\Controllers\API\TypeOffertController;
 use App\Http\Controllers\API\ClassificationOffertController;
@@ -8,9 +9,13 @@ use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
 use App\Http\Controllers\API\ClassificationEstateController;
+use App\Http\Controllers\API\FolderController;
+use App\Http\Controllers\API\PigeController;
+use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,52 +33,75 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::prefix("auth")->group(function(){
+Route::prefix("auth")->group(function () {
     Route::post("register", [RegisterController::class, "register"]);
     Route::post("login", [LoginController::class, "login"]);
 });
 
-Route::prefix("user")->middleware(["auth:sanctum", 'role:super_admin'])->group(function(){
-    Route::post("/create", [UserController::class, "store"]);
-    
+Route::middleware('auth:sanctum')->group(function () {
+    Route::prefix("user")->middleware(["auth:sanctum"])->group(function () {
+        Route::post("/create", [UserController::class, "store"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::post("/update", [UserController::class, "update"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::delete("/delete/{user}", [UserController::class, "destroy"])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::get('/get-agents', [UserController::class, "getAllAgents"]);
+        Route::get('/check-availability', [UserController::class, "checkAvailability"]);
+    });
+
+    Route::prefix("contact")->middleware(["auth:sanctum"])->group(function () {
+        Route::post('/', [ContactController::class, 'store']);
+        Route::get('/', [ContactController::class, 'index']);
+    });
+
+
+    // route pour les type offre
+    Route::prefix("type-offert")->group(function () {
+        Route::get('/', [TypeOffertController::class, 'index']);
+        Route::get('/{id}', [TypeOffertController::class, 'findById']);
+        Route::get('/classification-offert/{id}', [TypeOffertController::class, 'getClassificationByIdTypeOffert']);
+    });
+
+    // route pour les type de bien
+    Route::prefix("type-estate")->group(function () {
+        Route::get('/', [TypeEstateController::class, 'index']);
+        Route::get('/{id}', [TypeEstateController::class, 'getById']);
+        Route::get('/classification-bien/{id}', [TypeEstateController::class, 'getClassificationByIdTypeEstate']);
+    });
+
+    // route pour les classification de bien
+    Route::prefix("classification-estate")->group(function () {
+        Route::get('/', [ClassificationEstateController::class, 'index']);
+        Route::get('/{id}', [ClassificationEstateController::class, 'getById']);
+    });
+
+    // route pour les biens
+    Route::prefix("bien")->group(function () {
+        Route::post('/', [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
+        Route::get('/', [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
+        Route::get('/{id}', [BienController::class, 'findById']);
+        Route::get('/mandat/{id}', [BienController::class, 'getEstateByMandat']);
+        Route::post('/photos', [BienController::class, 'testPhotos']);
+        Route::prefix('folder')->group(function () {
+            Route::post('/step', [FolderController::class, 'registerStep']);
+            Route::patch('/step', [FolderController::class, 'updateStep']);
+            Route::get('/step/{action}/{stepId}', [FolderController::class, 'updateOrRemoveStep']);
+            Route::post('/register', [FolderController::class, 'registerFolder'])->middleware('agency_user');
+        });
+    });
+
+    Route::prefix('agency')->group(function () {
+        Route::get('/', [AgencyController::class, 'show']);
+        // ->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+    });
+    Route::prefix('piges')->group(function () {
+        Route::get('/{agency}', [PigeController::class, 'getPigesByAgence']);
+        Route::get('/details/{pigeId}', [PigeController::class, 'getPige']);
+        Route::post('/favorie', [PigeController::class, 'createOrRemoveFromFavorie']);
+        Route::post('/comment', [PigeController::class, 'createComment']);
+        Route::post('/postal-code', [PigeController::class, 'createPostalCode'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+        Route::delete('/postal-code/{configuration}', [PigeController::class, 'removePostalCode'])->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
+    });
 });
 
-Route::prefix("contact")->middleware(["auth:sanctum"])->group(function(){
-    Route::post('/', [ContactController::class, 'store']);
-    Route::get('/' , [ContactController::class, 'index']);
-});
+Route::get('/test', fn() => Hash::make('123456789'));
 
-
-// route pour les type offre
-Route::prefix("type-offert")->group(function(){
-    Route::get('/' , [TypeOffertController::class, 'index']);
-    Route::get('/{id}' , [TypeOffertController::class, 'findById']);
-    Route::get('/classification-offert/{id}' , [TypeOffertController::class, 'getClassificationByIdTypeOffert']);
-});
-
-// route pour les classification d'offre
-Route::prefix("classification-offert")->group(function(){
-    Route::get('/' , [ClassificationOffertController::class, 'index']);
-    Route::get('/{id}' , [ClassificationOffertController::class, 'getById']);
-});
-
-// route pour les type de bien
-Route::prefix("type-estate")->group(function(){
-    Route::get('/' , [TypeEstateController::class, 'index']);
-    Route::get('/{id}' , [TypeEstateController::class, 'getById']);
-    Route::get('/classification-bien/{id}' , [TypeEstateController::class, 'getClassificationByIdTypeEstate']);
-});
-
-// route pour les classification de bien
-Route::prefix("classification-estate")->group(function(){
-    Route::get('/' , [ClassificationEstateController::class, 'index']);
-    Route::get('/{id}' , [ClassificationEstateController::class, 'getById']);
-});
-
-// route pour les biens
-Route::prefix("bien")->group(function(){
-    Route::post('/' , [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
-    Route::get('/' , [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
-    Route::get('/{id}' , [BienController::class, 'findById']);
-    Route::post('/photos' , [BienController::class, 'testPhotos']);
-});
+Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');

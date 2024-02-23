@@ -33,6 +33,7 @@ class ContactController extends Controller
             $requestData = $contactRequest->validated();
             $requestData['contact']['preference_contacts_id_preference'] = $preferencyContactId['id'];
             $requestData['contact']['user_id'] = $userId->id;
+            $requestData['contact']['agency_id'] = $userId->agency->id;
             
             $this->contactService->createContact($requestData);
          

@@ -24,7 +24,18 @@ class AgencyRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "nameAgency" => 'required|string:255',
+            "nameAgency" => 'required|string:255|unique:agencies',
+            "nameCompany" => 'required|string:255',
+            "addressCompany" => 'required|string:255',
+            "phoneAgency" => 'required|string:15',
+        ];
+    }
+
+
+    public function messages(): array
+    {
+        return [
+            "nameAgency.required" => 'Le nom de l\'agence est requis',
             "nameCompany" => 'required|string:255',
             "addressCompany" => 'required|string:255',
             "phoneAgency" => 'required|string:15',

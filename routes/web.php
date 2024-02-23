@@ -20,3 +20,7 @@ Route::get('/', function () {
   ;
     return response()->json($data);
 });
+Route::get('/mail', function(){
+    return view('mails/mail');
+});
+
