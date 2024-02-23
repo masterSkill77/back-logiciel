@@ -24,8 +24,7 @@ class CreateContactRequest extends FormRequest
     public function rules(): array
     {
         return [
-            
-            "contact.title"=> 'required|string:150',
+
             "contact.contact_type"=> 'required|string:150',
             "contact.target"=> 'required|string:150',
             "contact.civility"=> 'nullable|string:150',

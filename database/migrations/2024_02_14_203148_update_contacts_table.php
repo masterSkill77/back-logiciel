@@ -16,6 +16,7 @@ return new class extends Migration
             $table->json('man_info_compl')->nullable();
             //INFO COMPLEMENTAIRE FEMME
             $table->json('woman_info_compl')->nullable();
+           
         });
     }
 
@@ -25,7 +26,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('contacts', function (Blueprint $table) {
-            //
+            //Remmove Title
+            $table->dropColumn('title');
         });
     }
 };

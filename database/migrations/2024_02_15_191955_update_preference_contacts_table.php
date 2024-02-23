@@ -17,13 +17,13 @@ return new class extends Migration
             //NOMBRE DE SALLE DE WC
             $table->integer('number_wc')->nullable();
             //JARDIN EXISTE
-            $table->integer('garden_exist');
+            $table->integer('garden_exist')->nullable();
             //SURFACE JARDIN SI EXISTE
             $table->float('garden_exist_area')->nullable();
             //SURFACE TERRAIN
             $table->float('land_area')->nullable();
             //PISCINE
-            $table->integer('swim');
+            $table->integer('swim')->nullable();
             //SURFACE PISCINE SI EXISTE
             $table->float('swim_exist_area')->nullable();
             //NOMBRE DE GARAGE
@@ -37,11 +37,11 @@ return new class extends Migration
             //VUE
             $table->string('view')->nullable();
             //GRENIER(COMBLE)
-            $table->integer('attic');
+            $table->integer('attic')->nullable();
             //CELLIER
-            $table->integer('cellar');
+            $table->integer('cellar')->nullable();
             //MEUBLES
-            $table->integer('furnished');
+            $table->integer('furnished')->nullable();
             //SURFACE CARREZ
             $table->float('carrez_area')->nullable();
             //SURFACE SEJOUR
