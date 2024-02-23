@@ -15,3 +15,4 @@ use App\Http\Controllers\API\EstimationController;
 use Illuminate\Support\Facades\Route;
 
 Route::post('/', [EstimationController::class, 'createEstimation'])->middleware('auth:sanctum');
+Route::get('/', [EstimationController::class, 'getEstimations'])->middleware('auth:sanctum');

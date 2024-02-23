@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Filters\EstimationFilters;
 use App\Models\Agency;
 use App\Models\Estimation;
 
@@ -18,5 +19,10 @@ class EstimationService
         $estimation =  new Estimation($data);
         $estimation->save();
         return $estimation;
+    }
+
+    public function getEstimations(Agency $agency, EstimationFilters $estimationFilters)
+    {
+        return Estimation::filter($estimationFilters)->agency($agency)->with('agency')->paginate(2);
     }
 }
