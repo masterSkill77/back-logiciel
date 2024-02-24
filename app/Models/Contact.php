@@ -16,11 +16,14 @@ class Contact extends Model
                             'legal_form', 'company_name', 'siret', 'phone', 'home_phone',
                             'mail', 'country_contact', 'city_contact', 'zip_contact', 'adress_contact', 'negociator',
                             'contact_source', 'note', 'space_perso_activate', 'space_proprio_activate',
-                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference', 'agency_id'];
+                            'man_info', 'woman_info', 'user_id', 'preference_contacts_id_preference',
+                            'man_info_compl', 'woman_info_compl','agency_id'];
     
     protected $casts = [
         "man_info" => "json",
-        "woman_info" => "json"
+        "woman_info" => "json",
+        "man_info_compl" => "json",
+        "woman_info_compl" => "json",
     ];
 
     public function scopeContact(Builder $query , Contact $contact): Builder
