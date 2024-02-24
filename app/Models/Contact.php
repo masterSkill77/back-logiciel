@@ -21,7 +21,9 @@ class Contact extends Model
     
     protected $casts = [
         "man_info" => "json",
-        "woman_info" => "json"
+        "woman_info" => "json",
+        "man_info_compl" => "json",
+        "woman_info_compl" => "json",
     ];
 
     public function scopeContact(Builder $query , Contact $contact): Builder

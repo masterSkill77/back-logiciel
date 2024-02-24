@@ -28,6 +28,7 @@ return new class extends Migration
         Schema::table('contacts', function (Blueprint $table) {
             //Remmove Title
             $table->dropColumn('title');
+            //
         });
     }
 };
