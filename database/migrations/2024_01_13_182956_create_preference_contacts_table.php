@@ -50,6 +50,7 @@ return new class extends Migration
            $table->foreignIdFor(TypeOffert::class)->default(null);
            //TYPE DE BIEN
            $table->foreignIdFor(TypeEstate::class)->default(null);
+           
             $table->timestamps();
         });
     }

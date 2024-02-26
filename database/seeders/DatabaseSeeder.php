@@ -29,7 +29,7 @@ class DatabaseSeeder extends Seeder
             ClassificationOffertSeeder::class,
             ClassificationEstateSeeder::class,
             // AgencySeeder::class,
-            // UserSeeder::class
+            //UserSeeder::class
         ]);
     }
 }
