@@ -105,6 +105,7 @@ Route::middleware('auth:sanctum')->group(function () {
 
 Route::prefix('google')->group(function () {
     Route::post('/data', GoogleController::class)->middleware(['auth:sanctum', 'role:' . (Role::SUPER_ADMIN)->value, 'agency_user']);
+    Route::post('/create', [GoogleController::class, 'addEvent'])->middleware(['auth:sanctum']);
     Route::get('/oauth2callback', [GoogleController::class, 'callback']);
     Route::get('/synchronize', [GoogleController::class, 'synchronize'])->middleware(['auth:sanctum']);
     Route::delete('/remove/{eventId}', [GoogleController::class, 'removeEvent'])->middleware(['auth:sanctum', 'role:' . (Role::SUPER_ADMIN)->value]);
