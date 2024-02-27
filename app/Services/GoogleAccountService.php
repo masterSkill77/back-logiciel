@@ -37,7 +37,6 @@ class GoogleAccountService
 
     public function fetchAccessTokenWithRefresh(string $refresh): array
     {
-        $refresh = "1//03pkKlIDKoM6fCgYIARAAGAMSNwF-L9Ir4lfAq-yPdsaRiRIdxWWqUOUtMJ1t70ZW0rZvCo8TJw6AngwDlW1qDZYRA_1GFX0tqkM";
         return  $this->client->fetchAccessTokenWithRefreshToken($refresh);
     }
 
