@@ -13,7 +13,7 @@ class GoogleAccountService
         $this->client = new Client();
         $this->client->setApplicationName("MAPIM Immo Logiciel");
         $this->client->setAuthConfig(base_path() . '/client_secret.json');
-        $redirect_uri = 'http://127.0.0.1:8000/api/v1/google/oauth2callback';
+        $redirect_uri = env('GOOGLE_REDIRECT');
         $this->client->setRedirectUri($redirect_uri);
         $this->client->setApprovalPrompt('force');
         $this->client->setAccessType('offline');
