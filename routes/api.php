@@ -10,6 +10,7 @@ use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
 use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\API\FolderController;
+use App\Http\Controllers\API\GoogleController;
 use App\Http\Controllers\API\PigeController;
 use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
@@ -102,6 +103,11 @@ Route::middleware('auth:sanctum')->group(function () {
     });
 });
 
-Route::get('/test', fn() => Hash::make('123456789'));
+Route::prefix('google')->group(function () {
+    Route::post('/data', GoogleController::class)->middleware(['auth:sanctum', 'role:' . (Role::SUPER_ADMIN)->value, 'agency_user']);
+    Route::get('/oauth2callback', [GoogleController::class, 'callback']);
+    Route::get('/synchronize', [GoogleController::class, 'synchronize'])->middleware(['auth:sanctum']);
+    Route::delete('/remove/{eventId}', [GoogleController::class, 'removeEvent'])->middleware(['auth:sanctum', 'role:' . (Role::SUPER_ADMIN)->value]);
+});
 
 Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');

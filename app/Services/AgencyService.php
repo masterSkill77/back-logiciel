@@ -12,7 +12,7 @@ class AgencyService
         return Agency::create($data);
     }
 
-    public function getById(int $agencyId): Agency
+    public function getById(int $agencyId): Agency | null
     {
         return  Agency::where('id', $agencyId)->with('configurations', 'users', 'users.configurations', 'users.biens', 'users.contacts')->first();
     }
