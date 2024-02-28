@@ -26,7 +26,7 @@ class EstimationService
 
     public function getEstimations(Agency $agency, EstimationFilters $estimationFilters)
     {
-        return Estimation::filter($estimationFilters)->agency($agency)->with(['agency', 'user'])->paginate(10);
+        return Estimation::filter($estimationFilters)->agency($agency)->with(['agency', 'user'])->orderBy('created_at', 'DESC')->paginate(10);
     }
     /**
      * Affect an estimation to a specific user based on estimation uuid and the user id
