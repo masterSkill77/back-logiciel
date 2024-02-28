@@ -2,14 +2,13 @@
 
 namespace App\Services;
 
+use App\Enum\Role;
+use App\Models\User;
 use Carbon\Carbon;
-use Exception;
 use Google\Client;
 use Google\Service\Calendar;
 use Google\Service\Calendar\Event;
 use Google\Service\Calendar\EventDateTime;
-use Illuminate\Support\Facades\Cache;
-use Illuminate\Support\Facades\Log;
 
 class GoogleCalendarService
 {
@@ -38,7 +37,7 @@ class GoogleCalendarService
         return $events;
     }
 
-    public function addEvent(int $agencyId, array $data)
+    public function addEvent(int $agencyId, array $data, User $user)
     {
         $agency = (new AgencyService())->getById($agencyId);
 
@@ -51,10 +50,28 @@ class GoogleCalendarService
         $event = new Event();
         $event->setDescription($data['event_description']);
         $event->setSummary($data['event_name']);
-        // $event->setAttendees([[
-        //     'email' => 'clairmont@saha-technology.com',
-        //     'displayName' => 'Clairmont SAHA'
-        // ]]);
+
+        if (isset($data['agents']) && $user->role == Role::SUPER_ADMIN->value) {
+            $attendees = [];
+            foreach ($data['agents'] as $agentId) {
+                $agent = User::where('id', $agentId)->first();
+                array_push($attendees, [
+                    'email' => $agent->email,
+                    'displayName' => $agent->name
+                ]);
+            }
+            $event->setAttendees($attendees);
+        }
+        if ($user->role == Role::AGENCE->value) {
+            $agent = User::where('id', $user->id)->first();
+            $event->setAttendees([
+                [
+                    'email' => $agent->email,
+                    'displayName' => $agent->name
+                ]
+            ]);
+        }
+
         $endDate = (new EventDateTime());
         $endDate->setDateTime(Carbon::createFromDate($data['eventInfo']['end']));
         $startDate = (new EventDateTime());
@@ -77,8 +94,6 @@ class GoogleCalendarService
             $calendar = new Calendar($this->client);
             $calendar->events->delete('primary', $eventId);
             $events = $calendar->events->listEvents('primary')->getItems();
-            Cache::delete('calendar-' . $agencyId);
-            Cache::put('calendar-' . $agencyId, $events);
 
             return $events;
         }

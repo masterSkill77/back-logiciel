@@ -50,8 +50,10 @@ class GoogleController extends Controller
     public function addEvent(Request $request)
     {
         $agencyId = Auth::user()->agency_id;
+        $user = Auth::user();
+
         $data = $request->all();
-        $event = $this->googleCalendarService->addEvent($agencyId, $data);
+        $event = $this->googleCalendarService->addEvent($agencyId, $data, $user);
         return response()->json($event);
     }
 }
