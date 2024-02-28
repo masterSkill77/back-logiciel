@@ -23,6 +23,17 @@ class EstimationService
 
     public function getEstimations(Agency $agency, EstimationFilters $estimationFilters)
     {
-        return Estimation::filter($estimationFilters)->agency($agency)->with('agency')->paginate(2);
+        return Estimation::filter($estimationFilters)->agency($agency)->with(['agency', 'user'])->paginate(10);
+    }
+    /**
+     * Affect an estimation to a specific user based on estimation uuid and the user id
+     * @param int $userIdTo ( the user to attribute the estimation )
+     * @param $estimationId ( the estimation ID)
+     */
+    public function affectAgentToEstimation(int $userIdTo, $estimationId): void
+    {
+        $estimation = Estimation::where('id', $estimationId)->first();
+        $estimation->user_id = $userIdTo;
+        $estimation->save();
     }
 }
