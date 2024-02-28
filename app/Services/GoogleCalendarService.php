@@ -67,7 +67,8 @@ class GoogleCalendarService
             $event->setAttendees([
                 [
                     'email' => $agent->email,
-                    'displayName' => $agent->name
+                    'displayName' => $agent->name,
+                    'organizer' => true
                 ]
             ]);
         }
