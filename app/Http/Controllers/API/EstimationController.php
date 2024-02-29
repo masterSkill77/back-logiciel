@@ -33,4 +33,13 @@ class EstimationController extends Controller
 
         return response()->json($estimations, 200);
     }
+
+    public function affectAgentToEstimation(Request $request)
+    {
+        $userId = $request->input('user_id');
+        $estimationId = $request->input('estimation_id');
+        $this->estimationService->affectAgentToEstimation($userId, $estimationId);
+
+        return response()->json([]);
+    }
 }

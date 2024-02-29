@@ -19,7 +19,11 @@ class Estimation extends Model
         'demandeur_lastname',
         'demandeur_email',
         'details_bien',
-        'agency_id'
+        'user_id',
+        'agency_id',
+        'address_bien',
+        'cp_bien',
+        'ville_bien',
     ];
 
     public function scopeAgency(Builder $builder, Agency $agency): Builder
@@ -30,5 +34,10 @@ class Estimation extends Model
     public function agency(): BelongsTo
     {
         return $this->belongsTo(Agency::class, 'agency_id');
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class, 'user_id');
     }
 }
