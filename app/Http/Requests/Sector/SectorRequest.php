@@ -25,17 +25,17 @@ class SectorRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "sectors.advertised_country"=> 'required|string',
-            "sectors.public_zap"=> 'required|string',
-            "sectors.public_country"=> 'required|string',
-            "sectors.private_zap"=> 'required|string',
-            "sectors.private_country"=> 'required|string',
-            "sectors.property_address"=> 'required|string',
-            "sectors.address_completed"=> 'required|string',
-            "sectors.building"=> 'required|string',
-            "sectors.prox_service"=> 'required|string',
-            "sectors.environment"=> 'required|string',
-            "sectors.map"=> 'required|array'
+            "sectors.advertised_country"=> 'nullable|string',
+            "sectors.public_zap"=> 'nullable|string',
+            "sectors.public_country"=> 'nullable|string',
+            "sectors.private_zap"=> 'nullable|string',
+            "sectors.private_country"=> 'nullable|string',
+            "sectors.property_address"=> 'nullable|string',
+            "sectors.address_completed"=> 'nullable|string',
+            "sectors.building"=> 'nullable|string',
+            "sectors.prox_service"=> 'nullable|string',
+            "sectors.environment"=> 'nullable|string',
+            "sectors.map"=> 'nullable|string'
         ];
     }
 }

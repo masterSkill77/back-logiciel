@@ -25,22 +25,22 @@ class CreateExternDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "exteriorDetail.semiOwnership"=> 'required|string',
-            "exteriorDetail.basement"=> 'required|string',
+            "exteriorDetail.semiOwnership"=> 'string',
+            "exteriorDetail.basement"=> 'string',
             "exteriorDetail.withbasement"=> 'nullable|integer',
-            "exteriorDetail.cellar"=> 'required|integer',
+            "exteriorDetail.cellar"=> 'nullable|integer',
             "exteriorDetail.trueCellar"=> 'nullable|integer',
-            "exteriorDetail.balcony"=> 'required|integer',
+            "exteriorDetail.balcony"=> 'integer',
             "exteriorDetail.withBalcony"=> 'nullable|integer',
-            "exteriorDetail.terrace"=> 'required|integer',
+            "exteriorDetail.terrace"=> 'integer',
             "exteriorDetail.withTerrace"=> 'nullable|integer',
-            "exteriorDetail.varangue"=> 'required|integer',
-            "exteriorDetail.loggia"=> 'required|integer',
-            "exteriorDetail.veranda"=> 'required|integer',
+            "exteriorDetail.varangue"=> 'integer',
+            "exteriorDetail.loggia"=> 'integer',
+            "exteriorDetail.veranda"=> 'integer',
             "exteriorDetail.withVeranda"=> 'nullable|integer',
-            "exteriorDetail.singleStorey"=> 'required|integer',
-            "exteriorDetail.typeResidence"=> 'required|string',
-            "exteriorDetail.formatResidence"=> 'required|string'
+            "exteriorDetail.singleStorey"=> 'integer',
+            "exteriorDetail.typeResidence"=> 'string',
+            "exteriorDetail.formatResidence"=> 'string'
         ];
     }
 }

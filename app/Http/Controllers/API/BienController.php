@@ -72,6 +72,7 @@ class BienController extends Controller
     ) {
         DB::beginTransaction();
         try {
+
             // transaction
 
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
@@ -85,7 +86,6 @@ class BienController extends Controller
             $sectorId = $this->handleSector($requestSector->toArray());
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
-            $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             $requestData['biens']['photos_id_photos'] = $photosId['id'];
@@ -105,7 +105,7 @@ class BienController extends Controller
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
             $user = Auth::user();
-            $requestData['biens']['user_id'] = $user->id;
+            $requestData['biens']['agent_id'] = $user->id;
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
@@ -215,23 +215,23 @@ class BienController extends Controller
         return $response;
     }
 
-    // ajout et recuperation du photos
-    private function handlePhotos(array $requestData): array
+    private function handlePhotos(array $requestPhoto): array
     {
-        $photosData = $requestPhoto->input('photos');
-        $file = $requestPhoto->file('photos.photos_original');
-
-        $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
-
-        $requestData = [
-            'photos' => [
-                'photos_original' => $originalFilename,
-                'photos_slide' => $photosData['photos_slide'],
-            ],
-        ];
-
-        return $this->photoService->addPhotos($requestData);
+        $photosData = $requestPhoto['photos']; // Accéder aux données des photos depuis le tableau $requestPhoto
+    
+        // Vérifier si des fichiers ont été téléchargés
+        if(isset($requestPhoto['photos']['photos_original'])) {
+            $file = $requestPhoto['photos']['photos_original'];
+    
+            $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
+    
+            // Mettre à jour les données des photos avec les noms de fichiers originaux
+            $photosData['photos_original'] = $originalFilename;
+        }
+    
+        return $this->photoService->addPhotos($photosData);
     }
+    
 
     /**
      * Get all Biens with pagination
