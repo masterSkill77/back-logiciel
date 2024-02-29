@@ -11,7 +11,7 @@ class InfoCopropriete extends Model
     use HasFactory;
 
     protected $fillable = [
-        'lot_number', 'total_unit', 'annual_charges', 'amount_fund', 'thousands_copropriete', 'property_copropriete'
+        'lot_number', 'total_unit', 'annual_charges', 'amount_fund', 'thousands_copropriete', 'property_copropriete', 'backupPlan', 'unionStatus'
     ];
 
     protected $primaryKey = 'id_infocopropriete';

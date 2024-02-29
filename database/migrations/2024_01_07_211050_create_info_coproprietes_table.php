@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::create('info_coproprietes', function (Blueprint $table) {
             $table->id('id_infocopropriete'); 
 
+            //BIEN EN COPROPRIÉTÉ:
+            $table->json('property_copropriete');
             // N° DE LOT
             $table->string('lot_number');
             //NB DE LOTS
@@ -24,9 +26,10 @@ return new class extends Migration
             $table->bigInteger('amount_fund');
             //MILLIÈMES DE COPROPRIÉTÉ:
             $table->string('thousands_copropriete');
-            //BIEN EN COPROPRIÉTÉ:
-            $table->json('property_copropriete');
-
+            //PLAN DE SAUVEGARDE:
+            $table->string('backupPlan');
+            //status du syndicat
+            $table->string('unionStatus');
             $table->timestamps();
         });
     }
