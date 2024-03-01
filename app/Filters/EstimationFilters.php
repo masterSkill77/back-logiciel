@@ -38,7 +38,7 @@ class EstimationFilters extends QueryFilters
         return $this->builder->whereRaw("JSON_EXTRACT(details_bien, '$.nb_pieces') = ?", [$nbPieces]);
     }
 
-    public function nb_chambre(string $nbChambre = '')
+    public function nb_chambres(string $nbChambre = '')
     {
         if ($nbChambre == '') {
             return $this->builder;
