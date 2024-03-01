@@ -14,11 +14,11 @@ return new class extends Migration
         Schema::table('preference_contacts', function (Blueprint $table) {
 
             //SURFACE JARDIN SI EXISTE
-            $table->float('garden_exist_private')->nullable();
+            $table->integer('garden_exist_private')->nullable();
             //STATUT PISCINE SI EXISTE
-            $table->float('swim_exist_statut')->nullable();
+            $table->string('swim_exist_statut')->nullable();
             //NATURE PISCINE SI EXISTE
-            $table->float('swim_exist_nature')->nullable();
+            $table->string('swim_exist_nature')->nullable();
             //SOUS SOL AMNENAGE
             $table->string('basement_amenaged')->nullable();
             //CAVE
