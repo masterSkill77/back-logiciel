@@ -16,9 +16,6 @@ class EstimationService
     public function createEstimation(array $data, int $agencyId): Estimation
     {
         $data['agency_id'] = $agencyId;
-        $data['address_bien'] = 'Text';
-        $data['cp_bien'] = '35025';
-        $data['ville_bien'] = 'Paris';
         $estimation =  new Estimation($data);
         $estimation->save();
         return $estimation;
