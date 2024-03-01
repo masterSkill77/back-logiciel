@@ -16,4 +16,5 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('/', [EstimationController::class, 'createEstimation'])->middleware('auth:sanctum');
 Route::get('/', [EstimationController::class, 'getEstimations'])->middleware('auth:sanctum');
+Route::get('/cp', [EstimationController::class, 'getDistinctCP'])->middleware('auth:sanctum');
 Route::post('/affect', [EstimationController::class, 'affectAgentToEstimation'])->middleware(['auth:sanctum', 'agency_user']);

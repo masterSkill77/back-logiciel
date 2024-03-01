@@ -54,7 +54,10 @@ class PigeFilters extends QueryFilters
     {
         if ($keyword == '')
             return $this->builder;
-        return $this->builder->where('titre', 'like', "%$keyword%")->orWhere('texte', 'like', "%$keyword%");
+        return $this->builder->where(function ($query) use ($keyword) {
+            $query->where('titre', 'like', "%$keyword%")
+                ->orWhere('texte', 'like', "%$keyword%");
+        });;
     }
 
     public function budget_max(int | string $budgetMax = '')

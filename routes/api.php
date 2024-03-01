@@ -15,6 +15,7 @@ use App\Http\Controllers\API\PigeController;
 use App\Http\Controllers\Auth\ConfirmationAccountController;
 use App\Http\Controllers\Auth\RegisterController;
 use App\Http\Controllers\Auth\LoginController;
+use App\Services\CommuneSearchService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Route;
@@ -112,3 +113,5 @@ Route::prefix('google')->group(function () {
 });
 
 Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');
+
+Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));

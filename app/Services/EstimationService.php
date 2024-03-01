@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Filters\EstimationFilters;
 use App\Models\Agency;
 use App\Models\Estimation;
+use Illuminate\Support\Facades\DB;
 
 class EstimationService
 {
@@ -16,9 +17,6 @@ class EstimationService
     public function createEstimation(array $data, int $agencyId): Estimation
     {
         $data['agency_id'] = $agencyId;
-        $data['address_bien'] = 'Text';
-        $data['cp_bien'] = '35025';
-        $data['ville_bien'] = 'Paris';
         $estimation =  new Estimation($data);
         $estimation->save();
         return $estimation;
@@ -38,5 +36,14 @@ class EstimationService
         $estimation = Estimation::where('id', $estimationId)->first();
         $estimation->user_id = $userIdTo;
         $estimation->save();
+    }
+
+    /**
+     * Get the distinct CP to show them in the filter table
+     * @param int
+     */
+    public function getDistinctCP(int $agencyId)
+    {
+        return Estimation::select(DB::raw('DISTINCT(cp_bien) as code_postal'))->where('agency_id', $agencyId)->get();
     }
 }
