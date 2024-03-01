@@ -42,4 +42,12 @@ class EstimationController extends Controller
 
         return response()->json([]);
     }
+
+    public function getDistinctCP()
+    {
+        $agencyId = Auth::user()->agency_id;
+        $postalCodes = $this->estimationService->getDistinctCP($agencyId);
+
+        return response()->json($postalCodes);
+    }
 }
