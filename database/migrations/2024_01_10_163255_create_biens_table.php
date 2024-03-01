@@ -31,46 +31,58 @@ return new class extends Migration
     {
         Schema::create('biens', function (Blueprint $table) {
             $table->id('id_bien'); 
-            //PAYS
-            $table->string('city')->nullable();
-            //VILLE NOM
-            $table->string('name_country')->nullable();
-            //VILLE CODE POSTAL
-            $table->string('zap_country')->nullable();
+            //PRIX
+            //PRIX PUBLIC
+            $table->float('publish_price')->nullable();
+            //PRIX VENDEUR
+            $table->float('selling_price')->nullable();
+
+            //LOYER
+            $table->float('rent')->nullable();
+            //DURÉE BAIL
+            $table->integer('duration_lease')->nullable();
+
             //SURFACE HABITABLE
             $table->float('living_area')->nullable();
-            //SURFACE TERRAIN
-            $table->float('land_area')->nullable();
+
+
             //NOMBRE DES PIECES
             $table->integer('number_room')->nullable();
             //NOMBRE DES CHAMBRES
             $table->integer('number_bedroom')->nullable();
             //NOMBRE DES NIVEAUX
             $table->integer('number_level')->nullable();
+
             //JARDIN EXISTE
-            $table->integer('garden_exist');
+            $table->integer('garden');
             //JARDIN EXISTE JARDIN
-            $table->float('garden_exist_area')->nullable();
-            //JARDIN EXISTE PRIVATIF
-            $table->integer('garden_exist_private')->nullable();
+            $table->json('garden_exist')->nullable();
+
+            //SURFACE TERRAIN
+            $table->float('land_area')->nullable();
+
             //PISCINE
             $table->integer('swim');
             //PISCINE EXISTE (json)
             $table->json('swim_exist')->nullable();
-            //PISCINE EXISTE VOLUME
-            $table->float('swim_exist_volume')->nullable();
-            //PISCINE EXISTE DIMENSIONS
-            $table->string('swim_exist_dimensions')->nullable();
-            //PISCINE EXISTE TRAITEMENT
-            $table->string('swim_sxist_treatment')->nullable();
+
             //NOMBRE DE GARAGE
-            $table->integer('number_garage')->nullable();
+            $table->string('number_garage')->nullable();
             //PARKING INTERIEUR
             $table->string('indoor_parking')->nullable();
             //PARKING EXTERIERUR
             $table->string('outdoor_parking')->nullable();
-            //SITUATION
+
+            //SITUATION (exposition et vue)
             $table->json('status');
+
+            //PAYS
+            $table->string('city')->nullable();
+            //VILLE NOM
+            $table->string('name_country')->nullable();
+            //VILLE CODE POSTAL
+            $table->string('zap_country')->nullable();
+
             //DOSSIER N° MANDAT
             $table->unsignedBigInteger('num_folder');
             //DOSSIER DATE CREATION
@@ -79,18 +91,10 @@ return new class extends Migration
             $table->json('equipment')->nullable();
             //CONSTRUCTION RECENTE
             $table->json('recent_construct')->nullable();
-            
-            //PRIX
-            //PRIX PUBLIC
-            $table->float('publish_price')->nullable();
-            //PRIX VENDEUR
-            $table->float('selling_price')->nullable();
+        
             //PUBLIE LE BIEN
             $table->boolean('publish_property')->default(false);
-            //LOYER
-            $table->float('rent')->nullable();
-            //DURÉE BAIL
-            $table->integer('duration_lease')->nullable();
+
             // actif ou inactif inactif si null
             $table->boolean('publish')->default(false);
             // vendre ou a louer acheves si vendus

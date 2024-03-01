@@ -15,7 +15,6 @@ class InteriorDetail extends Model
         'category' => 'array',
     ];
     protected $fillable = [
-        'category', 'nbOfSleeping', 'nbOfBathroom', 'nbOfRoomWater', 'nbOfWc', 'caracteristique', 'surfaceSquare', 'surfaceStay',
-        'TypeOfKitchen', 'StateOfKitchen'
+        'category', 'nbOfSleeping', 'nbOfBathroom', 'nbOfRoomWater', 'nbOfWc', 'caracteristique', 'surface', 'kitchen'
     ];
 }

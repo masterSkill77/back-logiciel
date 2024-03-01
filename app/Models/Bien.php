@@ -17,13 +17,14 @@ class Bien extends Model
     protected $primaryKey = 'id_bien';
 
     protected $fillable = [
-        'city', 'country', 'name_country', 'zap_country', 'living_area', 'land_area', 'number_room', 'number_bedroom', 'number_level', 'garden_exist',
-        'garden_exist_area', 'garden_exist_private', 'swim', 'swim_exist', 'swim_exist_volume', 'swim_exist_dimensions', 'swim_sxist_treatment',
-        'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'num_folder', 'equipment', 'date_folder', 'publish_price', 'selling_price', 'publish_property',
-        'rent', 'duration_lease', 'photos_id_photos', 'recent_construct', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
-        'exterior_detail_id', 'classification_offert_id', 'classsification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
+        'publish_price','selling_price', 'rent', 'duration_lease', 'living_area', 'number_room', 'number_bedroom', 'number_level', 'garden',
+        'garden_exist', 'land_area', 'swim', 'swim_exist', 'number_garage', 'indoor_parking', 'outdoor_parking', 'status', 'city', 'name_country',
+        'zap_country', 'num_folder', 'date_folder', 'equipment', 'recent_construct', 'publish_property','publish', 'sold', 'recent_construct', 'info_copropriete_id_infocopropriete', 
+        'type_offert_id', 'type_estate_id', 'interior_detail_id','photos_id_photos',
+        'exterior_detail_id', 'classification_offert_id', 'classsification_estate_id', 'diagnostic_id_diagnostics', 
+        'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
         'advertisement_id', 'publish', 'sold', 'availabilities_id_availability',
-        'agency_id', 'user_id'
+        'agency_id', 'agent_id'
     ];
 
     protected $casts = [
