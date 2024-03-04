@@ -12,25 +12,26 @@ class PhotosService
     {
         // Constructor of the class
     }
-    public function addPhotos(array $params): array
+    public function addPhotos(array $photosData): int
     {
-        if(isset($params['photos']) && is_array($params['photos'])) {
-            $photo = (new Photos($params['photos']));
-            $photo->save();
+        $photo = new Photos($photosData);
+        $photo->save();
+    
+        return $photo->id_photos;
+    }
+    
 
-            return ['id' => $photo->id_photos];
+    public function savePhotos(UploadedFile $files): array
+    {
+        $filenames = [];
+        foreach ($files as $file) {
+            $originalFilename = $file->getClientOriginalName();
+            $path = $file->move(public_path('/document/photos/bien'), $originalFilename);
+            $filenames[] = $originalFilename;
         }
-
-        return ['id' => 0];
+        return $filenames;
     }
-
-    public function savePhotos(UploadedFile $file, array $slides): string
-    {
-        $originalFilename = $file->getClientOriginalName();
-        $path = $file->move(public_path('/document/photos/bien'), $originalFilename);
-
-        return $originalFilename;
-    }
+    
 
     /**
      * Update an Photos row based on infoId
