@@ -14,6 +14,8 @@ return new class extends Migration
         Schema::table('interior_details', function (Blueprint $table) {
              //surface boutin
              $table->string('surfaceBoutin')->nullable();
+             //nombre de lots
+            $table->integer('nbOfLots')->nullable();
              //plaque de cuisson
              $table->integer('hotplate')->nullable();
              //four
@@ -26,6 +28,28 @@ return new class extends Migration
              $table->integer('fridge')->nullable();
              //lave-vaiselle
              $table->integer('dishwasher')->nullable();
+             //cafetière
+             $table->integer('coffeeMaker')->nullable();
+             //grille-pain
+             $table->integer('toaster')->nullable();
+             //tv
+             $table->integer('tv')->nullable();
+             //internet
+             $table->integer('internet')->nullable();
+             //hifi
+             $table->integer('hifi')->nullable();
+             //lave-linge
+             $table->integer('washingMachine')->nullable();
+             //sèche-ligne
+             $table->integer('dryer')->nullable();
+             //fer à repasser
+             $table->integer('iron')->nullable();
+             //equipements bébé
+            $table->integer('babyEquipment')->nullable();
+            //nombre de baignoires
+            $table->integer('nbOfBathtubs')->nullable();
+            //nombre de douches
+            $table->integer('nbOfShowers')->nullable();
         });
     }
 

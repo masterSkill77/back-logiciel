@@ -36,7 +36,24 @@ class CreateInteriorDetailRequest extends FormRequest
             "interiorDetail.TypeOfKitchen"=> 'nullable|string',
             "interiorDetail.StateOfKitchen"=> 'nullable|integer',
             "interiorDetail.surfaceBoutin"=> 'nullable|integer',
-
+            "interiorDetail.nbOfLots"=> 'nullable|integer',
+            "interiorDetail.hotplate"=> 'nullable|integer',
+            "interiorDetail.oven"=> 'nullable|integer',
+            "interiorDetail.microwave"=> 'nullable|integer',
+            "interiorDetail.freezer"=> 'nullable|integer',
+            "interiorDetail.fridge"=> 'nullable|integer',
+            "interiorDetail.dishwasher"=> 'nullable|integer',
+            "interiorDetail.coffeeMaker"=> 'nullable|integer',
+            "interiorDetail.toaster"=> 'nullable|integer',
+            "interiorDetail.tv"=> 'nullable|integer',
+            "interiorDetail.internet"=> 'nullable|integer',
+            "interiorDetail.hifi"=> 'nullable|integer',
+            "interiorDetail.washingMachine"=> 'nullable|integer',
+            "interiorDetail.dryer"=> 'nullable|integer',
+            "interiorDetail.iron"=> 'nullable|integer',
+            "interiorDetail.babyEquipment"=> 'nullable|integer',
+            "interiorDetail.nbOfBathtubs"=> 'nullable|integer',
+            "interiorDetail.nbOfShowers"=> 'nullable|integer',
         ];
     }
 }

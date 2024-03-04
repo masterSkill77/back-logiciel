@@ -16,6 +16,8 @@ class InteriorDetail extends Model
     ];
     protected $fillable = [
         'category', 'nbOfSleeping', 'nbOfBathroom', 'nbOfRoomWater', 'nbOfWc', 'caracteristique', 'surfaceSquare', 'surfaceStay',
-        'TypeOfKitchen', 'StateOfKitchen', 'surfaceBoutin'
+        'TypeOfKitchen', 'StateOfKitchen', 'surfaceBoutin', 'nbOfLots', 'hotplate', 'oven', 'microwave', 'freezer', 'fridge',
+        'dishwasher', 'coffeeMaker', 'toaster', 'tv', 'internet', 'hifi', 'washingMachine', 'dryer', 'iron', 'babyEquipment',
+        'nbOfBathtubs', 'nbOfShowers'
     ];
 }
