@@ -35,6 +35,7 @@ class CreateInteriorDetailRequest extends FormRequest
             "interiorDetail.surfaceStay"=> 'nullable|integer',
             "interiorDetail.TypeOfKitchen"=> 'nullable|string',
             "interiorDetail.StateOfKitchen"=> 'nullable|integer',
+            "interiorDetail.surfaceBoutin"=> 'nullable|integer',
 
         ];
     }
