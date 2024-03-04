@@ -12,6 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('exterior_details', function (Blueprint $table) {
+            //Etages
+            $table->integer('floor')->nullable();
             //Barbecue
             $table->integer('barbecue')->nullable();
             //Jacuzzi

@@ -41,6 +41,7 @@ class CreateExternDetailRequest extends FormRequest
             "exteriorDetail.singleStorey"=> 'required|integer',
             "exteriorDetail.typeResidence"=> 'required|string',
             "exteriorDetail.formatResidence"=> 'required|string',
+            "exteriorDetail.floor"=> 'nullable|integer',
             "exteriorDetail.barbecue"=> 'nullable|integer',
             "exteriorDetail.jacuzzi"=> 'nullable|integer',
             "exteriorDetail.bikes"=> 'nullable|integer',

@@ -17,6 +17,6 @@ class ExteriorDetail extends Model
     
     protected $fillable = [
         'semiOwnership', 'basement', 'withbasement', 'cellar', 'trueCellar', 'balcony', 'withBalcony', 'terrace', 'withTerrace', 'varangue',
-        'loggia', 'veranda', 'withVeranda', 'singleStorey', 'typeResidence', 'formatResidence', 'barbecue', 'jacuzzi', 'bikes', 'tennis', 'summerKitchen'
+        'loggia', 'veranda', 'withVeranda', 'singleStorey', 'typeResidence', 'formatResidence', 'barbecue', 'jacuzzi', 'bikes', 'tennis', 'summerKitchen','floor'
     ];
 }
