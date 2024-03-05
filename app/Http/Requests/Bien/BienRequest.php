@@ -37,7 +37,7 @@ class BienRequest extends FormRequest
             "biens.garden_exist"=> 'nullable|integer',
             "biens.land_area"=> 'nullable|integer',
             "biens.swim"=> 'nullable|integer',
-            "biens.swim_exist"=> 'array',
+            "biens.swim_exist"=> 'nullable|string',
             "biens.number_garage"=> 'nullable|integer',
             "biens.indoor_parking"=> 'nullable|string',
             "biens.outdoor_parking"=> 'nullable|string',
