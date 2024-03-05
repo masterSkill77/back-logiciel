@@ -31,10 +31,10 @@ class PigeController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return JsonResponse
      */
-    public function getPigesByAgence(Request $request, PigeFilters $pigeFilters, Agency $agency): JsonResponse
+    public function getPigesByAgence(Request $request, PigeFilters $pigeFilters): JsonResponse
     {
         $agency = (new AgencyService)->getById(Auth::user()->agency_id);
-        $user = Auth::user()->role === Role::SUPER_ADMIN ? null : Auth::user();
+        $user = Auth::user()->role === Role::SUPER_ADMIN->value ? null : Auth::user();
         $piges = $this->pigeService->getPigesFromDatabase($agency, $pigeFilters, $user);
         return response()->json(($piges));
     }

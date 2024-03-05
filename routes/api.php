@@ -95,7 +95,7 @@ Route::middleware('auth:sanctum')->group(function () {
         // ->middleware(["role:" . (Role::SUPER_ADMIN)->value]);
     });
     Route::prefix('piges')->group(function () {
-        Route::get('/{agency}', [PigeController::class, 'getPigesByAgence']);
+        Route::get('/', [PigeController::class, 'getPigesByAgence'])->middleware(['auth:sanctum']);
         Route::get('/details/{pigeId}', [PigeController::class, 'getPige']);
         Route::post('/favorie', [PigeController::class, 'createOrRemoveFromFavorie']);
         Route::post('/comment', [PigeController::class, 'createComment']);
