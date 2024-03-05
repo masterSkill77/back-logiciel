@@ -17,46 +17,23 @@ return new class extends Migration
             $table->integer('info_price')->nullable();
 
             // HONORAIRES CHARGE ACQUÉREUR:
-            $table->json('info_honoraire_charge')->nullable();
+            $table->boolean('info_honoraire_charge')->nullable();
 
             // HONORAIRES CHARGE VENDEUR:
-            $table->json('info_honoraire_locataire_part')->nullable();
+            $table->boolean('info_honoraire_locataire_part')->nullable();
 
-            // PRIX LOYER:
+            // PRIX LOYER MENSUEL:
             $table->integer('info_rent')->nullable();
-            // ENCADREMENT DU LOYER
-            $table->boolean('info_rent_encadrement')->nullable();
-            // Loyer de base
-            $table->integer('info_rent_default')->nullable();
-            // Loyer de reference majoré
-            $table->integer('info_rent_majored')->nullable();
-            // Loyer complement
-            $table->integer('info_rent_complement')->nullable();
-            // Loyer information
-            $table->integer('info_information')->nullable();
-            // Loyer format 
-            $table->integer('info_format')->nullable();
 
-            // Loyer total 
-            $table->integer('info_total')->nullable();
+            // ENCADREMENT DU LOYER = Loyer de base,  Loyer de reference majoré,  Loyer complement
+            $table->json('info_rent_encadrement')->nullable();
 
-            // Etat des lieux M2
-            $table->integer('inventoryM2')->nullable();
+            // HORAIRE 
+            // PART locataire
+            $table->json('info_tenant_chare')->nullable();
+            // PART PROPRIETAIRE 
+            $table->json('info_owner_share')->nullable();
 
-            //Montant
-            $table->integer('risingM2')->nullable();
-
-
-            //%
-            $table->integer('percent')->nullable();
-
-
-            //%
-            $table->integer('rising')->nullable();
-
-
-            //Dont etat des lieux
-            $table->integer('includingStatusOfPremises')->nullable();
 
 
             // total Charge locative 
@@ -64,13 +41,14 @@ return new class extends Migration
               // format Charge locative 
             $table->string('info_locative_charge_format')->nullable();
 
+            // information Charge locative 
+            $table->string('info_locative_charge_information')->nullable();
+
             // valeur de l'estimation 
             $table->integer('info_estimation_value')->nullable();
             // estimation date
             $table->date('info_estimation_date')->nullable();
             
-            // Honoraire part du propriétaire
-            $table->json('info_honoraire_proprio_part')->nullable();
             // Travaux à prevoir:
             $table->string('info_predicted_work')->nullable();
             // Charges mensuelles:
