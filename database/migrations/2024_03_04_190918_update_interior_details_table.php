@@ -13,39 +13,15 @@ return new class extends Migration
     {
         Schema::table('interior_details', function (Blueprint $table) {
              //surface boutin
-             $table->string('surfaceBoutin')->nullable();
+             $table->float('surfaceBoutin')->nullable();
              //nombre de lots
-            $table->integer('nbOfLots')->nullable();
-             //plaque de cuisson
-             $table->integer('hotplate')->nullable();
-             //four
-             $table->integer('oven')->nullable();
-             //micro-onde
-             $table->integer('microwave')->nullable();
-             //congélateur
-             $table->integer('freezer')->nullable();
-             //refrigerateur
-             $table->integer('fridge')->nullable();
-             //lave-vaiselle
-             $table->integer('dishwasher')->nullable();
-             //cafetière
-             $table->integer('coffeeMaker')->nullable();
-             //grille-pain
-             $table->integer('toaster')->nullable();
-             //tv
-             $table->integer('tv')->nullable();
-             //internet
-             $table->integer('internet')->nullable();
-             //hifi
-             $table->integer('hifi')->nullable();
-             //lave-linge
-             $table->integer('washingMachine')->nullable();
-             //sèche-ligne
-             $table->integer('dryer')->nullable();
-             //fer à repasser
-             $table->integer('iron')->nullable();
-             //equipements bébé
-            $table->integer('babyEquipment')->nullable();
+             $table->integer('nbOfLots')->nullable();
+             //Equipement de cuisine
+             $table->json('kitchenEquipment')->nullable();
+             //Multimedia
+             $table->json('multimedia')->nullable();
+             //Autres equipements
+             $table->json('othersEquipment')->nullable();
             //nombre de baignoires
             $table->integer('nbOfBathtubs')->nullable();
             //nombre de douches
