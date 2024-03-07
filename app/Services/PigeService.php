@@ -66,7 +66,7 @@ class PigeService
 
     public function getPigesFromDatabase(Agency $agency, PigeFilters $pigeFilters, User $user = null): mixed
     {
-        return Pige::filter($pigeFilters)->with(['commentaires', 'commentaires.user'])->agency($agency)->paginate(20);
+        return Pige::filter($pigeFilters)->with(['commentaires', 'commentaires.user'])->paginate(20);
     }
     /**
      * Return an unique pige based on its ID
@@ -75,7 +75,7 @@ class PigeService
      */
     public function getPigeById(mixed $pigeId): mixed
     {
-        $pige = Pige::with(['favories', 'commentaires', 'commentaires.user'])->where('id', $pigeId)->first();
+        $pige = Pige::with(['favories', 'favories.user', 'commentaires', 'commentaires.user'])->where('id', $pigeId)->first();
         $correspondantPiges = Pige::where([
             ['cp', '=', $pige->cp],
             ['bien', '=', $pige->bien],
