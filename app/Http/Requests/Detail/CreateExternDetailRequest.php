@@ -38,9 +38,15 @@ class CreateExternDetailRequest extends FormRequest
             "exteriorDetail.loggia"=> 'integer',
             "exteriorDetail.veranda"=> 'integer',
             "exteriorDetail.withVeranda"=> 'nullable|integer',
-            "exteriorDetail.singleStorey"=> 'integer',
-            "exteriorDetail.typeResidence"=> 'string',
-            "exteriorDetail.formatResidence"=> 'string'
+            "exteriorDetail.singleStorey"=> 'required|integer',
+            "exteriorDetail.typeResidence"=> 'required|string',
+            "exteriorDetail.formatResidence"=> 'required|string',
+            "exteriorDetail.floor"=> 'nullable|integer',
+            "exteriorDetail.barbecue"=> 'nullable|integer',
+            "exteriorDetail.jacuzzi"=> 'nullable|integer',
+            "exteriorDetail.bikes"=> 'nullable|integer',
+            "exteriorDetail.tennis"=> 'nullable|integer',
+            "exteriorDetail.summerKitchen"=> 'nullable|integer'
         ];
     }
 }

@@ -31,9 +31,17 @@ class CreateInteriorDetailRequest extends FormRequest
             "interiorDetail.nbOfRoomWater"=> 'nullable|integer',
             "interiorDetail.nbOfWc"=> 'nullable|integer',
             "interiorDetail.caracteristique"=> 'nullable|array',
-            "interiorDetail.surface"=> 'nullable|array',
-            "interiorDetail.kitchen"=> 'nullable|array'
-
+            "interiorDetail.surfaceSquare"=> 'nullable|integer',
+            "interiorDetail.surfaceStay"=> 'nullable|integer',
+            "interiorDetail.TypeOfKitchen"=> 'nullable|string',
+            "interiorDetail.StateOfKitchen"=> 'nullable|integer',
+            "interiorDetail.surfaceBoutin"=> 'nullable|integer',
+            "interiorDetail.nbOfLots"=> 'nullable|integer',
+            "interiorDetail.kitchenEquipment"=> 'nullable|array',
+            "interiorDetail.multimedia"=> 'nullable|array',
+            "interiorDetail.othersEquipment"=> 'nullable|array',
+            "interiorDetail.nbOfBathtubs"=> 'nullable|integer',
+            "interiorDetail.nbOfShowers"=> 'nullable|integer',
         ];
     }
 }
