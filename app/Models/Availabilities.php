@@ -10,9 +10,9 @@ class Availabilities extends Model
 {
     use HasFactory;
 
-    protected $primaryKey = 'id_available';
+    protected $primaryKey = 'id_availability';
 
-    protected $fillable = ['num_folder', 'immediat', 'release_it', 'available_on'];
+    protected $fillable = ['num_folder', 'created_folder', 'updated_folder', 'immediat', 'release_it', 'available_on'];
 
     public function bien() : BelongsTo
     {
