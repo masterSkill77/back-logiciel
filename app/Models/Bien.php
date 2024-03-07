@@ -127,4 +127,9 @@ class Bien extends Model
     {
         return $this->hasOne(Folder::class, 'bien_id');
     }
+
+    public function mandate(): BelongsTo
+    {
+        return $this->belongsTo(Mandate::class);
+    }
 }

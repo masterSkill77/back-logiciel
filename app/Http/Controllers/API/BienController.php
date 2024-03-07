@@ -16,6 +16,7 @@ use App\Services\InfoFinanciereService;
 use App\Services\SectorService;
 use App\Services\PhotosService;
 use App\Services\BienService;
+use App\Services\MandateService;
 use App\Services\AdvertissementsService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
 use App\Http\Requests\Detail\CreateExternDetailRequest;
@@ -27,6 +28,7 @@ use App\Http\Requests\InfoFinanciere\InfoFinanciereRequest;
 use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
+use App\Http\Requests\Mandate\MandateRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
 use App\Models\Bien;
 use Illuminate\Validation\ValidationException;
@@ -48,7 +50,8 @@ class BienController extends Controller
         public SectorService $sectorService,
         public PhotosService $photoService,
         public AdvertissementsService $advertissementService,
-        public BienService $bienService
+        public BienService $bienService,
+        public MandateService $mandateService
 
     ) {
     }
@@ -68,7 +71,8 @@ class BienController extends Controller
         SectorRequest $requestSector,
         PhotoRequest $requestPhoto,
         AdvertissementRequest $requestAdvertissement,
-        BienRequest $requestBien
+        BienRequest $requestBien,
+        MandateRequest $Mandaterequest
     ) {
         DB::beginTransaction();
         try {
@@ -109,7 +113,12 @@ class BienController extends Controller
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
-            $this->handleBien($requestData);
+            $bienId = $this->handleBien($requestData);
+
+            $mandateData = $Mandaterequest->input('Mandate');
+            $mandateData['bien_id_bien'] = 1;
+            $this->mandateService->addMandate($mandateData);
+            
             DB::commit();
 
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
@@ -346,5 +355,11 @@ class BienController extends Controller
         if ($bien->agency_id !== $user->agency_id)
             throw new NotAllowedRessourceException();
         return response()->json($bien);
+    }
+
+    public function createMandate(MandateRequest $Mandaterequest): int
+    {
+        $mandateData = $Mandaterequest->input('Mandate');
+        return $this->mandateService->addMandate($mandateData);
     }
 }
