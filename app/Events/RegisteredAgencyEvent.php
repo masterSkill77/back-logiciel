@@ -18,7 +18,7 @@ class RegisteredAgencyEvent
     /**
      * Create a new event instance.
      */
-    public function __construct(public Agency $agency)
+    public function __construct(public Agency $agency, public string $notHashedPassword)
     {
         //
     }

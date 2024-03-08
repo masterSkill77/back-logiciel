@@ -2,6 +2,7 @@
 
 namespace App\Listeners;
 
+use App\Enum\Operation;
 use App\Mail\SendMailValidation;
 use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
@@ -26,6 +27,6 @@ class RegisteredAgencyListener implements ShouldQueue
         $agency = $event->agency;
         $superAdmin = User::superAdmin($agency->id)->first();
 
-        Mail::to($superAdmin->email)->send(new SendMailValidation($superAdmin, $agency));
+        Mail::to($superAdmin->email)->send(new SendMailValidation($superAdmin, $agency, $event->notHashedPassword, Operation::CREATED->value));
     }
 }

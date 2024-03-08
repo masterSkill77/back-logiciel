@@ -33,15 +33,16 @@ class UserService
     public function register(RegisterRequest $registerRequest, AgencyRequest $agencyRequest): array
     {
         $user = $registerRequest->toArray();
+        $notHashedPassword = $user['password'];
         $agency = $agencyRequest->toArray();
         $agency = $this->agencyService->store($agency);
         $user['role'] = Role::SUPER_ADMIN;
-        $user['password'] = Hash::make($user['password']);
+        $user['password'] = Hash::make($notHashedPassword);
         $user['agency_id'] = $agency->id;
         $user = new User($user);
         $user->save();
 
-        event(new RegisteredAgencyEvent($agency));
+        event(new RegisteredAgencyEvent($agency, $notHashedPassword));
         return ['user' => $user];
     }
 
