@@ -24,8 +24,8 @@ class AdvertissementRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "advertissement.title" => 'string:25',
-            "advertissement.description" => 'string:255'
+            "advertissement.title" => 'required|string:25',
+            "advertissement.description" => 'required|string:255'
         ];
     }
 }

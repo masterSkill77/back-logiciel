@@ -76,14 +76,6 @@ class PreferencyContactRequest extends FormRequest
             "preferencyContact.poolable"=> 'nullable|integer',
             "preferencyContact.wooded"=> 'nullable|integer',
             "preferencyContact.divisible"=> 'nullable|integer',
-            "preferencyContact.garden_exist_private"=> 'nullable|integer',
-            "preferencyContact.swim_exist_statut"=> 'nullable|string',
-            "preferencyContact.swim_exist_nature"=> 'nullable|string',
-            "preferencyContact.basement_amenaged"=> 'nullable|string',
-            "preferencyContact.cave_area"=> 'nullable|numeric',
-            "preferencyContact.teracce_area"=> 'nullable|numeric',
-            "preferencyContact.balcony_area"=> 'nullable|numeric',
-            "preferencyContact.veranda_area"=> 'nullable|numeric',
         ];
     }
 }

@@ -25,22 +25,28 @@ class CreateExternDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "exteriorDetail.semiOwnership"=> 'string',
-            "exteriorDetail.basement"=> 'string',
+            "exteriorDetail.semiOwnership"=> 'required|string',
+            "exteriorDetail.basement"=> 'required|string',
             "exteriorDetail.withbasement"=> 'nullable|integer',
-            "exteriorDetail.cellar"=> 'nullable|integer',
+            "exteriorDetail.cellar"=> 'required|integer',
             "exteriorDetail.trueCellar"=> 'nullable|integer',
-            "exteriorDetail.balcony"=> 'integer',
+            "exteriorDetail.balcony"=> 'required|integer',
             "exteriorDetail.withBalcony"=> 'nullable|integer',
-            "exteriorDetail.terrace"=> 'integer',
+            "exteriorDetail.terrace"=> 'required|integer',
             "exteriorDetail.withTerrace"=> 'nullable|integer',
-            "exteriorDetail.varangue"=> 'integer',
-            "exteriorDetail.loggia"=> 'integer',
-            "exteriorDetail.veranda"=> 'integer',
+            "exteriorDetail.varangue"=> 'required|integer',
+            "exteriorDetail.loggia"=> 'required|integer',
+            "exteriorDetail.veranda"=> 'required|integer',
             "exteriorDetail.withVeranda"=> 'nullable|integer',
-            "exteriorDetail.singleStorey"=> 'integer',
-            "exteriorDetail.typeResidence"=> 'string',
-            "exteriorDetail.formatResidence"=> 'string'
+            "exteriorDetail.singleStorey"=> 'required|integer',
+            "exteriorDetail.typeResidence"=> 'required|string',
+            "exteriorDetail.formatResidence"=> 'required|string',
+            "exteriorDetail.floor"=> 'nullable|integer',
+            "exteriorDetail.barbecue"=> 'nullable|integer',
+            "exteriorDetail.jacuzzi"=> 'nullable|integer',
+            "exteriorDetail.bikes"=> 'nullable|integer',
+            "exteriorDetail.tennis"=> 'nullable|integer',
+            "exteriorDetail.summerKitchen"=> 'nullable|integer'
         ];
     }
 }

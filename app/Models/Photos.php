@@ -13,10 +13,9 @@ class Photos extends Model
     protected $primaryKey = 'id_photos';
 
 
-    protected $fillable = ['photos_couvert', 'photos_slide', 'description'];
+    protected $fillable = ['photos_original', 'photos_slide'];
 
     protected $casts = [
-        'photos_couvert' => 'array',
         'photos_slide' => 'array'
     ];
 

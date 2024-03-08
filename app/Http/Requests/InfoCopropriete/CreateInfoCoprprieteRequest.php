@@ -25,14 +25,12 @@ class CreateInfoCoprprieteRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "InfoCopropriete.lot_number"=> 'nullable|string',
-            "InfoCopropriete.total_unit"=> 'nullable|integer',
-            "InfoCopropriete.annual_charges"=> 'nullable|string',
-            "InfoCopropriete.amount_fund"=> 'nullable|integer',
-            "InfoCopropriete.thousands_copropriete"=> 'nullable|string',
-            "InfoCopropriete.property_copropriete"=> 'nullable|array',
-            "InfoCopropriete.backupPlan"=> 'nullable|string',
-            "InfoCopropriete.unionStatus"=> 'nullable|string'
+            "InfoCopropriete.lot_number"=> 'required|string',
+            "InfoCopropriete.total_unit"=> 'required|integer',
+            "InfoCopropriete.annual_charges"=> 'required|string',
+            "InfoCopropriete.amount_fund"=> 'required|integer',
+            "InfoCopropriete.thousands_copropriete"=> 'required|string',
+            "InfoCopropriete.property_copropriete"=> 'required|array',
         ];
     }
 }

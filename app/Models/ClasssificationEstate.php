@@ -19,6 +19,6 @@ class ClasssificationEstate extends Model
 
     public function typeState(): BelongsTo
     {
-        return $this->belongsTo(typeEstate::class, 'type_estate_id');
+        return $this->belongsTo(typeEstate::class, 'typeEstate_id');
     }
 }

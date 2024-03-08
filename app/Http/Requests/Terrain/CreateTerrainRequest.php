@@ -24,7 +24,7 @@ class CreateTerrainRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "terrain.ground"=> 'nullable|array',
+            "terrain.ground"=> 'required|array',
             "terrain.ground_print"=> 'nullable|string',
             "terrain.ground_print_residual"=> 'nullable|string',
             "terrain.shon"=> 'nullable|string',

@@ -25,10 +25,14 @@ return new class extends Migration
             $table->integer('nbOfWc')->nullable();
             // caracteristique ensemble des input 
             $table->json('caracteristique')->nullable();
-            // surface 
-            $table->json('surface')->nullable();
-            // cuisine 
-            $table->json('kitchen')->nullable();
+            // surface carrez 
+            $table->float('surfaceSquare')->nullable();
+            // surface sejour 
+            $table->float('surfaceStay')->nullable();
+            // type de cuisine 
+            $table->string('TypeOfKitchen')->nullable();
+            // etat du cuisine 
+            $table->string('StateOfKitchen')->nullable();
             $table->timestamps();
         });
     }

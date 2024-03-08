@@ -14,10 +14,9 @@ return new class extends Migration
         Schema::create('photos', function (Blueprint $table) {
             $table->id('id_photos'); 
             //photo à la une
-            $table->json('photos_couvert')->nullable();
+            $table->string('photos_original')->nullable();
             //photos pout le slide
             $table->json('photos_slide')->nullable();
-            $table->string('description')->nullable();
             $table->timestamps();
         });
     }

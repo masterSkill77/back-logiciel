@@ -28,10 +28,7 @@ class CreateEstimationRequest extends FormRequest
             'demandeur_firstname' => 'required|max:70',
             'demandeur_lastname' => 'required|max:70',
             'demandeur_email' => 'required|max:70|email',
-            'details_bien' => 'required|json',
-            'address_bien' => '',
-            'cp_bien' => 'integer',
-            'ville_bien' => '',
+            'details_bien' => 'required|json'
         ];
     }
 }

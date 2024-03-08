@@ -72,7 +72,6 @@ class BienController extends Controller
     ) {
         DB::beginTransaction();
         try {
-
             // transaction
 
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
@@ -86,9 +85,10 @@ class BienController extends Controller
             $sectorId = $this->handleSector($requestSector->toArray());
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
+            $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
-            $requestData['biens']['photos_id_photos'] = $photosId;
+            $requestData['biens']['photos_id_photos'] = $photosId['id'];
             $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
             $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
             $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
@@ -105,7 +105,7 @@ class BienController extends Controller
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
             $user = Auth::user();
-            $requestData['biens']['agent_id'] = $user->id;
+            $requestData['biens']['user_id'] = $user->id;
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
@@ -214,48 +214,24 @@ class BienController extends Controller
 
         return $response;
     }
-    private function handlePhotos(array $requestPhoto): int
+
+    // ajout et recuperation du photos
+    private function handlePhotos(array $requestData): array
     {
-        $photosData = $requestPhoto['photos']; 
-    
-        $originalFilenames = [];
-        if (isset($photosData['photos_couvert'])) {
-            $photosOriginal = $photosData['photos_couvert'];
-            if (is_array($photosOriginal)) { // Vérifier si c'est un tableau
-                foreach ($photosOriginal as $original) {
-                    $filename = time() . '_' . $original->getClientOriginalName();
-                    $path = $original->move(public_path('/document/photos_couvert'), $filename);
-                    $originalFilenames[] = '/' . $filename;
-                }
-            }
-        }
-    
-        $slideFilenames = [];
-        if (isset($photosData['photos_slide'])) {
-            $photosSlide = $photosData['photos_slide'];
-            if (is_array($photosSlide)) { // Vérifier si c'est un tableau
-                foreach ($photosSlide as $slide) {
-                    $filename = time() . '_' . $slide->getClientOriginalName();
-                    $path = $slide->move(public_path('/document/photos_slide'), $filename);
-                    $slideFilenames[] = '/' . $filename;
-                }
-            }
-        }
-    
-        $description = $photosData['description'];
-    
-        // Ajouter les données à la base de données
-        $photosData = [
-            'description' => $description,
-            'photos_couvert' => $originalFilenames,
-            'photos_slide' => $slideFilenames
+        $photosData = $requestPhoto->input('photos');
+        $file = $requestPhoto->file('photos.photos_original');
+
+        $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
+
+        $requestData = [
+            'photos' => [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $photosData['photos_slide'],
+            ],
         ];
-    
-        // Enregistrer les données dans la base de données
-        return $this->photoService->addPhotos($photosData);
+
+        return $this->photoService->addPhotos($requestData);
     }
-    
-    
 
     /**
      * Get all Biens with pagination
@@ -290,48 +266,23 @@ class BienController extends Controller
     }
 
     // test add photos
-    public function testPhotos(Request $request)
+    public function testPhotos(Request $resquest)
     {
-        // Récupérer la description
-        $description = $request->input('description');
-    
-        // Gérer le téléchargement des photos_couvert
-        if ($request->hasFile('photos_couvert')) {
-            $photosOriginal = $request->file('photos_couvert');
-            $originalFilenames = [];
-            
-            $filename = time() . '_' . $photosOriginal->getClientOriginalName();
-            $path = $photosOriginal->move(public_path('/document/photos_couvert'), $filename);
-            $originalFilenames[] = '/' . $filename;
+        if ($resquest->hasFile('photos_original')) {
+            $file = $resquest->file('photos_original');
+            $originalFilename = $this->photoService->savePhotos($file, ['test']);
+
+            $photosData = [
+                'photos_original' => $originalFilename,
+                'photos_slide' => $resquest->input('photos_slide')
+            ];
+
+            $photoId = $this->photoService->addPhotos(['photos' => $photosData]);
+            return $photoId;
         }
-    
-        // Gérer le téléchargement des photos_slide
-        if ($request->hasFile('photos_slide')) {
-            $photosSlide = $request->file('photos_slide');
-            $slideFilenames = [];
-            foreach ($photosSlide as $slide) {
-                // Générer un nom de fichier unique pour chaque fichier
-                $filename = time() . '_' . $slide->getClientOriginalName();
-        
-                // Déplacer le fichier téléchargé vers le répertoire de destination
-                $path = $slide->move(public_path('/document/photos_slide'), $filename);
-        
-                // Ajouter le nom du fichier à la liste des noms de fichiers
-                $slideFilenames[] = '/' . $filename;
-            }
-        }
-        // Ajouter les données à la base de données
-        $photosData = [
-            'description' => $description,
-            'photos_couvert' => $originalFilenames ?? [],
-            'photos_slide' => $slideFilenames ?? []
-        ];
-        // Enregistrer les données dans la base de données
-        $photoId = $this->photoService->addPhotos($photosData);
-    
-        return $photoId ? response()->json(['id' => $photoId], 201) : response()->json(['error' => 'Erreur lors de l\'enregistrement des photos'], 500);
+
+        return 0;
     }
-    
 
     /**
      * Retrieve estate from numFolder

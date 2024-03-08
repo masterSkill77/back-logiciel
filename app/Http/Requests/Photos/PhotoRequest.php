@@ -25,9 +25,8 @@ class PhotoRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "photos.photos_couvert"=> 'nullable',
-            "photos.photos_slide"=> 'nullable',
-            "photos.description"=> 'nullable|string',
+            "photos.photos_original"=> 'required|string',
+            "photos.photos_slide"=> 'required|array'
         ];
     }
 }
