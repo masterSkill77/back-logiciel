@@ -71,12 +71,12 @@ class BienController extends Controller
         // CreateDiagnostiqueRequest $requestDiagnostique,
         // RentalInvestRequest $requestRentalInvest,
         // InfoFinanciereRequest $requestInfoFinanciere,
-        // SectorRequest $requestSector,
+        SectorRequest $requestSector,
         // PhotoRequest $requestPhoto,
         // AdvertissementRequest $requestAdvertissement,
         // BienRequest $requestBien,
         // MandateRequest $Mandaterequest,
-        AvalaibilitiesRequest $requestAvalaibilitie
+        // AvalaibilitiesRequest $requestAvalaibilitie
     ) {
         DB::beginTransaction();
         try {
@@ -90,14 +90,14 @@ class BienController extends Controller
             // $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
             // $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
             // $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
-            // $sectorId = $this->handleSector($requestSector->toArray());
+            $sectorId = $this->handleSector($requestSector->toArray());
             // $photosId = $this->handlePhotos($requestPhoto->toArray());
-            $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
+            // $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
             // $requestData = $requestBien->validated();
             // $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             // $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             // $requestData['biens']['photos_id_photos'] = $photosId;
-            $requestData['biens']['availabilities_id_availability'] = $avalaibilitieId;
+            // $requestData['biens']['availabilities_id_availability'] = $avalaibilitieId;
             // $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
             // $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
             // $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
@@ -126,7 +126,7 @@ class BienController extends Controller
             
             DB::commit();
 
-            return response(['message' => 'Bien créé avec succès', $requestData], Response::HTTP_CREATED);
+            return response(['message' => 'Bien créé avec succès', $sectorId], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
             DB::rollBack();
 

@@ -34,8 +34,7 @@ class SectorRequest extends FormRequest
             "sectors.address_completed"=> 'nullable|string',
             "sectors.building"=> 'nullable|string',
             "sectors.prox_service"=> 'nullable|string',
-            "sectors.environment"=> 'nullable|string',
-            "sectors.map"=> 'nullable|string'
+            "sectors.environment"=> 'nullable|string'
         ];
     }
 }

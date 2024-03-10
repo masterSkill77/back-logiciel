@@ -33,8 +33,6 @@ return new class extends Migration
             $table->string('prox_service');
             //ENVIRONNEMENT
             $table->string('environment');
-            //MAP
-            $table->json('map');
             $table->timestamps();
         });
     }
