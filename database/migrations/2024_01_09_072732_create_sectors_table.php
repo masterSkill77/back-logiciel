@@ -37,7 +37,7 @@ return new class extends Migration
         });
     }
 
-    /**
+    /**property_address
      * Reverse the migrations.
      */
     public function down(): void

@@ -19,6 +19,7 @@ use App\Services\BienService;
 use App\Services\MandateService;
 use App\Services\AvalaibilitiesService;
 use App\Services\AdvertissementsService;
+use App\Services\AgencyService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
 use App\Http\Requests\Detail\CreateExternDetailRequest;
 use App\Http\Requests\InfoCopropriete\CreateInfoCoprprieteRequest;
@@ -54,8 +55,8 @@ class BienController extends Controller
         public AdvertissementsService $advertissementService,
         public BienService $bienService,
         public MandateService $mandateService,
-        public AvalaibilitiesService $avalaibilitiesService
-
+        public AvalaibilitiesService $avalaibilitiesService,
+        public AgencyService $agentService
     ) {
     }
 
@@ -64,65 +65,69 @@ class BienController extends Controller
      * return json
      */
     public function createBien(
-        // CreateExternDetailRequest $requestExterior,
-        // CreateTerrainRequest $requestTerrain,
-        // CreateInteriorDetailRequest $requestInterior,
-        // CreateInfoCoprprieteRequest $infoCoproprieteRequest,
-        // CreateDiagnostiqueRequest $requestDiagnostique,
-        // RentalInvestRequest $requestRentalInvest,
-        // InfoFinanciereRequest $requestInfoFinanciere,
+        CreateExternDetailRequest $requestExterior,
+        CreateTerrainRequest $requestTerrain,
+        CreateInteriorDetailRequest $requestInterior,
+        CreateInfoCoprprieteRequest $infoCoproprieteRequest,
+        CreateDiagnostiqueRequest $requestDiagnostique,
+        RentalInvestRequest $requestRentalInvest,
+        InfoFinanciereRequest $requestInfoFinanciere,
         SectorRequest $requestSector,
-        // PhotoRequest $requestPhoto,
-        // AdvertissementRequest $requestAdvertissement,
-        // BienRequest $requestBien,
-        // MandateRequest $Mandaterequest,
-        // AvalaibilitiesRequest $requestAvalaibilitie
+        PhotoRequest $requestPhoto,
+        AdvertissementRequest $requestAdvertissement,
+        BienRequest $requestBien,
+        MandateRequest $Mandaterequest,
+        AvalaibilitiesRequest $requestAvalaibilitie,
+        Request $request
     ) {
         DB::beginTransaction();
+        
         try {
             // transaction
 
-            // $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
-            // $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
-            // $terrainId = $this->handleTerrain($requestTerrain->toArray());
-            // $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
-            // $infoCoproprieteId = $this->handleInfoCopropriete($infoCoproprieteRequest->toArray());
-            // $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
-            // $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
-            // $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
+            $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
+            $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
+            $terrainId = $this->handleTerrain($requestTerrain->toArray());
+            $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
+            $infoCoproprieteId = $this->handleInfoCopropriete($infoCoproprieteRequest->toArray());
+            $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
+            $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
+            $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
             $sectorId = $this->handleSector($requestSector->toArray());
-            // $photosId = $this->handlePhotos($requestPhoto->toArray());
-            // $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
-            // $requestData = $requestBien->validated();
-            // $requestData['biens']['advertisement_id'] = $advertissementId['id'];
-            // $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
-            // $requestData['biens']['photos_id_photos'] = $photosId;
-            // $requestData['biens']['availabilities_id_availability'] = $avalaibilitieId;
-            // $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
-            // $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
-            // $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
-            // $requestData['biens']['rental_invest_id_rental_invest'] = $rentalInvestId['id'];
-            // $requestData['biens']['sector_id_sector'] = $sectorId['id'];
-            // $requestData['biens']['terrain_id'] = $terrainId['id'];
-            // $requestData['biens']['info_financiere_id'] = $infoFinanciereId['id'];
-            // $typeOffertId = $requestBien->input('type_offert_id');
-            // $typeEstateId = $requestBien->input('type_estate_id');
-            // $classificationEstateId = $requestBien->input('classification_estate_id');
-            // $classificationOffertId = $requestBien->input('classification_offert_id');
-            // $requestData['biens']['type_offert_id'] = $typeOffertId;
-            // $requestData['biens']['type_estate_id'] = $typeEstateId;
-            // $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
-            // $requestData['biens']['classification_offert_id'] = $classificationOffertId;
-            // $user = Auth::user();
-            // $requestData['biens']['agent_id'] = $user->id;
-            // $agency = $user->agency;
-            // $requestData['biens']['agency_id'] = $agency->id;
+            $photosId = $this->handlePhotos($requestPhoto->toArray());
+            $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
+            $requestData = $requestBien->validated();
+            $requestData['biens']['advertisement_id'] = $advertissementId['id'];
+            $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
+            $requestData['biens']['photos_id_photos'] = $photosId;
+            $requestData['biens']['availabilities_id_availability'] = $avalaibilitieId;
+            $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
+            $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
+            $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
+            $requestData['biens']['rental_invest_id_rental_invest'] = $rentalInvestId['id'];
+            $requestData['biens']['sector_id_sector'] = $sectorId['id'];
+            $requestData['biens']['terrain_id'] = $terrainId['id'];
+            $requestData['biens']['info_financiere_id'] = $infoFinanciereId['id'];
+            $typeOffertId = $requestBien->input('type_offert_id');
+            $typeEstateId = $requestBien->input('type_estate_id');
+            $classificationEstateId = $requestBien->input('classification_estate_id');
+            $classificationOffertId = $requestBien->input('classification_offert_id');
+            $requestData['biens']['type_offert_id'] = $typeOffertId;
+            $requestData['biens']['type_estate_id'] = $typeEstateId;
+            $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
+            $requestData['biens']['classification_offert_id'] = $classificationOffertId;
+            $user = Auth::user();
+            $requestData['biens']['agent_id'] = $user->id;
+            $agency = $user->agency;
+            $agent= $this->agentService->getById($request->agency_id);
+            $agentId= $agent->id;
+            $requestData['biens']['agency_id'] = $agentId;
 
-            // $bienId = $this->handleBien($requestData);
+            $bienId = $this->handleBien($requestData);
 
-            // $mandateData = $Mandaterequest->input('Mandate');
-            // $mandateData['bien_id_bien'] = 1;
-            // $this->mandateService->addMandate($mandateData);
+            $mandateData = $Mandaterequest->input('Mandate');
+            $mandateData['bien_id_bien'] = 1;
+            $this->mandateService->addMandate($mandateData);
             
             DB::commit();
 
