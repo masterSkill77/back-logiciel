@@ -23,7 +23,7 @@ class Bien extends Model
         'rent', 'duration_lease', 'photos_id_photos', 'recent_construct', 'info_copropriete_id_infocopropriete', 'type_offert_id', 'type_estate_id', 'interior_detail_id',
         'exterior_detail_id', 'classification_offert_id', 'classsification_estate_id', 'diagnostic_id_diagnostics', 'rental_invest_id_rental_invest', 'sector_id_sector', 'terrain_id', 'info_financiere_id',
         'advertisement_id', 'publish', 'sold', 'availabilities_id_availability',
-        'agency_id', 'user_id'
+        'agency_id', 'agent_id'
     ];
 
     protected $casts = [
@@ -131,4 +131,5 @@ class Bien extends Model
     {
         return $this->belongsTo(Mandate::class);
     }
+    
 }

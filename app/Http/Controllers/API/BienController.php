@@ -16,6 +16,8 @@ use App\Services\InfoFinanciereService;
 use App\Services\SectorService;
 use App\Services\PhotosService;
 use App\Services\BienService;
+use App\Services\MandateService;
+use App\Services\AvalaibilitiesService;
 use App\Services\AdvertissementsService;
 use App\Http\Requests\Detail\CreateInteriorDetailRequest;
 use App\Http\Requests\Detail\CreateExternDetailRequest;
@@ -27,7 +29,9 @@ use App\Http\Requests\InfoFinanciere\InfoFinanciereRequest;
 use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
+use App\Http\Requests\Mandate\MandateRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
+use App\Http\Requests\Avalaibilities\AvalaibilitiesRequest;
 use App\Models\Bien;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -48,7 +52,9 @@ class BienController extends Controller
         public SectorService $sectorService,
         public PhotosService $photoService,
         public AdvertissementsService $advertissementService,
-        public BienService $bienService
+        public BienService $bienService,
+        public MandateService $mandateService,
+        public AvalaibilitiesService $avalaibilitiesService
 
     ) {
     }
@@ -68,7 +74,9 @@ class BienController extends Controller
         SectorRequest $requestSector,
         PhotoRequest $requestPhoto,
         AdvertissementRequest $requestAdvertissement,
-        BienRequest $requestBien
+        BienRequest $requestBien,
+        MandateRequest $Mandaterequest,
+        AvalaibilitiesRequest $requestAvalaibilitie
     ) {
         DB::beginTransaction();
         try {
@@ -88,7 +96,7 @@ class BienController extends Controller
             $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
-            $requestData['biens']['photos_id_photos'] = $photosId['id'];
+            $requestData['biens']['photos_id_photos'] = $photosId;
             $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
             $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
             $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
@@ -110,9 +118,13 @@ class BienController extends Controller
             $requestData['biens']['agency_id'] = $agency->id;
 
             $this->handleBien($requestData);
+            $mandateData = $Mandaterequest->input('Mandate');
+            $mandateData['bien_id_bien'] = 1;
+            $this->mandateService->addMandate($mandateData);
+            
             DB::commit();
 
-            return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
+            return response(['message' => 'Bien créé avec succès', $sectorId], Response::HTTP_CREATED);
         } catch (ValidationException $e) {
             DB::rollBack();
 
@@ -215,22 +227,54 @@ class BienController extends Controller
         return $response;
     }
 
-    // ajout et recuperation du photos
-    private function handlePhotos(array $requestData): array
+    // Dossier et disponibilite
+    private function handleAbilities(array $requestData): array
     {
-        $photosData = $requestPhoto->input('photos');
-        $file = $requestPhoto->file('photos.photos_original');
+        $data = $this->avalaibilitiesService->addAvalaibilities($requestData);
+        $response = ['id' => $data];
 
-        $originalFilename = $this->photoService->savePhotos($file, $photosData['photos_slide']);
+        return $response;
+    }
 
-        $requestData = [
-            'photos' => [
-                'photos_original' => $originalFilename,
-                'photos_slide' => $photosData['photos_slide'],
-            ],
+    private function handlePhotos(array $requestPhoto) 
+    {
+        $photosData = $requestPhoto['photos']; 
+    if(isset($photoData) && $photoData != null){
+        $originalFilenames = [];
+        if (isset($photosData['photos_couvert'])) {
+            $photosOriginal = $photosData['photos_couvert'];
+            if (is_array($photosOriginal)) { // Vérifier si c'est un tableau
+                foreach ($photosOriginal as $original) {
+                    $filename = time() . '_' . $original->getClientOriginalName();
+                    $path = $original->move(public_path('/document/photos_couvert'), $filename);
+                    $originalFilenames[] = '/' . $filename;
+                }
+            }
+        }
+    
+        $slideFilenames = [];
+        if (isset($photosData['photos_slide'])) {
+            $photosSlide = $photosData['photos_slide'];
+            if (is_array($photosSlide)) { // Vérifier si c'est un tableau
+                foreach ($photosSlide as $slide) {
+                    $filename = time() . '_' . $slide->getClientOriginalName();
+                    $path = $slide->move(public_path('/document/photos_slide'), $filename);
+                    $slideFilenames[] = '/' . $filename;
+                }
+            }
+        }
+        $description = $photosData['description'];
+    
+        // Ajouter les données à la base de données
+        $photosData = [
+            'description' => $description,
+            'photos_couvert' => $originalFilenames,
+            'photos_slide' => $slideFilenames
         ];
-
-        return $this->photoService->addPhotos($requestData);
+        // Enregistrer les données dans la base de données
+        return $this->photoService->addPhotos($photosData);
+    
+    }
     }
 
     /**
@@ -297,5 +341,11 @@ class BienController extends Controller
         if ($bien->agency_id !== $user->agency_id)
             throw new NotAllowedRessourceException();
         return response()->json($bien);
+    }
+
+    public function createMandate(MandateRequest $Mandaterequest): int
+    {
+        $mandateData = $Mandaterequest->input('Mandate');
+        return $this->mandateService->addMandate($mandateData);
     }
 }
