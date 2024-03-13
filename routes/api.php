@@ -115,3 +115,4 @@ Route::prefix('google')->group(function () {
 Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');
 
 Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));
+Route::get('/match-address-country-global', fn (Request $request) => (new CommuneSearchService)->getCountryName($request->query('name')));

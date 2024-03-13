@@ -14,30 +14,38 @@ return new class extends Migration
         Schema::create('info_financieres', function (Blueprint $table) {
             $table->id();
             $table->integer('info_price')->nullable();
+
+            // HONORAIRES CHARGE ACQUÉREUR:
+            $table->boolean('info_honoraire_charge')->nullable();
+
+            // HONORAIRES CHARGE VENDEUR:
+            $table->boolean('info_honoraire_locataire_part')->nullable();
+
+            // PRIX LOYER MENSUEL:
             $table->integer('info_rent')->nullable();
-            $table->boolean('info_rent_encadrement')->nullable();
-            // Loyer de base
-            $table->integer('info_rent_default')->nullable();
-            // Loyer de reference majoré
-            $table->integer('info_rent_majored')->nullable();
-            // Loyer complement
-            $table->integer('info_rent_complement')->nullable();
-            // Charge locative
+
+            // ENCADREMENT DU LOYER = Loyer de base,  Loyer de reference majoré,  Loyer complement
+            $table->json('info_rent_encadrement')->nullable();
+
+            // HORAIRE 
+            // PART locataire
+            $table->json('info_tenant_chare')->nullable();
+            // PART PROPRIETAIRE 
+            $table->json('info_owner_share')->nullable();
+
+
+
+            // total Charge locative 
             $table->integer('info_locative_charge_total')->nullable();
             $table->string('info_locative_charge_format')->nullable();
+            // information Charge locative 
+            $table->string('info_locative_charge_information')->nullable();
 
-            // Honoraire charge
-            $table->json('info_honoraire_charge')->nullable();
-
+            // valeur de l'estimation 
             $table->integer('info_estimation_value')->nullable();
             $table->date('info_estimation_date')->nullable();
-
-            // Honoraire part du locataire
-            $table->json('info_honoraire_locataire_part')->nullable();
-
-            // Honoraire part du propriétaire
-            $table->json('info_honoraire_proprio_part')->nullable();
-
+            
+            // Travaux à prevoir:
             $table->string('info_predicted_work')->nullable();
             $table->integer('info_monthly_charge')->nullable();
 

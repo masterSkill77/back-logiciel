@@ -41,6 +41,12 @@ class Contact extends Model
     {
         return $this->hasOne(PreferenceContacts::class);
     }   
+
+
+    public function mandate(): BelongsTo
+    {
+        return $this->belongsTo(Mandate::class);
+    }
 }
 
 

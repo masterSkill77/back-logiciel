@@ -11,11 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
+        // Investissement locatif
         Schema::create('rental_invests', function (Blueprint $table) {
             $table->id('id_rental_invest'); 
             //LOYER ESTIMÉ
             $table->string('estimated_rent')->nullable();
-            //LOYER ESTIMÉ
+            //Charges mensuelles locatives:
             $table->string('monthly_rent')->nullable();
             //RENDEMENT
             $table->string('yeld');

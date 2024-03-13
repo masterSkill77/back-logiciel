@@ -25,25 +25,25 @@ class InfoFinanciereRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "InfoFinanciere.info_price"=> 'required|integer',
-            "InfoFinanciere.info_rent"=> 'required|integer',
-            "InfoFinanciere.info_rent_encadrement"=> 'required|boolean',
-            "InfoFinanciere.info_rent_default"=> 'required|integer',
-            "InfoFinanciere.info_rent_majored"=> 'required|integer',
-            "InfoFinanciere.info_rent_complement"=> 'required|integer',
-            "InfoFinanciere.info_locative_charge_total"=> 'required|integer',
-            "InfoFinanciere.info_locative_charge_format"=> 'required|string',
-            "InfoFinanciere.info_honoraire_charge"=> 'required|array',
-            "InfoFinanciere.info_estimation_value"=> 'required|integer',
-            "InfoFinanciere.info_estimation_date"=> 'required|date',
-            "InfoFinanciere.info_honoraire_locataire_part"=> 'required|array',
-            "InfoFinanciere.info_honoraire_proprio_part"=> 'required|array',
-            "InfoFinanciere.info_predicted_work"=> 'required|string',
-            "InfoFinanciere.info_monthly_charge"=> 'required|integer',
-            "InfoFinanciere.info_garantied_deposit"=> 'required|string',
-            "InfoFinanciere.info_fonciere_taxe"=> 'required|integer',
-            "InfoFinanciere.info_habitation_taxe"=> 'required|integer',
-            "InfoFinanciere.info_ordure_menagere_taxe"=> 'required|integer'
+
+            "InfoFinanciere.info_price"=> 'nullable|integer',
+            "InfoFinanciere.info_honoraire_charge"=> 'nullable|integer',
+            "InfoFinanciere.info_honoraire_locataire_part"=> 'nullable|integer',
+            "InfoFinanciere.info_rent"=> 'nullable|integer',
+            "InfoFinanciere.info_rent_encadrement"=> 'nullable|array',
+            "InfoFinanciere.info_tenant_chare"=> 'nullable|array',
+            "InfoFinanciere.info_owner_share"=> 'nullable|array',
+            "InfoFinanciere.info_locative_charge_total"=> 'nullable|integer',
+            "InfoFinanciere.info_locative_charge_format"=> 'nullable|string',
+            "InfoFinanciere.info_locative_charge_information"=> 'nullable|string',
+            "InfoFinanciere.info_estimation_value"=> 'nullable|integer',
+            "InfoFinanciere.info_estimation_date"=> 'nullable|date',
+            "InfoFinanciere.info_predicted_work"=> 'nullable|string',
+            "InfoFinanciere.info_monthly_charge"=> 'nullable|integer',
+            "InfoFinanciere.info_garantied_deposit"=> 'nullable|string',
+            "InfoFinanciere.info_fonciere_taxe"=> 'nullable|integer',
+            "InfoFinanciere.info_habitation_taxe"=> 'nullable|integer',
+            "InfoFinanciere.info_ordure_menagere_taxe"=> 'nullable|integer',
         ];
     }
 }
