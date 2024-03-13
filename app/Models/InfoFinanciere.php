@@ -11,7 +11,8 @@ class InfoFinanciere extends Model
 
     protected $casts = [
         'info_honoraire_proprio_part' => 'array',
-        'info_rent_encadrement' => 'array'
+        'info_rent_encadrement' => 'array',
+        'info_tenant_chare' => 'array'
     ];
 
     protected $fillable = [
@@ -32,6 +33,9 @@ class InfoFinanciere extends Model
         'info_fonciere_taxe',
         'info_habitation_taxe',
         'info_ordure_menagere_taxe',
+        'info_honoraire_proprio_part',
+        'info_rent_encadrement',
+
         
     ];
 }

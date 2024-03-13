@@ -73,7 +73,6 @@ class BienController extends Controller
         DB::beginTransaction();
         try {
             // transaction
-            dd($requestExterior);
 
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
             $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
