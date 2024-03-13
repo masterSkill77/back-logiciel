@@ -10,9 +10,8 @@ class InfoFinanciere extends Model
     use HasFactory;
 
     protected $casts = [
-        'info_honoraire_charge' => 'array',
-        'info_honoraire_locataire_part' => 'array',
-        'info_honoraire_proprio_part' => 'array'
+        'info_honoraire_proprio_part' => 'array',
+        'info_rent_encadrement' => 'array'
     ];
 
     protected $fillable = [
@@ -20,7 +19,6 @@ class InfoFinanciere extends Model
         'info_honoraire_charge',
         'info_honoraire_locataire_part',
         'info_rent',
-        'info_rent_encadrement',
         'info_tenant_chare',
         'info_owner_share',
         'info_locative_charge_total',
@@ -33,6 +31,7 @@ class InfoFinanciere extends Model
         'info_garantied_deposit',
         'info_fonciere_taxe',
         'info_habitation_taxe',
-        'info_ordure_menagere_taxe'
+        'info_ordure_menagere_taxe',
+        
     ];
 }

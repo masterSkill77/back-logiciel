@@ -27,8 +27,8 @@ class InfoFinanciereRequest extends FormRequest
         return [
 
             "InfoFinanciere.info_price"=> 'nullable|integer',
-            "InfoFinanciere.info_honoraire_charge"=> 'nullable|integer',
-            "InfoFinanciere.info_honoraire_locataire_part"=> 'nullable|integer',
+            "InfoFinanciere.info_honoraire_charge"=> 'nullable|boolean',
+            "InfoFinanciere.info_honoraire_locataire_part"=> 'nullable|boolean',
             "InfoFinanciere.info_rent"=> 'nullable|integer',
             "InfoFinanciere.info_rent_encadrement"=> 'nullable|array',
             "InfoFinanciere.info_tenant_chare"=> 'nullable|array',
