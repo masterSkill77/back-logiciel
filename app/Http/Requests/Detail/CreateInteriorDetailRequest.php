@@ -26,7 +26,7 @@ class CreateInteriorDetailRequest extends FormRequest
     {
         return [
             "interiorDetail.category"=> 'nullable|array',
-            "interiorDetail.nbOfSleeping"=> 'nullable|integer',
+            "interiorDetail.nbOfSleeping"=> 'nullable',
             "interiorDetail.nbOfBathroom"=> 'nullable|integer',
             "interiorDetail.nbOfRoomWater"=> 'nullable|integer',
             "interiorDetail.nbOfWc"=> 'nullable|integer',

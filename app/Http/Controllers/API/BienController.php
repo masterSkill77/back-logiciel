@@ -64,32 +64,32 @@ class BienController extends Controller
      * return json
      */
     public function createBien(
-        // CreateExternDetailRequest $requestExterior,
-        // CreateTerrainRequest $requestTerrain,
-        // CreateInteriorDetailRequest $requestInterior,
-        // CreateInfoCoprprieteRequest $infoCoproprieteRequest,
-        // CreateDiagnostiqueRequest $requestDiagnostique,
-        // RentalInvestRequest $requestRentalInvest,
-        // InfoFinanciereRequest $requestInfoFinanciere,
+        CreateExternDetailRequest $requestExterior,
+        CreateTerrainRequest $requestTerrain,
+        CreateInteriorDetailRequest $requestInterior,
+        CreateInfoCoprprieteRequest $infoCoproprieteRequest,
+        CreateDiagnostiqueRequest $requestDiagnostique,
+        RentalInvestRequest $requestRentalInvest,
+        InfoFinanciereRequest $requestInfoFinanciere,
         SectorRequest $requestSector,
-        // PhotoRequest $requestPhoto,
-        // AdvertissementRequest $requestAdvertissement,
-        // BienRequest $requestBien,
-        // MandateRequest $Mandaterequest,
-        // AvalaibilitiesRequest $requestAvalaibilitie
+        PhotoRequest $requestPhoto,
+        AdvertissementRequest $requestAdvertissement,
+        BienRequest $requestBien,
+        MandateRequest $Mandaterequest,
+        AvalaibilitiesRequest $requestAvalaibilitie
     ) {
         DB::beginTransaction();
         try {
             // transaction
 
-            // $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
-            // $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
-            // $terrainId = $this->handleTerrain($requestTerrain->toArray());
-            // $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
-            // $infoCoproprieteId = $this->handleInfoCopropriete($infoCoproprieteRequest->toArray());
-            // $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
-            // $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
-            // $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
+            $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
+            $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
+            $terrainId = $this->handleTerrain($requestTerrain->toArray());
+            $interiorDetailId = $this->handleInteriorDetail($requestInterior->toArray());
+            $infoCoproprieteId = $this->handleInfoCopropriete($infoCoproprieteRequest->toArray());
+            $diagnostiqueId = $this->handleDiagnostique($requestDiagnostique->toArray());
+            $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
+            $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
             $sectorId = $this->handleSector($requestSector->toArray());
             $photosId = $this->handlePhotos($requestPhoto->toArray());
             $requestData = $requestBien->validated();
