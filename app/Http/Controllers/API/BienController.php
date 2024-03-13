@@ -113,7 +113,7 @@ class BienController extends Controller
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
             $user = Auth::user();
-            $requestData['biens']['user_id'] = $user->id;
+            $requestData['biens']['agent_id'] = $user->id;
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
