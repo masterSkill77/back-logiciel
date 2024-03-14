@@ -121,7 +121,7 @@ class BienController extends Controller
             $mandateData = $Mandaterequest->input('Mandate');
             $mandateData['bien_id_bien'] = 1;
             $this->mandateService->addMandate($mandateData);
-            
+
             DB::commit();
 
             return response(['message' => 'Bien créé avec succès', $sectorId], Response::HTTP_CREATED);
@@ -236,45 +236,44 @@ class BienController extends Controller
         return $response;
     }
 
-    private function handlePhotos(array $requestPhoto) 
+    private function handlePhotos(array $requestPhoto)
     {
-        $photosData = $requestPhoto['photos']; 
-    if(isset($photoData) && $photoData != null){
-        $originalFilenames = [];
-        if (isset($photosData['photos_couvert'])) {
-            $photosOriginal = $photosData['photos_couvert'];
-            if (is_array($photosOriginal)) { // Vérifier si c'est un tableau
-                foreach ($photosOriginal as $original) {
-                    $filename = time() . '_' . $original->getClientOriginalName();
-                    $path = $original->move(public_path('/document/photos_couvert'), $filename);
-                    $originalFilenames[] = '/' . $filename;
+        $photosData = $requestPhoto['photos'];
+        if (isset($photoData) && $photoData != null) {
+            $originalFilenames = [];
+            if (isset($photosData['photos_couvert'])) {
+                $photosOriginal = $photosData['photos_couvert'];
+                if (is_array($photosOriginal)) { // Vérifier si c'est un tableau
+                    foreach ($photosOriginal as $original) {
+                        $filename = time() . '_' . $original->getClientOriginalName();
+                        $path = $original->move(public_path('/document/photos_couvert'), $filename);
+                        $originalFilenames[] = '/' . $filename;
+                    }
                 }
             }
-        }
-    
-        $slideFilenames = [];
-        if (isset($photosData['photos_slide'])) {
-            $photosSlide = $photosData['photos_slide'];
-            if (is_array($photosSlide)) { // Vérifier si c'est un tableau
-                foreach ($photosSlide as $slide) {
-                    $filename = time() . '_' . $slide->getClientOriginalName();
-                    $path = $slide->move(public_path('/document/photos_slide'), $filename);
-                    $slideFilenames[] = '/' . $filename;
+
+            $slideFilenames = [];
+            if (isset($photosData['photos_slide'])) {
+                $photosSlide = $photosData['photos_slide'];
+                if (is_array($photosSlide)) { // Vérifier si c'est un tableau
+                    foreach ($photosSlide as $slide) {
+                        $filename = time() . '_' . $slide->getClientOriginalName();
+                        $path = $slide->move(public_path('/document/photos_slide'), $filename);
+                        $slideFilenames[] = '/' . $filename;
+                    }
                 }
             }
+            $description = $photosData['description'];
+
+            // Ajouter les données à la base de données
+            $photosData = [
+                'description' => $description,
+                'photos_couvert' => $originalFilenames,
+                'photos_slide' => $slideFilenames
+            ];
+            // Enregistrer les données dans la base de données
+            return $this->photoService->addPhotos($photosData);
         }
-        $description = $photosData['description'];
-    
-        // Ajouter les données à la base de données
-        $photosData = [
-            'description' => $description,
-            'photos_couvert' => $originalFilenames,
-            'photos_slide' => $slideFilenames
-        ];
-        // Enregistrer les données dans la base de données
-        return $this->photoService->addPhotos($photosData);
-    
-    }
     }
 
     /**
@@ -350,15 +349,15 @@ class BienController extends Controller
     }
 
 
-    public function udpateStatus(int $bienId,Request $request) : JsonResponse
+    public function udpateStatus(int $bienId, Request $request): JsonResponse
     {
-        $status= $request->toArray();
+        $status = $request->toArray();
         $findBienId = $this->bienService->updateStatusById($bienId, $status);
 
         if (!$findBienId) {
             return response()->json(['error' => "Bien with ID $bienId not found"], 404);
         }
 
-        return response()->json($findBienId, );
+        return response()->json(['message'=>"Un bien a été change avec succés"]);
     }
 }
