@@ -178,4 +178,19 @@ class BienService
             'advertisement'
         ])->first();
     }
+
+    public function updateStatusById(int $BienId, $status) : Bien
+    {
+      
+        $bien = Bien::where('id_bien', $BienId)->first();
+        if($bien != null ){
+            if(isset($status['publish'])){
+                $bien->update(['publish'=> $status['publish']]);
+            }
+            if(isset($status['sold'])){
+                $bien->update(['sold'=> $status['sold']]);
+            }
+        }
+        return $bien;
+    } 
 }

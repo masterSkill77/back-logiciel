@@ -348,4 +348,17 @@ class BienController extends Controller
         $mandateData = $Mandaterequest->input('Mandate');
         return $this->mandateService->addMandate($mandateData);
     }
+
+
+    public function udpateStatus(int $bienId,Request $request) : JsonResponse
+    {
+        $status= $request->toArray();
+        $findBienId = $this->bienService->updateStatusById($bienId, $status);
+
+        if (!$findBienId) {
+            return response()->json(['error' => "Bien with ID $bienId not found"], 404);
+        }
+
+        return response()->json($findBienId, );
+    }
 }
