@@ -2,6 +2,7 @@
 
 namespace App\Services;
 
+use App\Enum\PropertyStatus;
 use App\Models\Bien;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\ModelNotFoundException;
@@ -110,17 +111,17 @@ class BienService
             $filterValue = $filters['filter'];
 
             switch ($filterValue) {
-                case 'actif':
-                    $query->where('publish', true);
+                case PropertyStatus::ACTIVE->value :
+                    $query->where('published',PropertyStatus::ACTIVE );
                     break;
-                case 'inactif':
-                    $query->where('publish', false);
+                case PropertyStatus::INACTIVE->value:
+                    $query->where('published', PropertyStatus::INACTIVE);
                     break;
-                case 'archivés':
-                    $query->where('sold', true);
+                case PropertyStatus::ARCHIVE->value:
+                    $query->where('solds', PropertyStatus::ARCHIVE);
                     break;
-                case 'vendus':
-                    $query->where('sold', false);
+                case PropertyStatus::SOLD->value:
+                    $query->where('solds', PropertyStatus::SOLD);
                     break;
             }
         }
