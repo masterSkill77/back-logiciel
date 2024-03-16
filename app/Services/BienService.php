@@ -182,14 +182,14 @@ class BienService
 
     public function updateStatusById(int $BienId, $status) : Bien
     {
-      
+
         $bien = Bien::where('id_bien', $BienId)->first();
         if($bien != null ){
-            if(isset($status['publish'])){
-                $bien->update(['publish'=> $status['publish']]);
+            if(isset($status['published'])){
+                $bien->update(['published'=> $status['published']]);
             }
-            if(isset($status['sold'])){
-                $bien->update(['sold'=> $status['sold']]);
+            if(isset($status['solds'])){
+                $bien->update(['solds'=> $status['solds']]);
             }
         }
         return $bien;
