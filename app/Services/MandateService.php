@@ -33,4 +33,11 @@ class MandateService
     {
         return Mandate::all();
     }
+
+    public function udpateMandate(array $mandate) 
+    {
+        $Mandate = Mandate::where('contact_id_contact', $mandate['contact_id_contact'])->first();
+       return  $Mandate->update(['bien_id_bien' => $mandate['bien_id_bien']]);
+
+    }
 }

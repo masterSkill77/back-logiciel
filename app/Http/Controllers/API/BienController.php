@@ -28,7 +28,9 @@ use App\Http\Requests\Sector\SectorRequest;
 use App\Http\Requests\Photos\PhotoRequest;
 use App\Http\Requests\Bien\BienRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
+use App\Http\Requests\Mandate\MandateRequest;
 use App\Models\Bien;
+use App\Services\MandateService;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
@@ -48,8 +50,8 @@ class BienController extends Controller
         public SectorService $sectorService,
         public PhotosService $photoService,
         public AdvertissementsService $advertissementService,
-        public BienService $bienService
-
+        public BienService $bienService,
+        public MandateService $mandateService,
     ) {
     }
 
@@ -66,15 +68,14 @@ class BienController extends Controller
         RentalInvestRequest $requestRentalInvest,
         InfoFinanciereRequest $requestInfoFinanciere,
         SectorRequest $requestSector,
-        PhotoRequest $requestPhoto,
+       // PhotoRequest $requestPhoto,
         AdvertissementRequest $requestAdvertissement,
-        BienRequest $requestBien
+        BienRequest $requestBien,
+        MandateRequest $requestMandat,
     ) {
         DB::beginTransaction();
         try {
             // transaction
-            dd($requestExterior);
-
             $advertissementId = $this->handleAdvertissement($requestAdvertissement->toArray());
             $exteriorId = $this->handleExteriorDetail($requestExterior->toArray());
             $terrainId = $this->handleTerrain($requestTerrain->toArray());
@@ -84,12 +85,13 @@ class BienController extends Controller
             $rentalInvestId = $this->handleRentalInvest($requestRentalInvest->toArray());
             $infoFinanciereId = $this->handleInfoFinanciere($requestInfoFinanciere->toArray());
             $sectorId = $this->handleSector($requestSector->toArray());
-            $photosId = $this->handlePhotos($requestPhoto->toArray());
+          //  $photosId = $this->handlePhotos($requestPhoto->toArray());
+            $mandat = $this->handleMandat($requestMandat);  
             $requestData = $requestBien->validated();
             $user = Auth::user();
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
-            $requestData['biens']['photos_id_photos'] = $photosId['id'];
+           // $requestData['biens']['photos_id_photos'] = $photosId['id'];
             $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
             $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
             $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
@@ -111,6 +113,18 @@ class BienController extends Controller
             $requestData['biens']['agency_id'] = $agency->id;
 
             $this->handleBien($requestData);
+            $bienId = $this->handleBien($requestData);
+
+
+            $mandateData = $requestMandat->input('Mandate');
+            $mandateData['bien_id_bien'] = $bienId;
+
+            if(isset($mandateData['contact_id_contact'])){
+                $this->mandateService->addMandate($mandateData);
+            }else{
+                $this->mandateService->udpateMandate($mandateData);
+            }
+            
             DB::commit();
 
             return response(['message' => 'Bien créé avec succès'], Response::HTTP_CREATED);
@@ -299,4 +313,5 @@ class BienController extends Controller
             throw new NotAllowedRessourceException();
         return response()->json($bien);
     }
+
 }
