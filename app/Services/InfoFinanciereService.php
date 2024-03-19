@@ -22,8 +22,13 @@ class InfoFinanciereService
             $infoFinanciereData = $params['InfoFinanciere'];
             
             $infoFinanciereData['info_rent_encadrement'] = json_encode($infoFinanciereData['info_rent_encadrement']);
-            $infoFinanciereData['info_tenant_chare'] = json_encode($infoFinanciereData['info_tenant_chare']);
-            $infoFinanciereData['info_owner_share'] = json_encode($infoFinanciereData['info_owner_share']);
+            if(isset($infoFinanciereData['info_tenant_chare'])){
+                $infoFinanciereData['info_tenant_chare'] = json_encode($infoFinanciereData['info_tenant_chare']);
+            }
+            if(isset($infoFinanciereData['info_owner_share']))
+            {
+                $infoFinanciereData['info_owner_share'] = json_encode($infoFinanciereData['info_owner_share']);
+            }
     
             $infoFinanciereData['info_honoraire_charge'] = $infoFinanciereData['info_honoraire_charge'] ? 1 : 0;
             $infoFinanciereData['info_honoraire_locataire_part'] = $infoFinanciereData['info_honoraire_locataire_part'] ? 1 : 0;

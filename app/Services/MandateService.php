@@ -15,22 +15,29 @@ class MandateService
     public function addMandate(array $mandate): int
     {
         $existingMandate = Mandate::where('num_mandat', $mandate['num_mandat'])->first();
-
         if ($existingMandate) {
-            $existingMandate->contact_id_contact = $mandate['contact_id_contact'];
+           isset($mandate['contact_id_contact']) ?? $existingMandate->contact_id_contact = $mandate['contact_id_contact'];
+           isset($mandate['bien_id_bien']) ?? $existingMandate->bien_id_bien = $mandate['bien_id_bien'];
             $existingMandate->save();
-    
             return $existingMandate->id_mandate;
+
         } else {
+            
             $newMandate = new Mandate($mandate);
             $newMandate->save();
-    
+
             return $newMandate->id_mandate;
         }
-    } 
+    }
 
-    public function getMandate() : Collection
+    public function getMandate(): Collection
     {
         return Mandate::all();
+    }
+
+    public function udpateMandate(array $mandate)
+    {
+        $Mandate = Mandate::where('contact_id_contact', $mandate['contact_id_contact'])->first();
+        return  $Mandate->update(['bien_id_bien' => $mandate['bien_id_bien']]);
     }
 }

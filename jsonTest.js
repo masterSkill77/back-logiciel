@@ -1,4 +1,3 @@
-// test payload du bien 
 {
     "exteriorDetail":
     {
@@ -102,22 +101,19 @@
     "InfoFinanciere" : {
         "info_price" : 2,
         "info_rent" : 2,
-        "info_rent_encadrement" : true,
+        "info_rent_encadrement" : [ {
+            "test": "house",
+            "test": true
+        }],
         "info_rent_default" : 2,
         "info_rent_majored" : 2,
         "info_rent_complement" : 2,
         "info_locative_charge_total" : 2,
         "info_locative_charge_format" : "test format",
-        "info_honoraire_charge" : [ {
-            "test": "house",
-            "test": true
-        }],
+        "info_honoraire_charge" : true,
         "info_estimation_value" : 2,
         "info_estimation_date" : "2020-02-02",
-        "info_honoraire_locataire_part" : [ {
-            "test": "house",
-            "test": true
-        }],
+        "info_honoraire_locataire_part" : true,
         "info_honoraire_proprio_part" : [ {
             "test": "house",
             "test": true
@@ -146,11 +142,7 @@
         }]
     },
         "photos": {
-        "photos_original" : "test",
-        "photos_slide" : [ {
-            "test": "house",
-            "test": true
-        }]
+       
     },
 
     "biens": {
@@ -191,12 +183,21 @@
         "selling_price" : 2,
         "publish_property" : true,
         "rent" : 2,
-        "duration_lease" : 2
+        "duration_lease" : 2,
+				"sold" : false,
+		  	"publish" : false
     },
     "advertissement": {
-        "title": "oskar",
+        "title": "test",
         "description": "test de la description pour l'advertissement"
     },
+
+    "Mandate":{
+        "num_mandat":4,
+        "person":"test",
+        "contact_id_contact":1
+    },
+
     "type_offert_id": 1,
     "type_estate_id": 1,
     "classification_estate_id": 1,
