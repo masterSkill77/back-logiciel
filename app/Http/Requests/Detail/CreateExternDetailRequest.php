@@ -26,21 +26,27 @@ class CreateExternDetailRequest extends FormRequest
     {
         return [
             "exteriorDetail.semiOwnership"=> 'required|string',
-            "exteriorDetail.basement"=> 'required|array',
-            "exteriorDetail.withbasement"=> 'required|integer',
-            "exteriorDetail.cellar"=> 'required|integer',
-            "exteriorDetail.trueCellar"=> 'required|integer',
+            "exteriorDetail.basement"=> 'nullable|string',
+            "exteriorDetail.withbasement"=> 'nullable|string',
+            "exteriorDetail.cellar"=> 'nullable',
+            "exteriorDetail.trueCellar"=> 'nullable',
             "exteriorDetail.balcony"=> 'required|integer',
-            "exteriorDetail.withBalcony"=> 'required|integer',
+            "exteriorDetail.withBalcony"=> 'nullable',
             "exteriorDetail.terrace"=> 'required|integer',
-            "exteriorDetail.withTerrace"=> 'required|integer',
+            "exteriorDetail.withTerrace"=> 'nullable',
             "exteriorDetail.varangue"=> 'required|integer',
             "exteriorDetail.loggia"=> 'required|integer',
             "exteriorDetail.veranda"=> 'required|integer',
-            "exteriorDetail.withVeranda"=> 'required|integer',
+            "exteriorDetail.withVeranda"=> 'nullable',
             "exteriorDetail.singleStorey"=> 'required|integer',
             "exteriorDetail.typeResidence"=> 'required|string',
-            "exteriorDetail.formatResidence"=> 'required|string'
+            "exteriorDetail.formatResidence"=> 'required|string',
+            "exteriorDetail.floor"=> 'nullable|integer',
+            "exteriorDetail.barbecue"=> 'nullable',
+            "exteriorDetail.jacuzzi"=> 'nullable',
+            "exteriorDetail.bikes"=> 'nullable',
+            "exteriorDetail.tennis"=> 'nullable',
+            "exteriorDetail.summerKitchen"=> 'nullable'
         ];
     }
 }

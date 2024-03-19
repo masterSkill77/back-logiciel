@@ -3,7 +3,11 @@
 namespace App\Services;
 
 use App\Models\Contact;
+use App\Models\User;
+use App\Models\PreferenceContacts;
+use App\Http\Requests\Contact\CreateContactRequest;
 use Illuminate\Database\Eloquent\Collection;
+use Illuminate\Support\Facades\DB;
 
 class ContactService
 {
@@ -14,14 +18,17 @@ class ContactService
 
     public function createContact(array $params): Contact
     {
-        $contact = (new Contact($params));
-        $contact->save();
-        return $contact;
+        if(isset($params['contact']) && is_array($params['contact'])){
+            $contact = (new Contact($params['contact']));
+            $contact->save();
+            return $contact;
+        }
     }
 
-    public function updateContact(Contact $contact, array $params): Contact
+    public function updateContact($data, $params): Contact
     {
-        $contact->update($params);
+        $contact = Contact::findOrFail($params);
+        $contact->update($data);
         return $contact;
     }
 

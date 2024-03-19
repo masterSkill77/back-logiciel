@@ -18,10 +18,8 @@ return new class extends Migration
             $table->integer('year_construction')->nullable();
             //DPE_DATE DE RÉALISATION
             $table->date('dpe_date_realization')->nullable();
-            //DPE_BIEN SOUMIS AU DPE:
-            $table->boolean('dpe_property')->default(false);
-            //DPE VIERGE
-            $table->boolean('dpe_virgin')->default(false);
+            //DPE_BIEN:
+            $table->boolean('dpe')->default(false);
             //DPE_CONSOMMATION
             $table->string('dpe_consommation')->nullable();
             //GES

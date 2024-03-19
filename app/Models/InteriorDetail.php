@@ -13,9 +13,13 @@ class InteriorDetail extends Model
     protected $casts = [
         'caracteristique' => 'array',
         'category' => 'array',
+        'kitchenEquipment' => 'array',
+        'multimedia' => 'array',
+        'othersEquipment' => 'array',
     ];
     protected $fillable = [
         'category', 'nbOfSleeping', 'nbOfBathroom', 'nbOfRoomWater', 'nbOfWc', 'caracteristique', 'surfaceSquare', 'surfaceStay',
-        'TypeOfKitchen', 'StateOfKitchen'
+        'TypeOfKitchen', 'StateOfKitchen', 'surfaceBoutin', 'nbOfLots','kitchenEquipment', 'multimedia', 'othersEquipment',
+        'nbOfBathtubs', 'nbOfShowers'
     ];
 }

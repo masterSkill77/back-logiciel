@@ -40,10 +40,17 @@ return new class extends Migration
             $table->string('commune');
              //Code postal
             $table->string('zip');
+            //date debut
+            $table->date('start_date')->nullable();
+            //date fin
+            $table->date('end_date')->nullable();
+            //nombre de nuits
+            $table->integer('night_number')->nullable();
            //TYPE D'OFFRE
            $table->foreignIdFor(TypeOffert::class)->default(null);
            //TYPE DE BIEN
            $table->foreignIdFor(TypeEstate::class)->default(null);
+           
             $table->timestamps();
         });
     }

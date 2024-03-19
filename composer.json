@@ -6,11 +6,15 @@
     "license": "MIT",
     "require": {
         "php": "^8.1",
+        "google/apiclient": "^2.15.0",
+        "guzzlehttp/guzzle": "^7.2",
         "laravel/framework": "^10.10",
         "laravel/sanctum": "^3.3",
         "laravel/tinker": "^2.8",
         "masterskill/service-package": "^2.0",
-        "orhanerday/open-ai": "^5.0"
+        "orhanerday/open-ai": "^5.0",
+        "masterskill/custom-router": "^1.0",
+        "masterskill/service-package": "^2.0"
     },
     "require-dev": {
         "fakerphp/faker": "^1.9.1",

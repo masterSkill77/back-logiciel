@@ -1,10 +1,15 @@
 <?php
 
-namespace App\Http\API\Controllers;
+namespace App\Http\Controllers\API;
 
+use App\Enum\Role;
 use App\Models\Agency;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Services\AgencyService;
+use App\Services\ConfigurationService;
+use App\Services\UserService;
+use Illuminate\Support\Facades\Auth;
 
 class AgencyController extends Controller
 {
@@ -35,9 +40,18 @@ class AgencyController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(Agency $agency)
+    public function show()
     {
-        //
+        $agencyService = new AgencyService();
+        $userService = new UserService($agencyService, new ConfigurationService);
+        $user = Auth::user();
+
+        if ($user->role == Role::SUPER_ADMIN->value)
+            $config = $agencyService->getById($user->agency_id);
+        else {
+            $config = $userService->getAgent($user->id);
+        }
+        return response()->json($config);
     }
 
     /**

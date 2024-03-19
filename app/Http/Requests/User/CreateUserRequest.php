@@ -25,9 +25,10 @@ class CreateUserRequest extends FormRequest
     {
         return [
             "name" => 'required|string:255',
-            "email" => 'required|email|string|unique:users',
+            "email" => 'required|email|string',
             "password" => 'required|string|min:8',
-            "agency_id" => 'exists:App\Models\Agency,id',
+            'image' => 'required',
+            'code_postal'
         ];
     }
 }
