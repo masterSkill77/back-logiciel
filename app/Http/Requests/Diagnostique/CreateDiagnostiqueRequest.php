@@ -27,8 +27,7 @@ class CreateDiagnostiqueRequest extends FormRequest
         return [
             "diagnostique.year_construction"=> 'required|integer',
             "diagnostique.dpe_date_realization"=> 'required|date',
-            "diagnostique.dpe_property"=> 'nullable|boolean',
-            "diagnostique.dpe_virgin"=> 'nullable|boolean',
+            "diagnostique.pde"=> 'nullable|string',
             "diagnostique.dpe_consommation"=> 'required|string',
             "diagnostique.dpe_ges"=> 'required|string',
             "diagnostique.cost_estimate"=> 'required|integer',
