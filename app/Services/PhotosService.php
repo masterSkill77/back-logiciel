@@ -14,16 +14,32 @@ class PhotosService
     }
     public function addPhotos(array $params): array
     {
-        if(isset($params['photos']) && is_array($params['photos'])) {
-            $photo = (new Photos($params['photos']));
-            $photo->save();
-
-            return ['id' => $photo->id_photos];
+        $photosData = [];
+    
+        foreach ($params['photos_couvert'] as $photoData) {
+            $photosData[] = [
+                'type' => 'photos_couvert',
+                'filename' => $photoData['filename'],
+                'description' => $photoData['description']
+            ];
         }
-
-        return ['id' => 0];
+        $dataTest = [];
+        foreach ($params['photos_slide'] as $photoData) {
+            $dataTest[] = [
+                'type' => 'photos_slide',
+                'filename' => $photoData['filename'],
+                'description' => $photoData['description']
+            ];
+        }
+        $photo = new Photos();
+        $photo->photos_couvert = $photosData;
+        $photo->photos_slide = $dataTest; 
+        $photo->save();
+    
+        return ['id' => $photo->id_photos];
     }
-
+    
+    
     public function savePhotos(UploadedFile $file, array $slides): string
     {
         $originalFilename = $file->getClientOriginalName();
