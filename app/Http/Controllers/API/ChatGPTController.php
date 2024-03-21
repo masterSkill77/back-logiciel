@@ -13,7 +13,7 @@ class ChatGPTController extends Controller
 {
     public function __construct(public OpenAiService $openAiService, public TypeEstateService $typeEstateService, public TypeOffertService $typeOffertService)
     {
-        
+
     }
     public function chatGPT(AnnonceRequest $annonceRequest)
     {
