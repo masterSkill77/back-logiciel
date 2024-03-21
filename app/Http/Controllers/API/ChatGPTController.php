@@ -23,6 +23,6 @@ class ChatGPTController extends Controller
         $chat = $this->openAiService->useOpenAi($annonces, $offert['designation'], $estate['designation'], );
         $data = json_decode($chat, true);
 
-        return response()->json(['response' => $data['choices'][0]['message']['content']]);
+        return response()->json(['response' =>$data['choices'][0]['message']['content']]);
     }
 }
