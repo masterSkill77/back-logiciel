@@ -17,6 +17,13 @@ return new class extends Migration
             $table->string('published')->after('duration_lease');
             $table->string('solds')->nullable()->after('published');
         });
+
+        Schema::table('diagnostics', function (Blueprint $table) {
+            $table->dropColumn('gaz');
+            $table->dropColumn('electric');
+            $table->integer('electric_diagnostic')->nullable()->after('amiante_yes_comments');
+            $table->integer('gaz_diagnostic')->nullable()->after('electric_yes_comments');
+        });
     }
 
     /**
