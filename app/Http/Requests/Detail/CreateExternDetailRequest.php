@@ -28,7 +28,7 @@ class CreateExternDetailRequest extends FormRequest
             "exteriorDetail" => "required",
             "exteriorDetail.semiOwnership" => 'required|string',
             "exteriorDetail.basement" => 'nullable|string',
-            "exteriorDetail.withbasement" => 'nullable|string',
+            "exteriorDetail.withbasement" => 'nullable|float',
             "exteriorDetail.cellar" => 'nullable',
             "exteriorDetail.trueCellar" => 'nullable',
             "exteriorDetail.balcony" => 'required|integer',
