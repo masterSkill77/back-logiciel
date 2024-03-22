@@ -8,6 +8,7 @@ use App\Http\Controllers\API\ClassificationOffertController;
 use App\Http\Controllers\API\UserController;
 use App\Http\Controllers\API\TypeEstateController;
 use App\Http\Controllers\API\BienController;
+use App\Http\Controllers\API\ChatGPTController;
 use App\Http\Controllers\API\ClassificationEstateController;
 use App\Http\Controllers\API\FolderController;
 use App\Http\Controllers\API\GoogleController;
@@ -117,3 +118,5 @@ Route::get('/validate-account', ConfirmationAccountController::class)->name('val
 
 Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));
 Route::get('/match-address-country-global', fn (Request $request) => (new CommuneSearchService)->getCountryName($request->query('name')));
+//OpenAI
+Route::post('/chat', [ChatGPTController::class, 'chat']);
