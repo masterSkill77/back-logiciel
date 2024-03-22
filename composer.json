@@ -13,8 +13,6 @@
         "masterskill/custom-router": "^1.0",
         "laravel/tinker": "^2.8",
         "masterskill/service-package": "^2.0",
-        "orhanerday/open-ai": "^5.0"
-        "masterskill/service-package": "^2.0",
         "orhanerday/open-ai": "^5.1"
     },
     "require-dev": {
