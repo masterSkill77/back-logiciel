@@ -124,4 +124,4 @@ Route::get('/validate-account', ConfirmationAccountController::class)->name('val
 Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));
 Route::get('/match-address-country-global', fn (Request $request) => (new CommuneSearchService)->getCountryName($request->query('name')));
 //OpenAI
-Route::post('/chat-GPT', [ChatGPTController::class, 'chatGPT']);
+Route::post('/chat-gpt', [ChatGPTController::class, 'chatGPT']);
