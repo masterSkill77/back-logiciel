@@ -118,5 +118,10 @@ Route::get('/validate-account', ConfirmationAccountController::class)->name('val
 
 Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));
 Route::get('/match-address-country-global', fn (Request $request) => (new CommuneSearchService)->getCountryName($request->query('name')));
+
+Route::get('/validate-account', ConfirmationAccountController::class)->name('validate.account');
+
+Route::get('/match-address', fn (Request $request) => (new CommuneSearchService)->getStreet($request->query('query')));
+Route::get('/match-address-country-global', fn (Request $request) => (new CommuneSearchService)->getCountryName($request->query('name')));
 //OpenAI
-Route::post('/chat', [ChatGPTController::class, 'chat']);
+Route::post('/chat-GPT', [ChatGPTController::class, 'chatGPT']);
