@@ -24,7 +24,7 @@ class AvalaibilitiesRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "availabilities.num_folder" => 'string:25',
+            "availabilities.num_folder" => 'integer',
             "availabilities.created_folder" => 'date',
             "availabilities.updated_folder" => 'date',
             "availabilities.immediat" => 'string',
