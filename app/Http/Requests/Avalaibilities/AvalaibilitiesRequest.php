@@ -25,8 +25,8 @@ class AvalaibilitiesRequest extends FormRequest
     {
         return [
             "availabilities.num_folder" => 'integer',
-            "availabilities.created_folder" => 'date',
-            "availabilities.updated_folder" => 'date',
+            "availabilities.created_folder" => '',
+            "availabilities.updated_folder" => '',
             "availabilities.immediat" => 'string',
             "availabilities.release_it" => 'string',
             "availabilities.available_on" => 'string',
