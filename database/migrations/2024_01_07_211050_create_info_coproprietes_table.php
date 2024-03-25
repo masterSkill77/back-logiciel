@@ -12,20 +12,20 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('info_coproprietes', function (Blueprint $table) {
-            $table->id('id_infocopropriete'); 
+            $table->id('id_infocopropriete');
 
             // N° DE LOT
-            $table->string('lot_number');
+            $table->string('lot_number')->nullable();
             //NB DE LOTS
-            $table->integer('total_unit');
+            $table->integer('total_unit')->nullable();
             //QUOTE PART ANUELLE CHARGES
-            $table->string('annual_charges');
+            $table->string('annual_charges')->nullable();
             //MONTANT FONDS DE TRAVAUX:
-            $table->bigInteger('amount_fund');
+            $table->bigInteger('amount_fund')->nullable();
             //MILLIÈMES DE COPROPRIÉTÉ:
-            $table->string('thousands_copropriete');
+            $table->string('thousands_copropriete')->nullable();
             //BIEN EN COPROPRIÉTÉ:
-            $table->json('property_copropriete');
+            $table->json('property_copropriete')->nullable();
 
             $table->timestamps();
         });

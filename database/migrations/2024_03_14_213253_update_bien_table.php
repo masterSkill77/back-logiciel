@@ -14,8 +14,8 @@ return new class extends Migration
         Schema::table('biens', function (Blueprint $table) {
             $table->dropColumn('sold');
             $table->dropColumn('publish');
-            $table->string('published')->after('duration_lease');
-            $table->string('solds')->nullable()->after('published');
+            $table->string('published')->after('duration_lease')->default("Publié");
+            $table->string('solds')->nullable()->after('published')->default("Vendu");
         });
     }
 
