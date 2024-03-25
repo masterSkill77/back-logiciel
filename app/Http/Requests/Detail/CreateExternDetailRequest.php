@@ -9,7 +9,7 @@ class CreateExternDetailRequest extends FormRequest
 {
     use ValidationErrors;
 
-        /**
+    /**
      * Determine if the user is authorized to make this request.
      */
     public function authorize(): bool
@@ -17,7 +17,7 @@ class CreateExternDetailRequest extends FormRequest
         return true;
     }
 
-        /**
+    /**
      * Get the validation rules that apply to the request.
      *
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
@@ -25,28 +25,29 @@ class CreateExternDetailRequest extends FormRequest
     public function rules(): array
     {
         return [
-            "exteriorDetail.semiOwnership"=> 'required|string',
-            "exteriorDetail.basement"=> 'nullable|string',
-            "exteriorDetail.withbasement"=> 'nullable|string',
-            "exteriorDetail.cellar"=> 'nullable',
-            "exteriorDetail.trueCellar"=> 'nullable',
-            "exteriorDetail.balcony"=> 'required|integer',
-            "exteriorDetail.withBalcony"=> 'nullable',
-            "exteriorDetail.terrace"=> 'required|integer',
-            "exteriorDetail.withTerrace"=> 'nullable',
-            "exteriorDetail.varangue"=> 'required|integer',
-            "exteriorDetail.loggia"=> 'required|integer',
-            "exteriorDetail.veranda"=> 'required|integer',
-            "exteriorDetail.withVeranda"=> 'nullable',
-            "exteriorDetail.singleStorey"=> 'required|integer',
-            "exteriorDetail.typeResidence"=> 'required|string',
-            "exteriorDetail.formatResidence"=> 'required|string',
-            "exteriorDetail.floor"=> 'nullable|integer',
-            "exteriorDetail.barbecue"=> 'nullable',
-            "exteriorDetail.jacuzzi"=> 'nullable',
-            "exteriorDetail.bikes"=> 'nullable',
-            "exteriorDetail.tennis"=> 'nullable',
-            "exteriorDetail.summerKitchen"=> 'nullable'
+            "exteriorDetail" => "required",
+            "exteriorDetail.semiOwnership" => 'required|string',
+            "exteriorDetail.basement" => 'nullable|string',
+            "exteriorDetail.withbasement" => 'nullable',
+            "exteriorDetail.cellar" => 'nullable',
+            "exteriorDetail.trueCellar" => 'nullable',
+            "exteriorDetail.balcony" => 'required|integer',
+            "exteriorDetail.withBalcony" => 'nullable',
+            "exteriorDetail.terrace" => 'required|integer',
+            "exteriorDetail.withTerrace" => 'nullable',
+            "exteriorDetail.varangue" => 'required|integer',
+            "exteriorDetail.loggia" => 'required|integer',
+            "exteriorDetail.veranda" => 'required|integer',
+            "exteriorDetail.withVeranda" => 'nullable',
+            "exteriorDetail.singleStorey" => 'required|integer',
+            "exteriorDetail.typeResidence" => 'required|string',
+            "exteriorDetail.formatResidence" => 'required|string',
+            "exteriorDetail.floor" => 'nullable',
+            "exteriorDetail.barbecue" => 'nullable',
+            "exteriorDetail.jacuzzi" => 'nullable',
+            "exteriorDetail.bikes" => 'nullable',
+            "exteriorDetail.tennis" => 'nullable',
+            "exteriorDetail.summerKitchen" => 'nullable'
         ];
     }
 }

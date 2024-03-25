@@ -30,7 +30,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('biens', function (Blueprint $table) {
-            $table->id('id_bien'); 
+            $table->id('id_bien');
             //PAYS
             $table->string('city')->nullable();
             //VILLE NOM
@@ -74,12 +74,12 @@ return new class extends Migration
             //DOSSIER N° MANDAT
             $table->unsignedBigInteger('num_folder');
             //DOSSIER DATE CREATION
-            $table->timestamp('date_folder');
+            $table->date('date_folder')->nullable();
             //EQUIPEMENT
             $table->json('equipment')->nullable();
             //CONSTRUCTION RECENTE
             $table->json('recent_construct')->nullable();
-            
+
             //PRIX
             //PRIX PUBLIC
             $table->float('publish_price')->nullable();
@@ -121,9 +121,9 @@ return new class extends Migration
             $table->foreignIdFor(Sector::class)->nullable()->default(null);
             //ANNONCE
             $table->foreignIdFor(Advertisement::class)->nullable()->default(null);
-            // terrain 
+            // terrain
             $table->foreignIdFor(Terrain::class)->nullable()->default(null);
-            // info financiere 
+            // info financiere
             $table->foreignIdFor(InfoFinanciere::class)->nullable()->default(null);
 
             $table->foreignIdFor(Agency::class)->cascadeOnDelete()->nullable()->default(null);

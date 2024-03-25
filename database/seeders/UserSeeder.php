@@ -19,7 +19,8 @@ class UserSeeder extends Seeder
         'email'=>'contact@koders.com',
          'password'=>Hash::make('123456789'),
          'role' => Role::SUPER_ADMIN,
-         'agency_id' => 1
+         'agency_id' => 1,
+         'email_verified_at' => now()
         ];
         User::create($array);
     }
