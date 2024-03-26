@@ -259,8 +259,8 @@ class BienController extends Controller
                 $destination = '/document/photos_couvert';
                 $photo['photos_slide1']->move(public_path($destination), $filename);
                 $originalFilenames[] = [
-                    'filename' => '/' . $filename,
-                    'description' => $photo['photos_slide1_description']
+                    'photos_slide1' => '/' . $filename,
+                    'photos_slide1_description' => $photo['photos_slide1_description']
                 ];
             }
         }
@@ -344,8 +344,8 @@ class BienController extends Controller
                 $destination = '/document/photos_couvert';
                 $photo['photos_slide1']->move(public_path($destination), $filename);
                 $originalFilenames[] = [
-                    'filename' => '/' . $filename,
-                    'description' => $photo['photos_slide1_description']
+                    'photos_slide1' => '/' . $filename,
+                    'photos_slide1_description' => $photo['photos_slide1_description']
                 ];
             }
         }
