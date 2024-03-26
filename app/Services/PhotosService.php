@@ -15,7 +15,9 @@ class PhotosService
     public function addPhotos(array $params): array
     {
         $photosData = [];
+        $slideData = [];
     
+        // Traitement des photos couvertes
         foreach ($params['photos_couvert'] as $photoData) {
             $photosData[] = [
                 'type' => 'photos_couvert',
@@ -23,21 +25,23 @@ class PhotosService
                 'description' => $photoData['description']
             ];
         }
-        $dataTest = [];
-        foreach ($params['photos_slide'] as $photoData) {
-            $dataTest[] = [
-                'type' => 'photos_slide',
-                'filename' => $photoData['filename'],
-                'description' => $photoData['description']
-            ];
+
+        // Traitement des photos de diapositives
+        foreach ($params['photos_slide'] as $slide) {
+            $slideInfo = [];
+            foreach ($slide as $data) {
+                $slideData[] = $data;
+            }
         }
+
         $photo = new Photos();
         $photo->photos_couvert = $photosData;
-        $photo->photos_slide = $dataTest; 
+        $photo->photos_slide = $slideData;
         $photo->save();
     
         return ['id' => $photo->id_photos];
     }
+    
     
     
     public function savePhotos(UploadedFile $file, array $slides): string

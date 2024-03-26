@@ -246,11 +246,10 @@ class BienController extends Controller
     private function handlePhotos(array $requestPhoto)
     {
         $photosData = $requestPhoto['photos'];
-
+        
         if (!$photosData) {
             return response()->json(['error' => 'No photos provided'], 400);
         }
-
         $originalFilenames = [];
         $slideFilenames = [];
         foreach ($photosData['photos_couvert'] as $photo) {
@@ -266,15 +265,22 @@ class BienController extends Controller
             }
         }
 
-        foreach ($photosData['photos_slide'] as $photo) {
-            if (isset($photo['photos_slide1']) && isset($photo['photos_slide1_description'])) {
-                $filename = time() . '_' . $photo['photos_slide1']->getClientOriginalName();
-                $destination = '/document/photos_slide';
-                $photo['photos_slide1']->move(public_path($destination), $filename);
-                $slideFilenames[] = [
-                    'filename' => '/' . $filename,
-                    'description' => $photo['photos_slide1_description']
-                ];
+        foreach ($photosData['photos_slide'] as $slideKey => $slide) {
+            foreach ($slide as $slideField => $slideValue) {
+                if (strpos($slideField, 'photos_slide') === 0) {
+                    $slideNumber = substr($slideField, -1); 
+                    $descriptionKey = $slideField . '_description';
+                    
+                    if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
+                        $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
+                        $destination = '/document/photos_slide';
+                        $slide[$slideField]->move(public_path($destination), $filename);
+                        $slideFilenames[$slideNumber][] = [
+                            $slideField => '/' . $filename,
+                            $descriptionKey => $slide[$descriptionKey]
+                        ];
+                    }
+                }
             }
         }
         $photos = [
@@ -329,7 +335,6 @@ class BienController extends Controller
         if (!$photosData) {
             return response()->json(['error' => 'No photos provided'], 400);
         }
-
         $originalFilenames = [];
         $slideFilenames = [];
         foreach ($photosData['photos_couvert'] as $photo) {
@@ -345,15 +350,22 @@ class BienController extends Controller
             }
         }
 
-        foreach ($photosData['photos_slide'] as $photo) {
-            if (isset($photo['photos_slide1']) && isset($photo['photos_slide1_description'])) {
-                $filename = time() . '_' . $photo['photos_slide1']->getClientOriginalName();
-                $destination = '/document/photos_slide';
-                $photo['photos_slide1']->move(public_path($destination), $filename);
-                $slideFilenames[] = [
-                    'filename' => '/' . $filename,
-                    'description' => $photo['photos_slide1_description']
-                ];
+        foreach ($photosData['photos_slide'] as $slideKey => $slide) {
+            foreach ($slide as $slideField => $slideValue) {
+                if (strpos($slideField, 'photos_slide') === 0) {
+                    $slideNumber = substr($slideField, -1); 
+                    $descriptionKey = $slideField . '_description';
+                    
+                    if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
+                        $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
+                        $destination = '/document/photos_slide';
+                        $slide[$slideField]->move(public_path($destination), $filename);
+                        $slideFilenames[$slideNumber][] = [
+                            $slideField => '/' . $filename,
+                            $descriptionKey => $slide[$descriptionKey]
+                        ];
+                    }
+                }
             }
         }
         $photos = [
