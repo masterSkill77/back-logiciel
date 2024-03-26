@@ -13,10 +13,11 @@ class Photos extends Model
     protected $primaryKey = 'id_photos';
 
 
-    protected $fillable = ['photos_original', 'photos_slide'];
+    protected $fillable = ['photos_couvert', 'photos_slide'];
 
     protected $casts = [
-        'photos_slide' => 'array'
+        'photos_couvert' => 'array',
+        'photos_slide' => 'array',
     ];
 
     public function bien(): BelongsTo

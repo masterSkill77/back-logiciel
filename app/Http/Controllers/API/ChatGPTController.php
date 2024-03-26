@@ -13,7 +13,7 @@ class ChatGPTController extends Controller
 {
     public function __construct(public OpenAiService $openAiService, public TypeEstateService $typeEstateService, public TypeOffertService $typeOffertService)
     {
-        
+
     }
     public function chatGPT(AnnonceRequest $annonceRequest)
     {
@@ -23,6 +23,6 @@ class ChatGPTController extends Controller
         $chat = $this->openAiService->useOpenAi($annonces, $offert['designation'], $estate['designation'], );
         $data = json_decode($chat, true);
 
-        return response()->json(['response' => $data['choices'][0]['message']['content']]);
+        return response()->json(['response' =>$data['choices'][0]['message']['content']]);
     }
 }
