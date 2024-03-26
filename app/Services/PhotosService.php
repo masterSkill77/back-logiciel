@@ -21,8 +21,8 @@ class PhotosService
         foreach ($params['photos_couvert'] as $photoData) {
             $photosData[] = [
                 'type' => 'photos_couvert',
-                'filename' => $photoData['filename'],
-                'description' => $photoData['description']
+                'photos_slide1' => $photoData['photos_slide1'],
+                'photos_slide1_description' => $photoData['photos_slide1_description']
             ];
         }
 
