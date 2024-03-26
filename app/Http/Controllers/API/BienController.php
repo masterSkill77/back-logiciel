@@ -31,7 +31,6 @@ use App\Http\Requests\Bien\BienRequest;
 use App\Http\Requests\Mandate\MandateRequest;
 use App\Http\Requests\Advertissement\AdvertissementRequest;
 use App\Http\Requests\Avalaibilities\AvalaibilitiesRequest;
-use App\Models\Bien;
 use App\Services\MandateService;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Http\JsonResponse;
@@ -96,8 +95,6 @@ class BienController extends Controller
             $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
             $user = Auth::user();
 
-            Log::info([json_encode($requestData)]);
-
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
             $requestData['biens']['photos_id_photos'] = $photosId['id'];
@@ -124,8 +121,6 @@ class BienController extends Controller
             $requestData['biens']['agent_id'] = $user->id;
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
-
-            Log::info([json_encode($requestData['biens'])]);
 
             $bienId = $this->handleBien($requestData);
 
@@ -259,38 +254,36 @@ class BienController extends Controller
         if (!$photosData) {
             return response()->json(['error' => 'No photos provided'], 400);
         }
+        $coverPhoto = $photosData['photos_couvert'];
+        $slidePhotos = $photosData['photos_slide'];
+
         $originalFilenames = [];
         $slideFilenames = [];
-        foreach ($photosData['photos_couvert'] as $photo) {
-            if (isset($photo['photos_slide1']) && isset($photo['photos_slide1_description'])) {
 
-                $filename = time() . '_' . $photo['photos_slide1']->getClientOriginalName();
+        if (!empty($coverPhoto)) {
+            if (isset($coverPhoto['photos_original'])) {
+                $filename = time() . '_' . ($coverPhoto['photos_original'][0])->getClientOriginalName();
                 $destination = '/document/photos_couvert';
-                $photo['photos_slide1']->move(public_path($destination), $filename);
+                ($coverPhoto['photos_original'][0])->move(public_path($destination), $filename);
                 $originalFilenames[] = [
-                    'photos_slide1' => '/' . $filename,
-                    'photos_slide1_description' => $photo['photos_slide1_description']
+                    'photo' => '/' . $filename,
+                    'description' => isset($coverPhoto['photos_original_description']) ? $coverPhoto['photos_original_description'] : ""
                 ];
             }
         }
 
-        foreach ($photosData['photos_slide'] as $slideKey => $slide) {
-            // foreach ($slide as $slideField => $slideValue) {
-            //     if (strpos($slideField, 'photos_slide') === 0) {
-            //         $slideNumber = substr($slideField, -1);
-            //         $descriptionKey = $slideField . '_description';
 
-            //         if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
-            //             $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
-            //             $destination = '/document/photos_slide';
-            //             $slide[$slideField]->move(public_path($destination), $filename);
-            //             $slideFilenames[$slideNumber][] = [
-            //                 $slideField => '/' . $filename,
-            //                 $descriptionKey => $slide[$descriptionKey]
-            //             ];
-            //         }
-            //     }
-            // }
+        foreach ($slidePhotos as $slide) {
+            if (isset($slide['photo'])) {
+
+                $filename = time() . '_' . ($slide['photo'][0])->getClientOriginalName();
+                $destination = '/document/photos_slide';
+                ($slide['photo'][0])->move(public_path($destination), $filename);
+                $slideFilenames[] = [
+                    'photo' => '/' . $filename,
+                    'description' => $slide['description']
+                ];
+            }
         }
         $photos = [
             'photos_couvert' => $originalFilenames,
@@ -300,6 +293,7 @@ class BienController extends Controller
         try {
             return $this->photoService->addPhotos($photos);
         } catch (\Exception $e) {
+            throw $e;
             return response()->json(['error' => 'Failed to add photos'], 500);
         }
     }

@@ -5,6 +5,7 @@ namespace App\Services;
 use App\Models\Photos;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Http\UploadedFile;
+use Illuminate\Support\Facades\Log;
 
 class PhotosService
 {
@@ -14,36 +15,18 @@ class PhotosService
     }
     public function addPhotos(array $params): array
     {
-        $photosData = [];
-        $slideData = [];
-    
-        // Traitement des photos couvertes
-        foreach ($params['photos_couvert'] as $photoData) {
-            $photosData[] = [
-                'type' => 'photos_couvert',
-                'photos_slide1' => $photoData['photos_slide1'],
-                'photos_slide1_description' => $photoData['photos_slide1_description']
-            ];
-        }
-
         // Traitement des photos de diapositives
-        foreach ($params['photos_slide'] as $slide) {
-            $slideInfo = [];
-            foreach ($slide as $data) {
-                $slideData[] = $data;
-            }
-        }
 
         $photo = new Photos();
-        $photo->photos_couvert = $photosData;
-        $photo->photos_slide = $slideData;
+        $photo->photos_couvert = $params['photos_couvert'];
+        $photo->photos_slide = $params['photos_slide'];
         $photo->save();
-    
+
         return ['id' => $photo->id_photos];
     }
-    
-    
-    
+
+
+
     public function savePhotos(UploadedFile $file, array $slides): string
     {
         $originalFilename = $file->getClientOriginalName();
@@ -66,7 +49,7 @@ class PhotosService
     }
 
 
-    public function getPhotos() : Collection
+    public function getPhotos(): Collection
     {
         return Photos::all();
     }
