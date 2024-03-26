@@ -38,6 +38,7 @@ use Illuminate\Http\JsonResponse;
 use Illuminate\Pagination\LengthAwarePaginator;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 
 class BienController extends Controller
 {
@@ -94,9 +95,12 @@ class BienController extends Controller
             $requestData = $requestBien->validated();
             $avalaibilitieId = $this->handleAbilities($requestAvalaibilitie->toArray());
             $user = Auth::user();
+
+            Log::info([json_encode($requestData)]);
+
             $requestData['biens']['advertisement_id'] = $advertissementId['id'];
             $requestData['biens']['exterior_detail_id'] = $exteriorId['id'];
-            $requestData['biens']['photos_id_photos'] = $photosId;
+            $requestData['biens']['photos_id_photos'] = $photosId['id'];
             $requestData['biens']['info_copropriete_id_infocopropriete'] = $infoCoproprieteId['id'];
             $requestData['biens']['interior_detail_id'] = $interiorDetailId['id'];
             $requestData['biens']['diagnostic_id_diagnostics'] = $diagnostiqueId['id'];
@@ -104,6 +108,9 @@ class BienController extends Controller
             $requestData['biens']['sector_id_sector'] = $sectorId['id'];
             $requestData['biens']['terrain_id'] = $terrainId['id'];
             $requestData['biens']['info_financiere_id'] = $infoFinanciereId['id'];
+            $requestData['biens']['recent_construct'] = json_encode($requestData['biens']['recent_construct']);
+            $requestData['biens']['equipment'] = json_encode($requestData['biens']['equipment']);
+            $requestData['biens']['status'] = json_encode($requestData['biens']['status']);
             $requestData['biens']['availabilities_id_availability'] = $avalaibilitieId['id'];
             $typeOffertId = $requestBien->input('type_offert_id');
             $typeEstateId = $requestBien->input('type_estate_id');
@@ -118,14 +125,16 @@ class BienController extends Controller
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
 
+            Log::info([json_encode($requestData['biens'])]);
+
             $bienId = $this->handleBien($requestData);
 
 
             $mandateData = $Mandaterequest->input('Mandate');
             $mandateData['bien_id_bien'] = $bienId['id'];
-            if(isset($mandateData['contact_id_contact'])){
+            if (isset($mandateData['contact_id_contact'])) {
                 $this->mandateService->udpateMandate($mandateData);
-            }else{
+            } else {
                 $this->mandateService->addMandate($mandateData);
             }
 
@@ -246,7 +255,7 @@ class BienController extends Controller
     private function handlePhotos(array $requestPhoto)
     {
         $photosData = $requestPhoto['photos'];
-        
+
         if (!$photosData) {
             return response()->json(['error' => 'No photos provided'], 400);
         }
@@ -266,22 +275,22 @@ class BienController extends Controller
         }
 
         foreach ($photosData['photos_slide'] as $slideKey => $slide) {
-            foreach ($slide as $slideField => $slideValue) {
-                if (strpos($slideField, 'photos_slide') === 0) {
-                    $slideNumber = substr($slideField, -1); 
-                    $descriptionKey = $slideField . '_description';
-                    
-                    if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
-                        $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
-                        $destination = '/document/photos_slide';
-                        $slide[$slideField]->move(public_path($destination), $filename);
-                        $slideFilenames[$slideNumber][] = [
-                            $slideField => '/' . $filename,
-                            $descriptionKey => $slide[$descriptionKey]
-                        ];
-                    }
-                }
-            }
+            // foreach ($slide as $slideField => $slideValue) {
+            //     if (strpos($slideField, 'photos_slide') === 0) {
+            //         $slideNumber = substr($slideField, -1);
+            //         $descriptionKey = $slideField . '_description';
+
+            //         if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
+            //             $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
+            //             $destination = '/document/photos_slide';
+            //             $slide[$slideField]->move(public_path($destination), $filename);
+            //             $slideFilenames[$slideNumber][] = [
+            //                 $slideField => '/' . $filename,
+            //                 $descriptionKey => $slide[$descriptionKey]
+            //             ];
+            //         }
+            //     }
+            // }
         }
         $photos = [
             'photos_couvert' => $originalFilenames,
@@ -331,7 +340,7 @@ class BienController extends Controller
     public function testPhotos(Request $request)
     {
         $photosData = $request['photos'];
-        
+
         if (!$photosData) {
             return response()->json(['error' => 'No photos provided'], 400);
         }
@@ -353,9 +362,9 @@ class BienController extends Controller
         foreach ($photosData['photos_slide'] as $slideKey => $slide) {
             foreach ($slide as $slideField => $slideValue) {
                 if (strpos($slideField, 'photos_slide') === 0) {
-                    $slideNumber = substr($slideField, -1); 
+                    $slideNumber = substr($slideField, -1);
                     $descriptionKey = $slideField . '_description';
-                    
+
                     if (isset($slide[$slideField]) && isset($slide[$descriptionKey])) {
                         $filename = time() . '_' . $slide[$slideField]->getClientOriginalName();
                         $destination = '/document/photos_slide';
@@ -380,7 +389,7 @@ class BienController extends Controller
         }
     }
 
-    
+
 
     /**
      * Retrieve estate from numFolder
@@ -407,6 +416,6 @@ class BienController extends Controller
             return response()->json(['error' => "Bien with ID $bienId not found"], 404);
         }
 
-        return response()->json(['message'=>"Un bien a été change avec succés"]);
+        return response()->json(['message' => "Un bien a été change avec succés"]);
     }
 }
