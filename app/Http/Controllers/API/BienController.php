@@ -111,7 +111,7 @@ class BienController extends Controller
             $requestData['biens']['type_estate_id'] = $typeEstateId;
             $requestData['biens']['classsification_estate_id'] = $classificationEstateId;
             $requestData['biens']['classification_offert_id'] = $classificationOffertId;
-            $user = Auth::user();
+
             $requestData['biens']['agent_id'] = $user->id;
             $agency = $user->agency;
             $requestData['biens']['agency_id'] = $agency->id;
@@ -128,7 +128,7 @@ class BienController extends Controller
             }else{
                 $this->mandateService->addMandate($mandateData);
             }
-            
+
             DB::commit();
 
             return response(['message' => 'Bien créé avec succès', $sectorId], Response::HTTP_CREATED);
