@@ -32,8 +32,6 @@ class PreferencyContactRequest extends FormRequest
             "preferencyContact.min_bedroom" => 'nullable|integer',
             "preferencyContact.max_bedroom" => 'nullable|integer',
             "preferencyContact.localities" => 'nullable|string',
-            "preferencyContact.commune" => 'nullable|string',
-            "preferencyContact.zip" => 'nullable|string',
             "preferencyContact.start_date" => 'nullable|date',
             "preferencyContact.end_date" => 'nullable|date',
             "preferencyContact.night_number" => 'nullable|integer',

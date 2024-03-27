@@ -319,15 +319,15 @@ class BienController extends Controller
      * return json
      * get identification du bien
      */
-    public function findById(int $bienId): JsonResponse
+    public function findByUuid(string $bienUuid): JsonResponse
     {
-        $findBienId = $this->bienService->getById($bienId);
+        $findBienUuid = $this->bienService->getByUuid($bienUuid);
 
-        if (!$findBienId) {
-            return response()->json(['error' => "Bien with ID $bienId not found"], 404);
+        if (!$findBienUuid) {
+            return response()->json(['error' => "Bien with ID $bienUuid not found"], 404);
         }
 
-        return response()->json($findBienId);
+        return response()->json($findBienUuid);
     }
 
     // test add photos

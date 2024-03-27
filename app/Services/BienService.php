@@ -38,10 +38,10 @@ class BienService
     }
 
     // find identification de la bien avec leur relation
-    public function getById(int $bienId): ?Bien
+    public function getByUuid(string $bienUuid): ?Bien
     {
         try {
-            return Bien::with([
+            return Bien::where('uuid', $bienUuid)->with([
                 'photos',
                 'infoCopropriete',
                 'typeOffert',
@@ -58,7 +58,7 @@ class BienService
                 'terrain',
                 'infoFinanciere',
                 'advertisement'
-            ])->find($bienId);
+            ])->first();
         } catch (ModelNotFoundException $e) {
             return null;
         }

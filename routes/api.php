@@ -81,7 +81,7 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::post('/', [BienController::class, 'createBien'])->middleware(['auth:sanctum']);
         Route::get('/', [BienController::class, 'findAll'])->middleware(['auth:sanctum']);
         Route::post('/publish/{id}', [BienController::class, 'udpateStatus'])->middleware(['auth:sanctum']);
-        Route::get('/{id}', [BienController::class, 'findById']);
+        Route::get('/{uuid}', [BienController::class, 'findByUuid']);
         Route::get('/mandat/{id}', [BienController::class, 'getEstateByMandat']);
         Route::post('/photos', [BienController::class, 'testPhotos']);
         Route::prefix('folder')->group(function () {
